@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <section className="mt-28">
+    <section className="mt-20">
       <div className="container flex items-center justify-center">
         <form
           action="/login"

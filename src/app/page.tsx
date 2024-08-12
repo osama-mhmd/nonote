@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-col mt-28">
+    <main className="flex flex-col mt-20">
       <div className="container flex flex-col items-center text-center gap-4">
         <h1 className="">Nonote</h1>
         <p className="text-muted-foreground max-w-prose">
