@@ -8,7 +8,7 @@ export default function Nav() {
         <Link href="/" className="font-medium">
           Nonote
         </Link>
-        <ul className="flex gap-3 items-center">
+        <ul className="flex gap-3 items-center px-0 list-none">
           <li>
             <Button variant="ghost">
               <Link href="/pricing">Pricing</Link>

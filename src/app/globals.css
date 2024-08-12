@@ -83,3 +83,14 @@ h3 {
 .link {
   @apply underline text-blue-800;
 }
+
+ul {
+  @apply list-disc px-5;
+}
+
+code {
+  @apply bg-muted rounded-md p-1 px-2;
+}
+code * {
+  @apply inline w-5 mb-0.5 h-5;
+}
