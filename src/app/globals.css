@@ -67,3 +67,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+h1 {
+  @apply text-4xl sm:text-6xl font-bold;
+}
+
+h2 {
+  @apply text-3xl sm:text-5xl font-semibold;
+}
+
+.link {
+  @apply underline text-blue-800;
+}
