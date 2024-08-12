@@ -7,7 +7,7 @@ export default function Login() {
     <section className="mt-20">
       <div className="container flex items-center justify-center">
         <form
-          action="/login"
+          action="/auth/login"
           method="post"
           className="flex flex-col gap-2 w-96"
         >
