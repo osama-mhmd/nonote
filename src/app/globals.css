@@ -76,6 +76,10 @@ h2 {
   @apply text-3xl sm:text-5xl font-semibold;
 }
 
+h3 {
+  @apply text-2xl sm:text-4xl font-medium;
+}
+
 .link {
   @apply underline text-blue-800;
 }
