@@ -16,7 +16,7 @@ export default function Nav() {
           </li>
           <li>
             <Button asChild>
-              <Link href="/auth/registr">Create account</Link>
+              <Link href="/auth/register">Create account</Link>
             </Button>
           </li>
         </ul>
