@@ -1,7 +1,18 @@
+// "use client";
+
+// import { useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+// import { createUser } from "@/db/adapter";
 
 export default function Home() {
+  // useEffect(() => {
+  //   async function doInAsync() {
+  //     await createUser();
+  //   }
+  //   doInAsync();
+  // });
   return (
     <main className="flex flex-col mt-20">
       <div className="container flex flex-col items-center text-center gap-4">
