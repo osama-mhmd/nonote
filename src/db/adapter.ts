@@ -1,50 +1,44 @@
-import * as mongoose from "mongoose";
+import { Lucia } from "lucia";
+import { MongodbAdapter } from "@lucia-auth/adapter-mongodb";
+import mongoose from "mongoose";
 import userSchema from "./user.schema";
-import { hash } from "@node-rs/argon2";
-
-type User = {
-  username: string;
-  email: string;
-  hashedPassword: string;
-  plan: "basic" | "pro" | "ultimate";
-};
 
 const dbPassword = process.env.MONGODB_PASSWORD;
 const uri = `mongodb+srv://the-user-admin:${dbPassword}@nonote.t738c.mongodb.net/?retryWrites=true&w=majority&appName=nonote`;
 
-mongoose.connect(uri);
+await mongoose.connect(uri);
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model(
+	"User",
+	userSchema
+);
 
-const userAdapter = {
-  getUser: async (username: string) => {
-    return await User.findOne({ username }).lean();
-  },
-  setUser: async (user: User) => {
-    await User.create(user);
-  },
-  deleteUser: async (username: string) => {
-    await User.deleteOne({ username });
-  },
-};
+const Session = mongoose.model(
+	"Session",
+	new mongoose.Schema(
+		{
+			_id: {
+				type: String,
+				required: true
+			},
+			user_id: {
+				type: String,
+				required: true
+			},
+			expires_at: {
+				type: Date,
+				required: true
+			}
+		} as const,
+		{ _id: false }
+	)
+);
 
-async function createUser() {
-  await User.create({
-    username: "admin-nonote",
-    hashedPassword: await hash("admin@nonote-1#2", {
-      // recommended minimum parameters
-      memoryCost: 19456,
-      timeCost: 2,
-      outputLen: 32,
-      parallelism: 1,
-    }),
-    email: "admin@nonote.com",
-    plan: "ultimate",
-  }).then(() => {
-    console.log("done saving a user");
-  });
+const adapter = new MongodbAdapter(
+	mongoose.connection.collection("sessions"),
+	mongoose.connection.collection("users")
+);
+
+export {
+  adapter
 }
-
-export { createUser };
-
-export default userAdapter;
