@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test:db": "node ./src/db/_test.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@node-rs/argon2": "^1.8.3",
