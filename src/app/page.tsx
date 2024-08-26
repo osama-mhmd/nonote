@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main className="flex flex-col mt-20">
       <div className="container flex flex-col items-center text-center gap-4">
-        <h1 className="">Nonote</h1>
+        <h1 className="text-4xl sm:text-6xl mb-0">Nonote</h1>
         <p className="text-muted-foreground max-w-prose">
           Everyday you see a new note taking app appears, but they all don{"'"}t
           fit you. Don{"'"}t worry, this app will fit you
