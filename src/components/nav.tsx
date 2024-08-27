@@ -10,11 +10,6 @@ export default function Nav() {
         </Link>
         <ul className="flex gap-3 items-center px-0 list-none">
           <li>
-            <Button variant="ghost">
-              <Link href="/pricing">Pricing</Link>
-            </Button>
-          </li>
-          <li>
             <Button asChild>
               <Link href="/auth/register">Create account</Link>
             </Button>
