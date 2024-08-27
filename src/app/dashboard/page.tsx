@@ -18,6 +18,8 @@ import Callout from "@yoopta/callout";
 import Code from "@yoopta/code";
 import File from "@yoopta/file";
 
+import "@/styles/yoopta.override.css";
+
 import LinkTool, { DefaultLinkToolRender } from "@yoopta/link-tool";
 import ActionMenu, { DefaultActionMenuRender } from "@yoopta/action-menu-list";
 import Toolbar, { DefaultToolbarRender } from "@yoopta/toolbar";
