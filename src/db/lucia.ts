@@ -1,7 +1,7 @@
 import { Lucia } from "lucia";
-import { getAdpater } from "./adapter";
+import adapter from "./adapter";
 
-export const lucia = new Lucia(await getAdpater(), {
+export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
       // set to `true` when using HTTPS

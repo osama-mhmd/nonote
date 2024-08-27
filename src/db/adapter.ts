@@ -6,17 +6,15 @@ import { sessionSchema } from "./session.schema";
 const dbPassword = process.env.MONGODB_PASSWORD;
 export const uri = `mongodb+srv://the-user-admin:${dbPassword}@nonote.t738c.mongodb.net/?retryWrites=true&w=majority&appName=nonote`;
 
-async function getAdpater() {
-  await mongoose.connect(uri);
+await mongoose.connect(uri);
 
-  const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
-  const Session = mongoose.model("Session", sessionSchema);
+const Session = mongoose.model("Session", sessionSchema);
 
-  return new MongodbAdapter(
-    mongoose.connection.collection("sessions"),
-    mongoose.connection.collection("users")
-  );
-}
+const adapter = new MongodbAdapter(
+  mongoose.connection.collection("sessions"),
+  mongoose.connection.collection("users")
+);
 
-export { getAdpater };
+export default adapter;
