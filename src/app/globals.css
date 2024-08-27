@@ -134,3 +134,7 @@ code {
 code * {
   @apply inline w-5 mb-0.5 h-5;
 }
+
+.spinner {
+  @apply rounded-full border-2 p-[6px] border-black animate-spin border-l-transparent;
+}
