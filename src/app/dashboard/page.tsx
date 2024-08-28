@@ -18,6 +18,8 @@ import Callout from "@yoopta/callout";
 import Code from "@yoopta/code";
 import File from "@yoopta/file";
 
+import { motion } from "framer-motion";
+
 import "@/styles/yoopta.override.css";
 
 import LinkTool, { DefaultLinkToolRender } from "@yoopta/link-tool";
@@ -33,7 +35,7 @@ import {
   Highlight,
 } from "@yoopta/marks";
 import { Button } from "@/components/ui/button";
-import { FileCheck } from "lucide-react";
+import { Check, FileCheck } from "lucide-react";
 
 const marks = [Bold, Italic, CodeMark, Underline, Strike, Highlight];
 
@@ -83,8 +85,6 @@ const Editor = () => {
     localStorage.setItem("yoopta-content", JSON.stringify(editorValue));
 
     setSavingState(false); // remove spinner
-
-    console.log("debounced version called");
   }
 
   function handleChange() {
@@ -109,22 +109,39 @@ const Editor = () => {
   return (
     <section>
       <div className="container pt-12">
-        {!saving && (
-          <Button variant={"ghost"} className="flex gap-1 mb-3" disabled={true}>
-            <FileCheck />
-            Saved to local storage
-          </Button>
-        )}
-        {saving && (
-          <Button
-            variant={"ghost"}
-            className="flex gap-2 mb-3 items-center"
-            disabled={true}
-          >
-            Saving to local storage
-            <span className="spinner"></span>
-          </Button>
-        )}
+        <div className="flex justify-end">
+          {!saving && (
+            <motion.div
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 100 }}
+            >
+              <Button
+                variant={"ghost"}
+                className="flex gap-1 mb-3"
+                disabled={true}
+              >
+                {/* <FileCheck /> */}
+                <Check />
+                Saved to local storage
+              </Button>
+            </motion.div>
+          )}
+          {saving && (
+            <motion.div
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 100 }}
+            >
+              <Button
+                variant={"ghost"}
+                className="flex gap-2 mb-3 items-center"
+                disabled={true}
+              >
+                <span className="spinner"></span>
+                Saving to local storage
+              </Button>
+            </motion.div>
+          )}
+        </div>
         <input
           className="text-5xl font-bold pb-4 focus:outline-0"
           placeholder="Type your page title..."
