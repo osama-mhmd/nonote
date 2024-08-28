@@ -43,48 +43,46 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <section>
-      <div className="container pt-12">
-        <div className="flex justify-end">
-          {!saving && (
-            <motion.div
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 100 }}
+    <div className="container pt-12">
+      <div className="flex justify-end">
+        {!saving && (
+          <motion.div
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 100 }}
+          >
+            <Button
+              variant={"ghost"}
+              className="flex gap-1 mb-3"
+              disabled={true}
             >
-              <Button
-                variant={"ghost"}
-                className="flex gap-1 mb-3"
-                disabled={true}
-              >
-                {/* <FileCheck /> */}
-                <Check />
-                Saved to local storage
-              </Button>
-            </motion.div>
-          )}
-          {saving && (
-            <motion.div
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 100 }}
+              {/* <FileCheck /> */}
+              <Check />
+              Saved to local storage
+            </Button>
+          </motion.div>
+        )}
+        {saving && (
+          <motion.div
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 100 }}
+          >
+            <Button
+              variant={"ghost"}
+              className="flex gap-2 mb-3 items-center"
+              disabled={true}
             >
-              <Button
-                variant={"ghost"}
-                className="flex gap-2 mb-3 items-center"
-                disabled={true}
-              >
-                <span className="spinner"></span>
-                Saving to local storage
-              </Button>
-            </motion.div>
-          )}
-        </div>
-        <input
-          className="text-5xl font-bold pb-4 focus:outline-0"
-          placeholder="Type your page title..."
-        />
-        <Editor editor={editor} />
+              <span className="spinner"></span>
+              Saving to local storage
+            </Button>
+          </motion.div>
+        )}
       </div>
-    </section>
+      <input
+        className="text-5xl font-bold pb-4 focus:outline-0"
+        placeholder="Type your page title..."
+      />
+      <Editor editor={editor} />
+    </div>
   );
 };
 
