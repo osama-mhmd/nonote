@@ -1,8 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 
+import { usePathname } from "next/navigation";
+
 export default function Nav() {
-  return (
+  const pathname = usePathname();
+  const shouldNotRender = pathname == "/dashboard";
+
+  return shouldNotRender ? null : (
     <nav className="shadow-md py-4">
       <div className="container flex items-center justify-between">
         <Link href="/" className="font-medium">
