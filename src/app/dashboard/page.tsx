@@ -71,18 +71,30 @@ const plugins = [
   File,
 ];
 
+let timeout: NodeJS.Timeout | null = null; // timeout for debouncing :: handleChange()
+
 const Editor = () => {
   const editor = useMemo(() => createYooptaEditor(), []);
   const [saving, setSavingState] = useState(false);
 
+  function saveContent() {
+    const editorValue = editor.getEditorValue();
+
+    localStorage.setItem("yoopta-content", JSON.stringify(editorValue));
+
+    setSavingState(false); // remove spinner
+
+    console.log("debounced version called");
+  }
+
   function handleChange() {
     setSavingState(true); // set spinner
 
-    const editorContent = editor.getEditorValue();
-
-    localStorage.setItem("yoopta-content", JSON.stringify(editorContent));
-
-    setSavingState(false); // end spinner
+    // debouncing
+    const t = 5000;
+    if (!timeout) saveContent();
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(saveContent, t);
   }
 
   useEffect(() => {
@@ -106,7 +118,7 @@ const Editor = () => {
         {saving && (
           <Button
             variant={"ghost"}
-            className="flex gap-1 mb-3 items-center"
+            className="flex gap-2 mb-3 items-center"
             disabled={true}
           >
             Saving to local storage
