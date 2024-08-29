@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
 
 export default function SignInWithGithub() {
   return (
-    <Button variant="outline" onClick={() => signIn("github")}>
+    <Button variant="outline">
       <svg
         className="size-6"
         fill="currentColor"
