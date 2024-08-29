@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createYooptaEditor } from "@yoopta/editor";
 import Editor from "@/components/editor";
 
@@ -8,12 +8,15 @@ import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 let timeout: NodeJS.Timeout | null = null; // timeout for debouncing :: handleChange()
 
 const Dashboard = () => {
   const editor = useMemo(() => createYooptaEditor(), []);
   const [saving, setSavingState] = useState(false);
+  const [title, setTitle] = useState(localStorage.getItem("title") ?? "");
+  const titleRef = useRef(null);
 
   function saveContent() {
     const editorValue = editor.getEditorValue();
@@ -33,6 +36,11 @@ const Dashboard = () => {
     timeout = setTimeout(saveContent, t);
   }
 
+  const changeTitle = (newTitle: string) => {
+    localStorage.setItem("title", newTitle);
+    setTitle(newTitle);
+  };
+
   useEffect(() => {
     const contentFromLocalStorage = localStorage.getItem("yoopta-content");
 
@@ -40,6 +48,9 @@ const Dashboard = () => {
       editor.setEditorValue(JSON.parse(contentFromLocalStorage));
 
     editor.on("change", handleChange);
+
+    if (titleRef.current)
+      (titleRef.current as HTMLHeadingElement).innerHTML = title;
   }, []);
 
   return (
@@ -55,9 +66,8 @@ const Dashboard = () => {
               className="flex gap-1 mb-3"
               disabled={true}
             >
-              {/* <FileCheck /> */}
               <Check />
-              Saved to local storage
+              Saved locally
             </Button>
           </motion.div>
         )}
@@ -72,15 +82,20 @@ const Dashboard = () => {
               disabled={true}
             >
               <span className="spinner"></span>
-              Saving to local storage
+              Saving locally
             </Button>
           </motion.div>
         )}
       </div>
-      <input
-        className="text-5xl font-bold pb-4 focus:outline-0"
-        placeholder="Type your page title..."
-      />
+      <h1
+        contentEditable={true}
+        ref={titleRef}
+        onInput={(e) => changeTitle(e.currentTarget.innerHTML)}
+        className={cn(
+          "text-5xl text-wrap focus:outline-0 after:text-gray-400 after:cursor-text",
+          title === "" ? 'after:content-["Page_title"]' : "after:content-none"
+        )}
+      ></h1>
       <Editor editor={editor} />
     </div>
   );
