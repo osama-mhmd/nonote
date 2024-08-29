@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Metadata } from "next";
 import Link from "next/link";
 
+import SignInWithGithub from "./signin-with-github";
+
 export const metadata: Metadata = {
   title: "Nonote | Login",
 };
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
 export default function Login() {
   return (
     <section className="mt-20">
-      <div className="container flex items-center justify-center">
+      <div className="container flex items-center flex-col gap-6 justify-center">
         <form
           action="/auth/login"
           method="post"
@@ -27,6 +29,9 @@ export default function Login() {
             Don{"'"}t have an account? Create Account
           </Link>
         </form>
+        <div className="grid w-96 [&>*>svg]:me-1">
+          <SignInWithGithub />
+        </div>
       </div>
     </section>
   );
