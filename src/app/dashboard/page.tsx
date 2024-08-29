@@ -15,7 +15,7 @@ let timeout: NodeJS.Timeout | null = null; // timeout for debouncing :: handleCh
 const Dashboard = () => {
   const editor = useMemo(() => createYooptaEditor(), []);
   const [saving, setSavingState] = useState(false);
-  const [title, setTitle] = useState(localStorage.getItem("title") ?? "");
+  const [title, setTitle] = useState("");
   const titleRef = useRef(null);
 
   function saveContent() {
@@ -26,7 +26,8 @@ const Dashboard = () => {
     setSavingState(false); // remove spinner
   }
 
-  function handleChange() {
+  function handleChange(e: any) {
+    console.log(e);
     setSavingState(true); // set spinner
 
     // debouncing
@@ -49,8 +50,13 @@ const Dashboard = () => {
 
     editor.on("change", handleChange);
 
+    const titleFromLocalStorage = localStorage.getItem("title") ?? "";
+
+    setTitle(titleFromLocalStorage);
+
     if (titleRef.current)
-      (titleRef.current as HTMLHeadingElement).innerHTML = title;
+      (titleRef.current as HTMLHeadingElement).innerHTML =
+        titleFromLocalStorage;
   }, []);
 
   return (
