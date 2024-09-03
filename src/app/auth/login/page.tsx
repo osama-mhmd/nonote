@@ -15,7 +15,6 @@ export default function Login() {
       <div className="container flex items-center flex-col gap-6 justify-center">
         <form
           action="/auth/login"
-          method="post"
           className="flex flex-col gap-2 w-96"
         >
           <h2 className="text-center mb-3">Login</h2>

@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config) => {
+    config.experiments.asyncWebAssembly = true;
+    return config;
+  },
   experimental: {
     serverComponentsExternalPackages: ["@node-rs/argon2"],
   },
+  // serverExternalPackages: ["@node-rs/argon2"],
   images: {
     remotePatterns: [
       {

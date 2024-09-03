@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import createUser from "@/db/actions/create-user";
+import signup from "@/db/actions/create-user";
 import Link from "next/link";
 import { SubmitHandler, useForm, ErrorOption } from "react-hook-form";
 import { registerFields, type RegisterFields } from './schema'
@@ -13,9 +13,8 @@ export default function Register() {
     register,
     formState: { errors },
     setError,
-    handleSubmit,
+    handleSubmit
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
-
 
   const onSumbit: SubmitHandler<RegisterFields> = async (data) => {
     if (data.password != data.password_repeat) setError("password_repeat", {
@@ -27,8 +26,8 @@ export default function Register() {
     <section className="mt-20">
       <div className="container flex items-center justify-center">
         <form
-          // action={createUser}
-          onSubmit={handleSubmit(onSumbit)}
+          action={signup}
+          // onSubmit={handleSubmit(onSumbit)}
           className="flex flex-col gap-2 w-96"
         >
           <h2 className="text-center mb-3">Register</h2>
