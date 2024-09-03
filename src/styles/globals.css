@@ -63,6 +63,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -78,6 +79,7 @@ h6 {
   font-weight: bold;
   display: block;
 }
+
 h1 {
   font-size: 2em;
   margin-top: 0.67em;
@@ -85,6 +87,7 @@ h1 {
   margin-left: 0;
   margin-right: 0;
 }
+
 h2 {
   font-size: 1.5em;
   margin-top: 0.83em;
@@ -92,6 +95,7 @@ h2 {
   margin-left: 0;
   margin-right: 0;
 }
+
 h3 {
   font-size: 1.17em;
   margin-top: 1em;
@@ -99,12 +103,14 @@ h3 {
   margin-left: 0;
   margin-right: 0;
 }
+
 h4 {
   margin-top: 1.33em;
   margin-bottom: 1.33em;
   margin-left: 0;
   margin-right: 0;
 }
+
 h5 {
   font-size: 0.83em;
   margin-top: 1.67em;
@@ -112,6 +118,7 @@ h5 {
   margin-left: 0;
   margin-right: 0;
 }
+
 h6 {
   font-size: 0.67em;
   margin-top: 2.33em;
@@ -131,10 +138,15 @@ ul {
 code {
   @apply bg-muted rounded-md p-1 px-2;
 }
+
 code * {
   @apply inline w-5 mb-0.5 h-5;
 }
 
 .spinner {
   @apply rounded-full border-2 p-[6px] border-black animate-spin border-l-transparent;
+}
+
+.error {
+  @apply p-3 border-l-4 border-red-500 rounded-md bg-red-100;
 }
