@@ -7,8 +7,9 @@ import Link from "next/link";
 import { SubmitHandler, useForm, ErrorOption } from "react-hook-form";
 import { registerFields, type RegisterFields } from './schema'
 import { valibotResolver } from '@hookform/resolvers/valibot'
+import { useEffect } from "react";
 
-export default function Register() {
+export default function Register({ searchParams }: { searchParams: { error: string } }) {
   const {
     register,
     formState: { errors },
@@ -16,11 +17,20 @@ export default function Register() {
     handleSubmit
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
 
-  const onSumbit: SubmitHandler<RegisterFields> = async (data) => {
-    if (data.password != data.password_repeat) setError("password_repeat", {
-      message: "Passwords must match!"
-    })
-  };
+  useEffect(() => {
+    // TODO: this way should be changed
+    const error = searchParams.error;
+    if (error) {
+      if (error == "users_email_unique") setError("email", { message: "Email already exists" })
+      if (error == "users_username_unique") setError("user_name", { message: "Username already exists" })
+    }
+  }, [searchParams.error])
+
+  // const onSumbit: SubmitHandler<RegisterFields> = async (data) => {
+  //   if (data.password != data.password_repeat) setError("password_repeat", {
+  //     message: "Passwords must match!"
+  //   })
+  // };
 
   return (
     <section className="mt-20">
