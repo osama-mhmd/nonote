@@ -7,9 +7,10 @@ import { lucia } from "../lucia";
 import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../schemas";
+import { RegisterFields } from "@/app/auth/register/schema";
 
-export default async function signup(formData: FormData) {
-  const userName = formData.get("user_name") as string;
+export default async function signup(data: RegisterFields) {
+  const userName = data.user_name;
 
   if (
     typeof userName !== "string" ||
@@ -21,7 +22,8 @@ export default async function signup(formData: FormData) {
       error: "Invalid username",
     };
   }
-  const password = formData.get("password");
+
+  const password = data.password;
   if (
     typeof password !== "string" ||
     password.length < 6 ||
@@ -33,20 +35,20 @@ export default async function signup(formData: FormData) {
   }
 
   const passwordHash = await hash(password, {
-    // recommended minimum parameters
     memoryCost: 19456,
     timeCost: 2,
     outputLen: 32,
     parallelism: 1,
   });
 
-  const userId = generateIdFromEntropySize(10); // 16 characters long
+  const userId = generateIdFromEntropySize(10);
 
-  const email = formData.get("email") as string;
+  const email = data.email;
 
-  const firstName = formData.get("first_name");
-  const lastName = formData.get("last_name");
-  const fullName = `${firstName} ${lastName}`;
+  const first_name = data.first_name;
+  const last_name = data.last_name;
+
+  const fullName = `${first_name} ${last_name}`;
 
   await db
     .insert(userTable)
@@ -58,12 +60,13 @@ export default async function signup(formData: FormData) {
       hashedPassword: passwordHash,
       plan: "basic",
     })
-    .catch((err) => {
+    .catch((err: any) => {
       redirect("/auth/register?error=" + err.constraint_name);
     });
 
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
+
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,

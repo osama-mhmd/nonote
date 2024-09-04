@@ -26,18 +26,20 @@ export default function Register({ searchParams }: { searchParams: { error: stri
     }
   }, [searchParams.error])
 
-  // const onSumbit: SubmitHandler<RegisterFields> = async (data) => {
-  //   if (data.password != data.password_repeat) setError("password_repeat", {
-  //     message: "Passwords must match!"
-  //   })
-  // };
+  const onSumbit: SubmitHandler<RegisterFields> = async (data: RegisterFields) => {
+    if (data.password != data.password_repeat) setError("password_repeat", {
+      message: "Passwords must match!"
+    })
+    else {
+      await signup(data);
+    }
+  };
 
   return (
     <section className="mt-20">
       <div className="container flex items-center justify-center">
         <form
-          action={signup}
-          // onSubmit={handleSubmit(onSumbit)}
+          onSubmit={handleSubmit(async (data) => await onSumbit(data))}
           className="flex flex-col gap-2 w-96"
         >
           <h2 className="text-center mb-3">Register</h2>

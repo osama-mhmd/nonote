@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "drizzle-kit generate",
+    "db:run:migration": "node ./src/db/migrate.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
