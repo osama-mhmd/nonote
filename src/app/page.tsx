@@ -1,23 +1,14 @@
-// "use client";
-
-// import { useEffect } from "react";
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-// import { createUser } from "@/db/adapter";
 
 export default function Home() {
-  // useEffect(() => {
-  //   async function doInAsync() {
-  //     await createUser();
-  //   }
-  //   doInAsync();
-  // });
   return (
-    <main className="flex flex-col mt-20">
-      <div className="container flex flex-col items-center text-center gap-4">
-        <h1 className="text-4xl sm:text-6xl mb-0">Nonote</h1>
-        <p className="text-muted-foreground max-w-prose">
+    <main className="flex flex-col mt-6">
+      <div className="container flex flex-col gap-4">
+        <h1 className="text-5xl sm:text-7xl mb-0">
+          Nonote: free, open source, for developers note taking app
+        </h1>
+        <p className="text-muted-foreground max-w-prose mt-2">
           Everyday you see a new note taking app appears, but they all don{"'"}t
           fit you. Don{"'"}t worry, this app will fit you
         </p>
