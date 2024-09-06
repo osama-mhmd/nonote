@@ -61,6 +61,18 @@ export default async function signup(data: RegisterFields) {
       plan: "basic",
     })
     .catch((err: any) => {
+      // TODO: solve issue
+      /* -->
+      Error: getaddrinfo EAI_AGAIN aws-0-eu-central-1.pooler.supabase.com
+          at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)
+          at GetAddrInfoReqWrap.callbackTrampoline (node:internal/async_hooks:130:17) {
+        errno: -3001,
+        code: 'EAI_AGAIN',
+        syscall: 'getaddrinfo',
+        hostname: 'aws-0-eu-central-1.pooler.supabase.com'
+      }
+      */
+      console.log(err);
       redirect("/auth/register?error=" + err.constraint_name);
     });
 

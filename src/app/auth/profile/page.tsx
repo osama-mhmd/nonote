@@ -1,26 +1,28 @@
+import { validateRequest } from "@/db/auth";
 import SignOut from "./sign-out";
+import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
-// import Image from "next/image";
+export const metadata: Metadata = {
+  title: "Nonote | Profile",
+};
 
-export default function Profile() {
+export default async function Profile() {
+  const { user, session } = await validateRequest();
+
+  if (!session) redirect("/auth/login")
+
   return (
     <section className="mt-20">
       <div className="container">
-        {/* <Image
-          height={200}
-          width={200}
-          alt="profile pic"
-          className="rounded-full bg-muted mx-auto"
-          src={session.user.image!}
-        /> */}
         <p className="rounded-md bg-muted my-3 p-3 flex items-center gap-1">
-          Username: ss
+          Username: {user.username}
         </p>
         <p className="rounded-md bg-muted my-3 p-3 flex items-center gap-1">
-          Name: Ss
+          Name: {user.fullname}
         </p>
         <p className="rounded-md bg-muted my-2 p-3 flex items-center gap-1">
-          Email: s@s
+          Email: {user.email}
         </p>
         <div className="text-center pt-4">
           <SignOut />
