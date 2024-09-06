@@ -1,11 +1,15 @@
-import { Inter } from "next/font/google";
+import { Inter, Merienda } from "next/font/google";
+
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
 import Nav from "@/components/nav";
 
-const inter = Inter({ subsets: ["latin"] });
+const interFont = Inter({ subsets: ["latin"] });
+const meriendaFont = Merienda({ subsets: ["latin"] });
+
+export const merienda = meriendaFont.className;
 
 export const metadata: Metadata = {
   title: "Nonote | Homepage",
@@ -20,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={interFont.className}>
         <Nav />
         {children}
       </body>
