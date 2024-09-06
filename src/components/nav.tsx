@@ -14,7 +14,7 @@ export default function Nav() {
 
   return shouldNotRender ? null : (
     <nav className="py-4 my-2 mx-4">
-      <div className="container border bg-border/30 rounded-full py-2 px-6 flex items-center justify-between">
+      <div className="container border bg-primary/5 rounded-full py-2 px-6 flex items-center justify-between">
         <Link href="/" className={"font-bold " + merienda}>
           Nonote
         </Link>
@@ -32,6 +32,7 @@ export default function Nav() {
               <Link
                 href="https://github.com/osama-mhmd/nonote"
                 className="flex gap-1"
+                target="_blank"
               >
                 <GithubIcon /> View source code
               </Link>
