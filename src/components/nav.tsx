@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import GithubIcon from "./icons/github";
 import { List } from "lucide-react";
-import { merienda } from "@/app/layout";
+import { merienda } from "@/app/families";
 
 export default function Nav() {
   const pathname = usePathname();

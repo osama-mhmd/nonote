@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { merienda } from "./layout";
+import { merienda } from "./families";
 import { validateRequest } from "@/db/auth";
 import { Metadata } from "next";
 

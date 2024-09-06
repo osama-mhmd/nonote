@@ -1,12 +1,7 @@
-import { Inter, Merienda } from "next/font/google";
+import { inter } from "./families";
 import Nav from "@/components/nav";
 
 import "@/styles/globals.css";
-
-const interFont = Inter({ subsets: ["latin"] });
-const meriendaFont = Merienda({ subsets: ["latin"] });
-
-export const merienda = meriendaFont.className;
 
 export default function RootLayout({
   children,
@@ -15,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={interFont.className}>
+      <body className={inter}>
         <Nav />
         {children}
       </body>
