@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import signup from "@/db/actions/create-user";
 import Link from "next/link";
-import { SubmitHandler, useForm, ErrorOption } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { registerFields, type RegisterFields } from "./schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Register({
   searchParams,
@@ -22,19 +22,6 @@ export default function Register({
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
   const [isLoading, setLoadingState] = useState(false);
 
-  useEffect(() => {
-    // TODO: this way should be changed
-    setLoadingState(false);
-
-    const error = searchParams.error;
-    if (error) {
-      if (error == "users_email_unique")
-        setError("email", { message: "Email already exists" });
-      if (error == "users_username_unique")
-        setError("user_name", { message: "Username already exists" });
-    }
-  }, [searchParams.error]);
-
   const onSumbit: SubmitHandler<RegisterFields> = async (
     data: RegisterFields
   ) => {
@@ -47,7 +34,17 @@ export default function Register({
         message: "Passwords must match!",
       });
     } else {
-      await signup(data);
+      const err = await signup(data);
+
+      if (err) {
+        setLoadingState(false);
+        if (err.message == "users_email_unique")
+          setError("email", { message: "Email already exists" });
+        if (err.message == "users_username_unique")
+          setError("user_name", { message: "Username already exists" });
+        if (err.message == "timeout")
+          setError("password_repeat", { message: "Connection time out" });
+      }
     }
   };
 

@@ -9,7 +9,13 @@ import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
 
-export default async function signup(data: RegisterFields) {
+type Err = {
+  message: string;
+};
+
+export default async function signup(
+  data: RegisterFields
+): Promise<Err | never> {
   const userName = data.user_name;
 
   if (
@@ -19,7 +25,7 @@ export default async function signup(data: RegisterFields) {
     !/^[a-z0-9_-]+$/.test(userName)
   ) {
     return {
-      error: "Invalid username",
+      message: "Invalid username",
     };
   }
 
@@ -30,7 +36,7 @@ export default async function signup(data: RegisterFields) {
     password.length > 255
   ) {
     return {
-      error: "Invalid password",
+      message: "Invalid password",
     };
   }
 
@@ -50,7 +56,7 @@ export default async function signup(data: RegisterFields) {
 
   const fullName = `${first_name} ${last_name}`;
 
-  await db
+  const user = await db
     .insert(userTable)
     .values({
       id: userId,
@@ -61,20 +67,16 @@ export default async function signup(data: RegisterFields) {
       plan: "basic",
     })
     .catch((err: any) => {
-      // TODO: solve issue
-      /* -->
-      Error: getaddrinfo EAI_AGAIN aws-0-eu-central-1.pooler.supabase.com
-          at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:120:26)
-          at GetAddrInfoReqWrap.callbackTrampoline (node:internal/async_hooks:130:17) {
-        errno: -3001,
-        code: 'EAI_AGAIN',
-        syscall: 'getaddrinfo',
-        hostname: 'aws-0-eu-central-1.pooler.supabase.com'
-      }
-      */
-      console.log(err);
-      redirect("/auth/register?error=" + err.constraint_name);
+      return {
+        message: err.constraint_name || "timeout",
+      };
     });
+
+  if ((user as Err).message) {
+    return {
+      message: (user as Err).message,
+    };
+  }
 
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
