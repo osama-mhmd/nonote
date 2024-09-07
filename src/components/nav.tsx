@@ -4,10 +4,11 @@ import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import GithubIcon from "./icons/github";
-import { List } from "lucide-react";
+import { ArrowRight, List } from "lucide-react";
 import { merienda } from "@/app/families";
+import { Session } from "lucia";
 
-export default function Nav() {
+export default function Nav({ session }: { session: Session | null }) {
   const pathname = usePathname();
 
   const shouldNotRender = pathname == "/dashboard";
@@ -22,10 +23,18 @@ export default function Nav() {
         <ul className="[&>li]:hidden [&>li]:sm:block flex gap-3 py-2 sm:py-0 items-center px-0 list-none">
           <List className="block sm:hidden cursor-pointer" />
           <li>
-            <Button asChild variant="link">
-              <Link href="/auth/register">Create account</Link>
-            </Button>
-            {/* )} */}
+            {session && (
+              <Button asChild variant="link">
+                <Link href="/dashboard" className="flex items-center gap-1">
+                  Dashboard <ArrowRight width={15} />
+                </Link>
+              </Button>
+            )}
+            {!session && (
+              <Button asChild variant="link">
+                <Link href="/auth/register">Create account</Link>
+              </Button>
+            )}
           </li>
           <li>
             <Button asChild variant="link">

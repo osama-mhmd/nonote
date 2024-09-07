@@ -2,13 +2,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { merienda } from "./families";
 import { validateRequest } from "@/db/auth";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Nonote | Homepage",
-  description:
-    "Everyday you see a new note taking app appears, but they all don't fit you. Don't worry, this app will fit you",
-};
 
 export default async function Home() {
   const { session } = await validateRequest();
