@@ -143,6 +143,10 @@ code * {
   @apply inline w-5 mb-0.5 h-5;
 }
 
+.spinner-primary {
+  @apply rounded-full border-2 p-[6px] border-primary-foreground animate-spin border-l-transparent;
+}
+
 .spinner {
   @apply rounded-full border-2 p-[6px] border-black animate-spin border-l-transparent;
 }
