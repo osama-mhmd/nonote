@@ -26,7 +26,7 @@ export default function Login() {
       <div className="container flex items-center flex-col gap-6 justify-center">
         <form
           onSubmit={handleSubmit(async (data) => await login(data))}
-          className="flex flex-col gap-2 max-w-96"
+          className="flex flex-col gap-2 w-full max-w-96"
         >
           <h2 className="text-center mb-3">Login</h2>
           <Input type="text" placeholder="Username" {...register("user_name")} />
@@ -41,7 +41,7 @@ export default function Login() {
             Don{"'"}t have an account? Create Account
           </Link>
         </form>
-        <div className="grid min-w-full max-w-96 [&>*>svg]:me-1">
+        <div className="grid w-full max-w-96 [&>*>svg]:me-1">
           <Button variant="outline">
             <GithubIcon />{" "}
             Sign in with github
