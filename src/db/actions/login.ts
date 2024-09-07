@@ -9,8 +9,12 @@ import { userTable } from "../schemas";
 import { eq } from "drizzle-orm";
 import { LoginFields } from "@/app/auth/login/page";
 
+type Err = {
+  message: string;
+};
+
 // TODO: rename things correctly or in the same way for all
-export async function login(data: LoginFields) {
+export async function login(data: LoginFields): Promise<Err | never> {
   const username = data.user_name;
   if (
     typeof username !== "string" ||
@@ -19,7 +23,7 @@ export async function login(data: LoginFields) {
     !/^[a-z0-9_-]+$/.test(username)
   ) {
     return {
-      error: "Invalid username",
+      message: "Invalid username",
     };
   }
   const password = data.password;
@@ -29,11 +33,10 @@ export async function login(data: LoginFields) {
     password.length > 255
   ) {
     return {
-      error: "Invalid password",
+      message: "Invalid password",
     };
   }
 
-  // TODO: select SQL
   const existingUser = await db
     .select()
     .from(userTable)
@@ -41,18 +44,9 @@ export async function login(data: LoginFields) {
 
   const user = existingUser[0];
 
-  if (!existingUser) {
-    // NOTE:
-    // Returning immediately allows malicious actors to figure out valid usernames from response times,
-    // allowing them to only focus on guessing passwords in brute-force attacks.
-    // As a preventive measure, you may want to hash passwords even for invalid usernames.
-    // However, valid usernames can be already be revealed with the signup page among other methods.
-    // It will also be much more resource intensive.
-    // Since protecting against this is non-trivial,
-    // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
-    // If usernames are public, you may outright tell the user that the username is invalid.
+  if (!user) {
     return {
-      error: "Incorrect username or password",
+      message: "Incorrect username or password",
     };
   }
 
@@ -64,7 +58,7 @@ export async function login(data: LoginFields) {
   });
   if (!validPassword) {
     return {
-      error: "Incorrect username or password",
+      message: "Incorrect username or password",
     };
   }
 
