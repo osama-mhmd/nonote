@@ -2,10 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Metadata } from "next";
+import GithubIcon from "@/components/icons/github";
 import Link from "next/link";
 
-import SignInWithGithub from "./signin-with-github";
 import { useForm } from "react-hook-form";
 import { registerFields, RegisterFields } from "../register/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
@@ -23,11 +22,11 @@ export default function Login() {
   } = useForm<LoginFields>({ resolver: valibotResolver(loginFields) });
 
   return (
-    <section className="mt-20">
+    <section className="mt-6 sm:mt-12">
       <div className="container flex items-center flex-col gap-6 justify-center">
         <form
           onSubmit={handleSubmit(async (data) => await login(data))}
-          className="flex flex-col gap-2 w-96"
+          className="flex flex-col gap-2 max-w-96"
         >
           <h2 className="text-center mb-3">Login</h2>
           <Input type="text" placeholder="Username" {...register("user_name")} />
@@ -42,8 +41,11 @@ export default function Login() {
             Don{"'"}t have an account? Create Account
           </Link>
         </form>
-        <div className="grid w-96 [&>*>svg]:me-1">
-          <SignInWithGithub />
+        <div className="grid min-w-full max-w-96 [&>*>svg]:me-1">
+          <Button variant="outline">
+            <GithubIcon />{" "}
+            Sign in with github
+          </Button>
         </div>
       </div>
     </section>
