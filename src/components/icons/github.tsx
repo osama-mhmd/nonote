@@ -12,5 +12,5 @@ export default function GithubIcon() {
         clipRule="evenodd"
       />
     </svg>
-  )
+  );
 }

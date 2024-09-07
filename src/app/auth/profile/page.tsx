@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Profile() {
   const { user, session } = await validateRequest();
 
-  if (!session) redirect("/auth/login")
+  if (!session) redirect("/auth/login");
 
   return (
     <section className="mt-20">

@@ -1,10 +1,10 @@
 require("dotenv").config();
 
 const { drizzle } = require("drizzle-orm/postgres-js");
-const postgres = require("postgres")
-const { migrate } = require("drizzle-orm/postgres-js/migrator")
+const postgres = require("postgres");
+const { migrate } = require("drizzle-orm/postgres-js/migrator");
 
-const dbURI = process.env.DATABASE_URL
+const dbURI = process.env.DATABASE_URL;
 const client = postgres(dbURI);
 const db = drizzle(client);
 

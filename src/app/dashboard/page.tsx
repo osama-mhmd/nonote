@@ -99,7 +99,7 @@ const Dashboard = () => {
         onInput={(e) => changeTitle(e.currentTarget.innerHTML)}
         className={cn(
           "text-5xl text-wrap focus:outline-0 after:text-gray-400 after:cursor-text",
-          title === "" ? 'after:content-["Page_title"]' : "after:content-none"
+          title === "" ? 'after:content-["Page_title"]' : "after:content-none",
         )}
       ></h1>
       <Editor editor={editor} />

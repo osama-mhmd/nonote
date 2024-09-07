@@ -7,10 +7,14 @@ export const metadata: Metadata = {
   title: "Nonote | Login",
 };
 
-export default async function NotAuthedLayer({ children }: { children: ReactNode }) {
+export default async function NotAuthedLayer({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const { session } = await validateRequest();
 
-  if (session) redirect("/dashboard")
+  if (session) redirect("/dashboard");
 
   return children;
 }

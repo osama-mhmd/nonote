@@ -4,17 +4,17 @@ export const registerFields = v.object({
   email: v.pipe(
     v.string(),
     v.nonEmpty("Please enter your email"),
-    v.email("Invalid email address")
+    v.email("Invalid email address"),
   ),
   password: v.pipe(
     v.string(),
     v.nonEmpty("Please enter your password"),
-    v.minLength(8)
+    v.minLength(8),
   ),
   password_repeat: v.pipe(
     v.string(),
     v.nonEmpty("Please rewrite your password"),
-    v.minLength(8)
+    v.minLength(8),
   ),
   user_name: v.pipe(
     v.string(),
@@ -23,8 +23,8 @@ export const registerFields = v.object({
     v.maxLength(31, "Username cannot exceed 31 letters"),
     v.regex(
       /^[a-z0-9-_]+$/,
-      "Username only contains lowercase letters, numbers, hyphen, and underscore"
-    )
+      "Username only contains lowercase letters, numbers, hyphen, and underscore",
+    ),
   ),
   first_name: v.pipe(v.string(), v.nonEmpty("Please enter your first name")),
   last_name: v.pipe(v.string(), v.nonEmpty("Please enter your last name")),

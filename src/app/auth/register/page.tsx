@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { registerFields, type RegisterFields } from "./schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useState } from "react";
+import { useToast } from "@/lib/use-toast";
 
 export default function Register({
   searchParams,
@@ -21,9 +22,10 @@ export default function Register({
     handleSubmit,
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
   const [isLoading, setLoadingState] = useState(false);
+  const { toast } = useToast();
 
   const onSumbit: SubmitHandler<RegisterFields> = async (
-    data: RegisterFields
+    data: RegisterFields,
   ) => {
     setLoadingState(true);
 
@@ -43,7 +45,7 @@ export default function Register({
         if (err.message == "users_username_unique")
           setError("user_name", { message: "Username already exists" });
         if (err.message == "timeout")
-          setError("password_repeat", { message: "Connection time out" });
+          toast({ description: "Connection time out" });
       }
     }
   };
@@ -98,12 +100,9 @@ export default function Register({
           {errors.password_repeat && (
             <p className="error">{errors.password_repeat.message}</p>
           )}
-          {!isLoading && <Button type="submit">Register</Button>}
-          {isLoading && (
-            <Button type="submit" className="flex items-center gap-2" disabled>
-              Creating <span className="spinner-primary"></span>
-            </Button>
-          )}
+          <Button type="submit" loading={isLoading}>
+            Register
+          </Button>
           <Link href="/auth/login" className="link">
             Already have an account? Login
           </Link>

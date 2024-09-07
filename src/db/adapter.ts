@@ -6,5 +6,5 @@ import db from ".";
 export const adapter = new DrizzlePostgreSQLAdapter(
   db,
   sessionTable,
-  userTable
+  userTable,
 );

@@ -21,7 +21,7 @@ export async function logout() {
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
 
   redirect("/auth/login");

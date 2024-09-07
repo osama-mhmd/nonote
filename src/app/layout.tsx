@@ -2,7 +2,7 @@ import { inter } from "./families";
 import Nav from "@/components/nav";
 import { validateRequest } from "@/db/auth";
 import { Metadata } from "next";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
 import "@/styles/globals.css";
 

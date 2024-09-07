@@ -14,7 +14,7 @@ type Err = {
 };
 
 export default async function signup(
-  data: RegisterFields
+  data: RegisterFields,
 ): Promise<Err | never> {
   const userName = data.user_name;
 
@@ -84,7 +84,7 @@ export default async function signup(
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
 
   redirect("/dashboard");
