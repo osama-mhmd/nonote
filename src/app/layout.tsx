@@ -2,6 +2,7 @@ import { inter } from "./families";
 import Nav from "@/components/nav";
 import { validateRequest } from "@/db/auth";
 import { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster"
 
 import "@/styles/globals.css";
 
@@ -23,6 +24,7 @@ export default async function RootLayout({
       <body className={inter}>
         <Nav session={session} />
         {children}
+        <Toaster />
       </body>
     </html>
   );
