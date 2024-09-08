@@ -147,7 +147,11 @@ code * {
   @apply rounded-full border-2 p-[6px] border-primary-foreground animate-spin border-l-transparent;
 }
 
-*:not(.bg-primary) > .spinner {
+.bg-destructive > .spinner {
+  @apply rounded-full border-2 p-[6px] border-destructive-foreground animate-spin border-l-transparent;
+}
+
+*:not(.bg-primary, .bg-destructive) > .spinner {
   @apply rounded-full border-2 p-[6px] border-black animate-spin border-l-transparent;
 }
 

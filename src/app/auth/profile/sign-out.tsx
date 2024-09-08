@@ -3,10 +3,24 @@
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { logout } from "@/db/actions/logout";
+import { useState } from "react";
 
 export default function SignOut() {
+  const [isLoading, setLoadingState] = useState(false);
+
+  const onclick = async () => {
+    setLoadingState(true);
+
+    await logout();
+  };
+
   return (
-    <Button variant="destructive" onClick={async () => await logout()}>
+    <Button
+      className="w-[15ch]"
+      variant="destructive"
+      loading={isLoading}
+      onClick={async () => await onclick()}
+    >
       Sign out <LogOut className="ms-2" />
     </Button>
   );
