@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { merienda } from "./families";
 import { validateRequest } from "@/db/auth";
+import GithubIcon from "@/components/icons/github";
+import { Circle, Star } from "lucide-react";
 
 export default async function Home() {
   const { session } = await validateRequest();
@@ -34,7 +36,18 @@ export default async function Home() {
               <Link href="/dashboard">Dashboard</Link>
             </Button>
           )}
+          <Button variant="link" className="underline flex gap-2">
+            <span className="relative">
+              <Star fill="white" className="p-0.5" />
+              <Circle
+                fill="hsl(var(--primary))"
+                className="-z-10 absolute top-0 left-0 w-full h-full"
+              />
+            </span>{" "}
+            Star us on Github
+          </Button>
         </div>
+        <div></div>
       </div>
     </main>
   );
