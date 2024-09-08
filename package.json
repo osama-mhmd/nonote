@@ -10,7 +10,8 @@
     "prettier:write": "pnpm exec prettier . --write",
     "prettier:check": "npx prettier . --check",
     "db:migrate": "drizzle-kit generate",
-    "db:run:migration": "node ./src/db/migrate.js"
+    "db:run:migration": "node ./src/db/migrate.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -61,10 +62,16 @@
     "drizzle-kit": "^0.24.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.19.0",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.*": "prettier --write"
   }
 }
