@@ -10,11 +10,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useState } from "react";
 import { useToast } from "@/lib/use-toast";
 
-export default function Register({
-  searchParams,
-}: {
-  searchParams: { error: string };
-}) {
+export default function Register() {
   const {
     register,
     formState: { errors },
@@ -45,7 +41,7 @@ export default function Register({
         if (err.message == "users_username_unique")
           setError("user_name", { message: "Username already exists" });
         if (err.message == "timeout")
-          toast({ description: "Connection time out" });
+          toast({ description: "Connection time out", variant: "destructive" });
       }
     }
   };
