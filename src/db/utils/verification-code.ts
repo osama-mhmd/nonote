@@ -18,10 +18,7 @@ export function generateEmailVerificationCode(): {
 }
 
 export function verifyVerificationCode(user: User, inputCode: string): boolean {
-  console.log(user);
-  const [_, expiresAt, code]: string = /(.+):(\d{8})/.exec(user.emailVerified);
-
-  console.log(`"${expiresAt}":"${code}"`);
+  const [expiresAt, code] = user.emailVerified.split("=");
 
   const expiresAtDate = new Date(expiresAt);
 
