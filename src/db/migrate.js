@@ -15,6 +15,6 @@ const main = async () => {
 main()
   .then(() => {
     console.log("Migrations done");
-    process.exit(1);
+    process.exit(0);
   })
   .catch((e) => console.log(":(, ", e));

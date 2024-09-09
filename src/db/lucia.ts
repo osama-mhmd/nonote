@@ -13,6 +13,7 @@ export const lucia = new Lucia(adapter, {
       fullname: attributes.fullName,
       username: attributes.userName,
       email: attributes.email,
+      emailVerified: attributes.emailVerified,
     };
   },
 });
@@ -30,5 +31,5 @@ interface DatabaseUserAttributes {
   userName: string;
   email: string;
   hashedPassword: string;
-  plan: "basic" | "pro" | "ultimate";
+  emailVerified: string;
 }

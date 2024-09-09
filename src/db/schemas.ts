@@ -6,7 +6,7 @@ export const userTable = pgTable("users", {
   userName: text("username").notNull().unique(),
   email: text("email").notNull().unique(),
   hashedPassword: text("hashed_password").notNull(),
-  plan: text("plan"), // .$default("basic"),
+  emailVerified: text("emailVerified"),
 });
 
 export const sessionTable = pgTable("session", {

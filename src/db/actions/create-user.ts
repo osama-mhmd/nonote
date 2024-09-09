@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
+import { generateEmailVerificationCode } from "../utils/verification-code";
+import sendMail from "../utils/send-mail";
 
 type Err = {
   message: string;
@@ -56,6 +58,9 @@ export default async function signup(
 
   const fullName = `${first_name} ${last_name}`;
 
+  const { verificationCode, expiresAt } = generateEmailVerificationCode();
+  await sendMail(email, verificationCode);
+
   const user = await db
     .insert(userTable)
     .values({
@@ -64,7 +69,11 @@ export default async function signup(
       userName,
       email,
       hashedPassword: passwordHash,
-      plan: "basic",
+      /**
+       * instead of making a seperate table, we are going to make a slot in the users table
+       * which value is equal to `${Date expires_at}:${Number code}` or "true"
+       */
+      emailVerified: `${expiresAt}:${verificationCode}`,
     })
     .catch((err: any) => {
       return {
@@ -87,5 +96,5 @@ export default async function signup(
     sessionCookie.attributes,
   );
 
-  redirect("/dashboard");
+  redirect("/auth/verify");
 }
