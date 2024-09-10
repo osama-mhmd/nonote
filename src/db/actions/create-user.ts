@@ -59,7 +59,11 @@ export default async function signup(
   const fullName = `${first_name} ${last_name}`;
 
   const { verificationCode, expiresAt } = generateEmailVerificationCode();
-  await sendMail(email, verificationCode);
+  await sendMail(
+    email,
+    "Please verify your gmail",
+    `This is your verification code: ${verificationCode}`,
+  );
 
   const user = await db
     .insert(userTable)

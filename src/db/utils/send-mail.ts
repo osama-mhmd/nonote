@@ -1,8 +1,31 @@
 "use server";
 
+import { createTransport } from "nodemailer";
+
+const transporter = createTransport({
+  service: "Gmail",
+  auth: {
+    user: "nonote.app.verify@gmail.com",
+    pass: process.env.MAIL_PASS,
+  },
+});
+
 export default async function sendMail(
-  email: string,
-  verificationCode: string,
+  to: string,
+  subject: string,
+  text: string,
 ) {
-  // TODO: node_mailer
+  const mailOptions = {
+    from: "nonote.app.verify@gmail.com",
+    to,
+    subject,
+    text,
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+    } else {
+      console.log("Email sent:", info.response);
+    }
+  });
 }
