@@ -5,7 +5,7 @@ import { isWithinExpirationDate } from "oslo";
 import VerifyForm from "./verify-form";
 import { newVerify } from "@/db/utils/new-verify";
 
-export const metadat: Metadata = {
+export const metadata: Metadata = {
   title: "Nonote | Verify your email",
 };
 
