@@ -8,8 +8,6 @@ import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
-import { generateEmailVerificationCode } from "../utils/verification-code";
-import sendMail from "../utils/send-mail";
 
 type Err = {
   message: string;
@@ -58,13 +56,6 @@ export default async function signup(
 
   const fullName = `${first_name} ${last_name}`;
 
-  const { verificationCode, expiresAt } = generateEmailVerificationCode();
-  await sendMail(
-    email,
-    "Please verify your gmail",
-    `This is your verification code: ${verificationCode}`,
-  );
-
   const user = await db
     .insert(userTable)
     .values({
@@ -75,10 +66,12 @@ export default async function signup(
       hashedPassword: passwordHash,
       /**
        * instead of making a seperate table, we are going to make a slot in the users table
-       * which value is equal to `${Date expires_at}=${Number code}` or "true"
+       * which value is equal to `${Date expires_at}=${Number code}` or "true" or "false"
+       * "false" is assigned cause it will be redirected to /auth/verify and there the email will
+       * be sent.
        * "=" is used to be clear in spliting it again
        */
-      emailVerified: `${expiresAt}=${verificationCode}`,
+      emailVerified: "false",
     })
     .catch((err: any) => {
       return {

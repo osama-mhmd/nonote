@@ -14,6 +14,7 @@ export const lucia = new Lucia(adapter, {
       username: attributes.userName,
       email: attributes.email,
       emailVerified: attributes.emailVerified,
+      isVerified: attributes.emailVerified == "true",
     };
   },
 });

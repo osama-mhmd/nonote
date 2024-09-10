@@ -1,59 +1,56 @@
-"use client";
+import db from "@/db";
+import { validateRequest } from "@/db/auth";
+import { userTable } from "@/db/schemas";
+import sendMail from "@/db/utils/send-mail";
+import { generateEmailVerificationCode } from "@/db/utils/verification-code";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { isWithinExpirationDate } from "oslo";
+import { ReactNode } from "react";
+import VerifyForm from "./verify-form";
+import { newVerify } from "@/db/utils/new-verify";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { verify } from "@/db/actions/verify-email";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+export const metadat: Metadata = {
+  title: "Nonote | Verify your email",
+};
 
-export default function Verify() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm<{ code: string }>();
-  const [isLoading, setLoadingState] = useState(false);
+export default async function Layout({ children }: { children: ReactNode }) {
+  const Text = ({ message = "" }) => (
+    <p className="flex items-center gap-2">
+      {message == "" && <span className="spinner"></span>}
+      {message}
+    </p>
+  );
 
-  const onsubmit = async (data: { code: string }) => {
-    setLoadingState(true);
+  let message = "";
 
-    const err = await verify(data.code);
+  const { user, session } = await validateRequest();
 
-    if (err) {
-      if (err.message == "invalid-code")
-        setError("code", {
-          message: "Invalid code",
-        });
+  if (!session || !user) redirect("/auth/login");
+
+  if (user.isVerified) redirect("/dashboard");
+
+  if (user.emailVerified == "false") {
+    message = `We have sent an email to "${user.email}". Please check out your inbox`;
+    await newVerify(user.email);
+  } else {
+    const [expiresAt, code] = user.emailVerified.split("=");
+
+    if (isWithinExpirationDate(new Date(expiresAt))) {
+      // TODO: this way should be changed
+      // might be changed for something like whatsapp where you can resend the code every 30 second
+      message = "We have already sent an email";
+    } else {
+      // send another email
+      message = "We have sent another email";
+      await newVerify(user.email);
     }
-
-    setLoadingState(false);
-  };
+  }
 
   return (
     <section className="mt-6 sm:mt-12">
       <div className="container flex items-center justify-center">
-        <form
-          onSubmit={handleSubmit(async (data) => await onsubmit(data))}
-          className="flex flex-col gap-2 w-96"
-        >
-          <Input
-            placeholder="Code"
-            {...register("code", {
-              required: "Please enter the code",
-              minLength: {
-                value: 8,
-                message: "Code consists of 8 digits",
-              },
-              maxLength: {
-                value: 8,
-                message: "Code consists of 8 digits",
-              },
-            })}
-          />
-          {errors.code && <span className="error">{errors.code.message}</span>}
-          <Button loading={isLoading}>Verify</Button>
-        </form>
+        <VerifyForm text={<Text message={message} />} />
       </div>
     </section>
   );
