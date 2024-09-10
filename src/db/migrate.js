@@ -1,4 +1,6 @@
-require("dotenv").config();
+/**
+ * we will not use typescript as it still experimental in node
+ */
 
 const { drizzle } = require("drizzle-orm/postgres-js");
 const postgres = require("postgres");
