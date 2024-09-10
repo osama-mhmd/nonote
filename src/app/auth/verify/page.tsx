@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Nonote | Verify your email",
 };
 
-export default async function Layout() {
+export default async function Verify() {
   const Text = ({ message = "" }) => (
     <p className="flex items-center info gap-2">
       {message == "" && <span className="spinner"></span>}
@@ -25,8 +25,10 @@ export default async function Layout() {
 
   if (user.isVerified) redirect("/dashboard");
 
+  const emailSentMessage = `We have sent an email to "${user.email}". Please check out your inbox... Please note that the verification email may take a few minutes to arrive.`;
+
   if (user.emailVerified == "false") {
-    message = `We have sent an email to "${user.email}". Please check out your inbox`;
+    message = emailSentMessage;
     await newVerify(user.email);
   } else {
     const [expiresAt, code] = user.emailVerified.split("=");
@@ -37,7 +39,7 @@ export default async function Layout() {
       message = "We have already sent an email";
     } else {
       // send another email
-      message = "We have sent another email";
+      message = emailSentMessage;
       await newVerify(user.email);
     }
   }
