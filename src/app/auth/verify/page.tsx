@@ -1,12 +1,7 @@
-import db from "@/db";
 import { validateRequest } from "@/db/auth";
-import { userTable } from "@/db/schemas";
-import sendMail from "@/db/utils/send-mail";
-import { generateEmailVerificationCode } from "@/db/utils/verification-code";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { isWithinExpirationDate } from "oslo";
-import { ReactNode } from "react";
 import VerifyForm from "./verify-form";
 import { newVerify } from "@/db/utils/new-verify";
 
@@ -14,9 +9,9 @@ export const metadat: Metadata = {
   title: "Nonote | Verify your email",
 };
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export default async function Layout() {
   const Text = ({ message = "" }) => (
-    <p className="flex items-center gap-2">
+    <p className="flex items-center info gap-2">
       {message == "" && <span className="spinner"></span>}
       {message}
     </p>
