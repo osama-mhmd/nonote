@@ -15,6 +15,13 @@
       "when": 1725887685315,
       "tag": "0001_cooing_the_enforcers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726049078579,
+      "tag": "0002_greedy_wraith",
+      "breakpoints": true
     }
   ]
 }
