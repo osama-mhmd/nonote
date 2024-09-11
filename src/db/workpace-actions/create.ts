@@ -26,7 +26,7 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
       id: workspaceId,
       owner: user.id,
       name: data.name ?? "workspace",
-      visibility: data.visibility ?? "private",
+      visibility: "private",
     })
     .catch((err) => {
       return {
@@ -39,5 +39,5 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
       message: (workspace as Err).message,
     };
 
-  redirect(`/workspace/${workspaceId}`);
+  redirect(`/app/workspace/${workspaceId}`);
 }

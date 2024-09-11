@@ -40,4 +40,7 @@ export const workspaceTable = pgTable("workspaces", {
       .references(() => userTable.id)
       .array(), // if visibility is public, then view by default is everyone
   }),
+  // viewed_by: text("viewed_by").references(() => userTable.id).arrary(),
+  // created_at: Date("created_at"),
+  // last_updated_at: Date("last_updated_at")
 });
