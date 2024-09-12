@@ -8,6 +8,13 @@ export default async function Space({
 }) {
   const userPermission = await permission(params.workspace_id);
 
+  if (userPermission == "not-found")
+    return (
+      <h3 className="text-center">
+        Sorry, this workspace doesn{"'"}t exist 😞
+      </h3>
+    );
+
   if (userPermission == "no-access")
     return (
       <h3 className="text-center">You have no access for this workspace 😞</h3>

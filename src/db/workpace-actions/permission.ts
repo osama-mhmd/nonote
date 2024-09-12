@@ -9,7 +9,7 @@ export type Permission = "owner" | "view" | "comment" | "edit" | "no-access";
 
 export default async function permission(
   workspaceId: string,
-): Promise<Permission> {
+): Promise<Permission | "not-found"> {
   const { user } = await validateRequest();
 
   if (!user) return "no-access";
@@ -26,7 +26,7 @@ export default async function permission(
 
   const workspace = workspaces[0];
 
-  if (!workspace) return "no-access";
+  if (!workspace) return "not-found";
 
   return workspace.permission as Permission;
 }
