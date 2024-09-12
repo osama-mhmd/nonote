@@ -22,6 +22,20 @@
       "when": 1726049078579,
       "tag": "0002_greedy_wraith",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1726077947265,
+      "tag": "0003_acoustic_the_renegades",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1726148464096,
+      "tag": "0004_motionless_silhouette",
+      "breakpoints": true
     }
   ]
 }

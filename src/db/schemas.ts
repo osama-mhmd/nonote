@@ -1,4 +1,4 @@
-import { json, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("users", {
   id: text("id").primaryKey(),
@@ -22,25 +22,16 @@ export const sessionTable = pgTable("session", {
 
 export const workspaceTable = pgTable("workspaces", {
   id: text("id").primaryKey(),
-  owner: text("owner")
-    .references(() => userTable.id)
-    .notNull(),
   name: text("name").notNull(),
-  visibility: text("visibility").notNull(), // "public"  | "private"
-  // [domain]/workspace/[workspace_id] => owner/permissions->edit
-  // [domain]/workspace/public/[workspace_id] => visibility, then permissions->comment,view
-  permissions: json("permissions").default({
-    edit: text("editors")
-      .references(() => userTable.id)
-      .array(),
-    comment: text("commentors")
-      .references(() => userTable.id)
-      .array(),
-    view: text("viewers")
-      .references(() => userTable.id)
-      .array(), // if visibility is public, then view by default is everyone
-  }),
-  // viewed_by: text("viewed_by").references(() => userTable.id).arrary(),
-  // created_at: Date("created_at"),
-  // last_updated_at: Date("last_updated_at")
+  // "public-comment" | "public-edit" | "public-view" | "private"
+  visibility: text("visibility").notNull(),
+  viewed_by: text("viewed_by").array().notNull().default([]),
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  last_updated_at: timestamp("last_updated_at").notNull().defaultNow(),
+});
+
+export const usersPermissions = pgTable("users_permissions", {
+  user_id: text("user_id").notNull(),
+  workpsace_id: text("workpsace_id").notNull(),
+  permission: text("permission").notNull(),
 });

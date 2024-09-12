@@ -8,10 +8,7 @@ import db from "..";
 import { userTable } from "../schemas";
 import { eq } from "drizzle-orm";
 import { LoginFields } from "@/app/auth/login/page";
-
-type Err = {
-  message: string;
-};
+import Err from "../err";
 
 // TODO: rename things correctly or in the same way for all
 export async function login(data: LoginFields): Promise<Err | never> {

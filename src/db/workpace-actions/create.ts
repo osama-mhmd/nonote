@@ -3,10 +3,10 @@
 import { generateIdFromEntropySize } from "lucia";
 import db from "..";
 import { validateRequest } from "../auth";
-import { workspaceTable } from "../schemas";
+import { usersPermissions, workspaceTable } from "../schemas";
 import { redirect } from "next/navigation";
 
-type Err = {
+export type Err = {
   message: string;
 };
 
@@ -24,7 +24,6 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
     .insert(workspaceTable)
     .values({
       id: workspaceId,
-      owner: user.id,
       name: data.name ?? "workspace",
       visibility: "private",
     })
@@ -38,6 +37,12 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
     return {
       message: (workspace as Err).message,
     };
+
+  await db.insert(usersPermissions).values({
+    workpsace_id: workspaceId,
+    user_id: user.id,
+    permission: "owner",
+  });
 
   redirect(`/app/workspace/${workspaceId}`);
 }

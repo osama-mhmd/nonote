@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/button";
-import getWorkspaces from "@/db/workpace-actions/get-workspaces";
+import {
+  getWorkspaces,
+  getWorkspacesPerUser,
+} from "@/db/workpace-actions/get-workspaces";
 import { PlusCircle, Settings } from "lucide-react";
 import Link from "next/link";
 
 export default async function App() {
   let Workspaces;
 
-  const workspaces = await getWorkspaces();
+  const workpsacesIds = await getWorkspacesPerUser();
+
+  const ids = workpsacesIds.map((workspace) => workspace.workspace_id);
+
+  const workspaces = await getWorkspaces(ids);
 
   if (workspaces.length == 0) {
     Workspaces = (
@@ -30,6 +37,14 @@ export default async function App() {
                 className="px-4 rounded-md bg-muted border border-border"
               >
                 <h3 className="text-lg">{workspace.name}</h3>
+                {/* <p>
+                  Permission:{" "}
+                  {
+                    workpsacesIds.filter(
+                      (item) => item.workspace_id == workspace.id
+                    )[0].permission
+                  }
+                </p> */}
               </Link>
             );
           })}

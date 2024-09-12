@@ -8,10 +8,7 @@ import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
-
-type Err = {
-  message: string;
-};
+import Err from "../err";
 
 export default async function signup(
   data: RegisterFields,
