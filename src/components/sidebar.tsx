@@ -71,13 +71,13 @@ const Sidebar = () => {
       setIsCollapsed(false);
       setIsResetting(true);
 
-      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+      sidebarRef.current.style.width = isMobile ? "240px" : "240px";
       navbarRef.current.style.removeProperty("width");
       navbarRef.current.style.setProperty(
         "width",
-        isMobile ? "0" : "calc(100%-240px)",
+        isMobile ? "240px" : "calc(100%-240px)",
       );
-      navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
+      navbarRef.current.style.setProperty("left", isMobile ? "0" : "240px");
       setTimeout(() => setIsResetting(false), 300);
     }
   };
@@ -102,7 +102,9 @@ const Sidebar = () => {
           "group/sidebar px-3 relative z-[300] flex h-screen w-60 flex-col overflow-y-auto bg-secondary",
           isResetting && "transition-all duration-300 ease-in-out",
           isMobile && "w-0",
+          isCollapsed && "px-0",
         )}
+        suppressHydrationWarning={true}
       >
         <div
           onClick={collapse}
@@ -111,6 +113,7 @@ const Sidebar = () => {
             "absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground opacity-0 transition hover:bg-primary/10 group-hover/sidebar:opacity-100",
             isMobile && "opacity-100",
           )}
+          suppressHydrationWarning={true}
         >
           <ChevronsLeft className="h-6 w-6" />
         </div>
