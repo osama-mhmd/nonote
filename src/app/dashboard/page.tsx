@@ -35,7 +35,7 @@ const Editor = () => {
     },
   });
 
-  return <EditorContent className="mt-6" editor={editor} />;
+  return <EditorContent className="mt-16" editor={editor} />;
 };
 
 export default Editor;

@@ -6,7 +6,14 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-import { Bolt, ChevronsLeft, House, MenuIcon, Settings } from "lucide-react";
+import {
+  Bolt,
+  ChevronsLeft,
+  ChevronsRight,
+  House,
+  MenuIcon,
+  Settings,
+} from "lucide-react";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -110,12 +117,12 @@ const Sidebar = () => {
           onClick={collapse}
           role="button"
           className={cn(
-            "absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground opacity-0 transition hover:bg-primary/10 group-hover/sidebar:opacity-100",
+            "absolute right-2 top-3 size-8 rounded-sm text-muted-foreground opacity-0 transition hover:bg-primary/10 group-hover/sidebar:opacity-100",
             isMobile && "opacity-100",
           )}
           suppressHydrationWarning={true}
         >
-          <ChevronsLeft className="h-6 w-6" />
+          <ChevronsLeft className="size-8 p-1" />
         </div>
         <div className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
           L
@@ -144,10 +151,10 @@ const Sidebar = () => {
           )}
         >
           {isCollapsed && (
-            <MenuIcon
+            <ChevronsRight
               onClick={resetWidth}
               role="button"
-              className="h-6 w-6 text-muted-foreground"
+              className="size-8 p-1 rounded-md bg-primary/10 text-muted-foreground"
             />
           )}
         </nav>
