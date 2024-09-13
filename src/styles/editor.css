@@ -2,7 +2,7 @@
   outline-width: 0;
 }
 
-.tiptap *.is-editor-empty:first-child::before {
+.tiptap *.is-empty::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
@@ -10,10 +10,33 @@
   pointer-events: none;
 }
 
-.tiptap *.is-empty::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
+.tiptap ul.is-empty::before {
+  padding-left: 1.5rem;
+}
+
+ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  justify-items: center;
+  gap: 0.375rem;
+}
+
+ul[data-type="taskList"] li label input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.25rem;
+  position: relative;
+  appearance: none;
+}
+
+ul[data-type="taskList"] li label input[type="checkbox"]::after {
+  @apply content-[""] absolute top-0 left-0 w-full h-full border border-black rounded-sm;
+}
+
+ul[data-type="taskList"] li label input[type="checkbox"]:checked::after {
+  @apply content-["✔"] text-[0.75rem] text-white border-primary bg-primary flex justify-center items-center;
 }

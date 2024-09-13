@@ -34,6 +34,15 @@ importers:
       "@tiptap/extension-placeholder":
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))(@tiptap/pm@2.6.6)
+      "@tiptap/extension-task-item":
+        specifier: ^2.6.6
+        version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))(@tiptap/pm@2.6.6)
+      "@tiptap/extension-task-list":
+        specifier: ^2.6.6
+        version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))
+      "@tiptap/extension-typography":
+        specifier: ^2.6.6
+        version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))
       "@tiptap/react":
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))(@tiptap/pm@2.6.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2025,10 +2034,35 @@ packages:
     peerDependencies:
       "@tiptap/core": ^2.6.6
 
+  "@tiptap/extension-task-item@2.6.6":
+    resolution:
+      {
+        integrity: sha512-fvzy8/TN5sm3A2HSokJzHj5ZvcOAsRdqPS6fPOpmf5dQZ+EIAJrlfyxqb9B6055pNXBbuXcMEXdeU44zCU0YRg==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.6.6
+      "@tiptap/pm": ^2.6.6
+
+  "@tiptap/extension-task-list@2.6.6":
+    resolution:
+      {
+        integrity: sha512-0N4xCCJZu0PcKoCRDywQngNNW6qlB26hyVJGDGgW53p/2zk5gdlzAA6/NxElO3iSAXKFm0QOWAg/x8E+ggDu4w==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.6.6
+
   "@tiptap/extension-text@2.6.6":
     resolution:
       {
         integrity: sha512-e84uILnRzNzcwK1DVQNpXVmBG1Cq3BJipTOIDl1LHifOok7MBjhI/X+/NR0bd3N2t6gmDTWi63+4GuJ5EeDmsg==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.6.6
+
+  "@tiptap/extension-typography@2.6.6":
+    resolution:
+      {
+        integrity: sha512-0niSddtPOY7CjKGmxOBQ34VqLGxTeOfN+zICL5CLmS8B815qb1G1csXhUyHJ1wT7q8xMCAhXnGCt8b8ilmj/sg==,
       }
     peerDependencies:
       "@tiptap/core": ^2.6.6
@@ -6239,7 +6273,20 @@ snapshots:
     dependencies:
       "@tiptap/core": 2.6.6(@tiptap/pm@2.6.6)
 
+  "@tiptap/extension-task-item@2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))(@tiptap/pm@2.6.6)":
+    dependencies:
+      "@tiptap/core": 2.6.6(@tiptap/pm@2.6.6)
+      "@tiptap/pm": 2.6.6
+
+  "@tiptap/extension-task-list@2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))":
+    dependencies:
+      "@tiptap/core": 2.6.6(@tiptap/pm@2.6.6)
+
   "@tiptap/extension-text@2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))":
+    dependencies:
+      "@tiptap/core": 2.6.6(@tiptap/pm@2.6.6)
+
+  "@tiptap/extension-typography@2.6.6(@tiptap/core@2.6.6(@tiptap/pm@2.6.6))":
     dependencies:
       "@tiptap/core": 2.6.6(@tiptap/pm@2.6.6)
 
