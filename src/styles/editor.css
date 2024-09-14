@@ -10,7 +10,7 @@
   pointer-events: none;
 }
 
-.tiptap ul.is-empty::before {
+.tiptap ul[data-type="taskList"].is-empty::before {
   padding-left: 1.5rem;
 }
 
@@ -39,4 +39,9 @@ ul[data-type="taskList"] li label input[type="checkbox"]::after {
 
 ul[data-type="taskList"] li label input[type="checkbox"]:checked::after {
   @apply content-["✔"] text-[0.75rem] text-white border-primary bg-primary flex justify-center items-center;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+  padding-inline-start: 1.25rem;
 }
