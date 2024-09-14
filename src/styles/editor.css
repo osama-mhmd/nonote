@@ -19,13 +19,13 @@ ul[data-type="taskList"] {
   padding: 0;
 }
 
-ul[data-type="taskList"] li {
+ul[data-type="taskList"] > li {
   display: flex;
   justify-items: center;
   gap: 0.375rem;
 }
 
-ul[data-type="taskList"] li label input[type="checkbox"] {
+ul[data-type="taskList"] > li label input[type="checkbox"] {
   width: 1rem;
   height: 1rem;
   margin-top: 0.25rem;
@@ -33,11 +33,11 @@ ul[data-type="taskList"] li label input[type="checkbox"] {
   appearance: none;
 }
 
-ul[data-type="taskList"] li label input[type="checkbox"]::after {
+ul[data-type="taskList"] > li label input[type="checkbox"]::after {
   @apply content-[""] absolute top-0 left-0 w-full h-full border border-black rounded-sm;
 }
 
-ul[data-type="taskList"] li label input[type="checkbox"]:checked::after {
+ul[data-type="taskList"] > li label input[type="checkbox"]:checked::after {
   @apply content-["✔"] text-[0.75rem] text-white border-primary bg-primary flex justify-center items-center;
 }
 
