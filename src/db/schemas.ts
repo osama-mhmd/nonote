@@ -35,3 +35,11 @@ export const usersPermissions = pgTable("users_permissions", {
   workpsace_id: text("workpsace_id").notNull(),
   permission: text("permission").notNull(),
 });
+
+export const workspaceDocuments = pgTable("workspace_documents", {
+  workspace_id: text("workspace_id").notNull(),
+  id: text("id").primaryKey().notNull(),
+  title: text("title").default(""),
+  content: text("content").default(""),
+  parent_id: text("parent_id").notNull(),
+});

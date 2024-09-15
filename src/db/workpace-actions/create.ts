@@ -5,6 +5,7 @@ import db from "..";
 import { validateRequest } from "../auth";
 import { usersPermissions, workspaceTable } from "../schemas";
 import { redirect } from "next/navigation";
+import createDocument from "../documents-actions/create";
 
 export type Err = {
   message: string;
@@ -43,6 +44,13 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
     user_id: user.id,
     permission: "owner",
   });
+
+  const result = await createDocument(workspaceId);
+
+  if (!result.ok)
+    return {
+      message: "document-not-created",
+    };
 
   redirect(`/app/workspace/${workspaceId}`);
 }
