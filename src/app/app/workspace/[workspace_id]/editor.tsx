@@ -8,6 +8,25 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import "@/styles/editor.css";
 import { saveDocument } from "@/db/documents-actions/save-document";
+import { motion } from "framer-motion";
+import { RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+async function updateDocument(
+  document_id: string,
+  workspace_id: string,
+  content: string,
+  title: string,
+) {
+  const status = await saveDocument(document_id, workspace_id, content, title);
+
+  return status;
+}
+
+// debouncing
+let timeout: NodeJS.Timeout | null = null;
+const debouncingDuration = 5000;
 
 interface EditorSchema {
   isEditable?: boolean;
@@ -24,6 +43,21 @@ const Editor = ({
   document_id,
   workspace_id,
 }: EditorSchema) => {
+  const [saving, setSavingStatus] = useState(false);
+  const [title, setTitle] = useState(defaultDocumentTitle);
+  const [content, setContent] = useState(defaultDocumentContent);
+
+  function update() {
+    setSavingStatus(true);
+
+    if (timeout) clearTimeout(timeout);
+    console.log(title, content);
+    timeout = setTimeout(() => {
+      updateDocument(document_id, workspace_id, content, title);
+      setSavingStatus(false);
+    }, debouncingDuration);
+  }
+
   const titleEditor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -51,14 +85,8 @@ const Editor = ({
         editor.commands.setNode("heading", { level: 1 });
       }
 
-      console.log(editor.getHTML());
-
-      const status = await saveDocument(
-        document_id,
-        workspace_id,
-        "",
-        editor.getHTML(),
-      );
+      setTitle(editor.getHTML());
+      update();
     },
     editable: isEditable,
   });
@@ -77,16 +105,47 @@ const Editor = ({
     content: defaultDocumentContent,
     immediatelyRender: false,
     onUpdate: async ({ editor }) => {
-      const status = await saveDocument(
-        document_id,
-        workspace_id,
-        editor.getHTML(),
-      );
+      setSavingStatus(true);
+
+      setContent(editor.getHTML());
+      update();
     },
   });
 
   return (
     <>
+      <div className="absolute top-4 right-4">
+        {!saving && (
+          <motion.div
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 100 }}
+          >
+            <Button
+              variant={"ghost"}
+              className="flex gap-1 mb-3"
+              disabled={true}
+            >
+              <RefreshCw width={20} height={20} />
+              Synced
+            </Button>
+          </motion.div>
+        )}
+        {saving && (
+          <motion.div
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 100 }}
+          >
+            <Button
+              variant={"ghost"}
+              className="flex gap-2 mb-3 items-center"
+              disabled={true}
+            >
+              <span className="spinner"></span>
+              Syncing
+            </Button>
+          </motion.div>
+        )}
+      </div>
       <EditorContent className="mt-16" editor={titleEditor} />
       <EditorContent editor={documentEditor} />
     </>
