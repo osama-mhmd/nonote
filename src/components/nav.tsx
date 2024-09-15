@@ -25,8 +25,8 @@ export default function Nav({ session }: { session: Session | null }) {
           <li>
             {session && (
               <Button asChild variant="link">
-                <Link href="/dashboard" className="flex items-center gap-1">
-                  Dashboard <ArrowRight width={15} />
+                <Link href="/app" className="flex items-center gap-1">
+                  App <ArrowRight width={15} />
                 </Link>
               </Button>
             )}

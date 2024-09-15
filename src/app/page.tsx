@@ -33,7 +33,7 @@ export default async function Home() {
           )}
           {session && (
             <Button asChild>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/app">App</Link>
             </Button>
           )}
           <Button variant="link" className="underline flex gap-2">
