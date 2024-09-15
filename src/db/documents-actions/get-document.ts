@@ -2,7 +2,7 @@
 
 import db from "..";
 import { workspaceDocuments } from "../schemas";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import permission from "../workpace-actions/permission";
 
 export type Document = {
@@ -40,7 +40,12 @@ export async function getRootDocument(
   const documents = await db
     .select()
     .from(workspaceDocuments)
-    .where(eq(workspaceDocuments.parent_id, ""));
+    .where(
+      and(
+        eq(workspaceDocuments.parent_id, ""),
+        eq(workspaceDocuments.workspace_id, workpsace_id),
+      ),
+    );
 
   return documents[0];
 }
