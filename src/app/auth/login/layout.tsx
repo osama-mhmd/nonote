@@ -14,7 +14,7 @@ export default async function NotAuthedLayer({
 }) {
   const { session } = await validateRequest();
 
-  if (session) redirect("/dashboard");
+  if (session) redirect("/app");
 
   return children;
 }
