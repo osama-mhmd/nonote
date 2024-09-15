@@ -47,13 +47,21 @@ const Editor = ({
   const [title, setTitle] = useState(defaultDocumentTitle);
   const [content, setContent] = useState(defaultDocumentContent);
 
-  function update() {
+  function update(changeType: "title" | "content", change: string) {
     setSavingStatus(true);
+
+    // the next following lines are written because when modifying title state
+    // the last change in the title is not made to update, so we should get the change
+    let contentToBe = content;
+    let titleToBe = title;
+
+    if (changeType == "title") titleToBe = change;
+    if (changeType == "content") contentToBe = change;
 
     if (timeout) clearTimeout(timeout);
     console.log(title, content);
     timeout = setTimeout(() => {
-      updateDocument(document_id, workspace_id, content, title);
+      updateDocument(document_id, workspace_id, contentToBe, titleToBe);
       setSavingStatus(false);
     }, debouncingDuration);
   }
@@ -86,7 +94,7 @@ const Editor = ({
       }
 
       setTitle(editor.getHTML());
-      update();
+      update("title", editor.getHTML());
     },
     editable: isEditable,
   });
@@ -108,7 +116,7 @@ const Editor = ({
       setSavingStatus(true);
 
       setContent(editor.getHTML());
-      update();
+      update("content", editor.getHTML());
     },
   });
 
