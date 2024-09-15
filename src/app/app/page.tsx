@@ -3,7 +3,7 @@ import {
   getWorkspaces,
   getWorkspacesPerUser,
 } from "@/db/workpace-actions/get-workspaces";
-import { PlusCircle, Settings } from "lucide-react";
+import { Bolt, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 export default async function App() {
@@ -64,7 +64,7 @@ export default async function App() {
       <div className="container">
         <div className="flex justify-end">
           <Link href="/app/settings">
-            <Settings />
+            <Bolt />
           </Link>
         </div>
         {Workspaces}
