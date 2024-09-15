@@ -68,5 +68,5 @@ export async function login(data: LoginFields): Promise<Err | never> {
     sessionCookie.attributes,
   );
 
-  redirect("/dashboard");
+  redirect("/app");
 }

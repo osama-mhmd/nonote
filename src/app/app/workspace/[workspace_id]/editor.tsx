@@ -103,9 +103,7 @@ const Editor = ({
     extensions: [
       StarterKit,
       TaskList,
-      TaskItem.configure({
-        nested: true,
-      }),
+      TaskItem,
       Placeholder.configure({
         placeholder: "Start writing here...",
       }),

@@ -48,5 +48,5 @@ export async function verify(code: string) {
     sessionCookie.attributes,
   );
 
-  redirect("/dashboard");
+  redirect("/app");
 }
