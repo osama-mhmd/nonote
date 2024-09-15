@@ -26,7 +26,15 @@ export default async function permission(
 
   const workspace = workspaces[0];
 
+  // if there are no workspace, so we have three options
+  // 1. no workspace with this id -> possible
+  // 2. no user with this id -> not possible
+  // 3. no relation between them -> higher percentage to happen
+  // NOTE: WE ARE USING NO-ACCESS AS AN INDICATE FOR BANNING SOMEONE
   if (!workspace) return "not-found";
+  // and in the frontend, we are going to know if there are a workspace or not
+  // if there are no workspaces, so return "not-found"
+  // if there are a workspace, so check the visibility and then return ...
 
   return workspace.permission as Permission;
 }
