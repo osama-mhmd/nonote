@@ -11,7 +11,7 @@ import { Session } from "lucia";
 export default function Nav({ session }: { session: Session | null }) {
   const pathname = usePathname();
 
-  const shouldNotRender = pathname == "/dashboard";
+  const shouldNotRender = /^\/app\/workspace\/(.+)$/.test(pathname);
 
   return shouldNotRender ? null : (
     <nav className="py-4 my-2 mx-4">
