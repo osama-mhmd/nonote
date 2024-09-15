@@ -1,6 +1,10 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  Editor as TipTapEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Heading from "@tiptap/extension-heading";
@@ -8,7 +12,21 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import "@/styles/editor.css";
 
-const Editor = () => {
+interface EditorSchema {
+  isEditable?: boolean;
+  defaultDocumentContent?: string;
+  defaultDocumentTitle?: string;
+  onDocumentContentUpdate?: (editor: TipTapEditor) => void;
+  onDocumentTitleUpdate?: (editor: TipTapEditor) => void;
+}
+
+const Editor = ({
+  isEditable = true,
+  defaultDocumentTitle = "",
+  defaultDocumentContent = "",
+  onDocumentContentUpdate = () => {},
+  onDocumentTitleUpdate = () => {},
+}: EditorSchema) => {
   const titleEditor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -24,21 +42,24 @@ const Editor = () => {
         levels: [1],
       }),
       Placeholder.configure({
-        placeholder: "Untitled Page",
+        placeholder: "Untitled Document",
       }),
     ],
     immediatelyRender: false,
-    content: "<h1></h1>",
+    content: `<h1>${defaultDocumentTitle}</h1>`,
     onUpdate: ({ editor }) => {
       const content = editor.getHTML();
 
       if (content == "<p></p>") {
         editor.commands.setNode("heading", { level: 1 });
       }
+
+      onDocumentTitleUpdate(editor);
     },
+    editable: isEditable,
   });
 
-  const pageEditor = useEditor({
+  const documentEditor = useEditor({
     extensions: [
       StarterKit,
       TaskList,
@@ -49,13 +70,15 @@ const Editor = () => {
         placeholder: "Start writing here...",
       }),
     ],
+    content: defaultDocumentContent,
     immediatelyRender: false,
+    onUpdate: ({ editor }) => onDocumentContentUpdate(editor),
   });
 
   return (
     <>
       <EditorContent className="mt-16" editor={titleEditor} />
-      <EditorContent editor={pageEditor} />
+      <EditorContent editor={documentEditor} />
     </>
   );
 };
