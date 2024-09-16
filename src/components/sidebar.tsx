@@ -14,8 +14,9 @@ import {
   MenuIcon,
   Settings,
 } from "lucide-react";
+import Link from "next/link";
 
-const Sidebar = () => {
+const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -127,9 +128,12 @@ const Sidebar = () => {
         <div className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
           L
         </div>
-        <div className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition">
+        <Link
+          href={`/app/workspace/${workspaceId}`}
+          className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition"
+        >
           <House width={20} /> Home
-        </div>
+        </Link>
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}

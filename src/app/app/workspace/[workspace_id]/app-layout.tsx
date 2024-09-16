@@ -1,16 +1,16 @@
 import Sidebar from "@/components/sidebar";
 import { ReactNode } from "react";
 
-export default function DashboardLayout({
+export default function AppLayout({
   children,
-  params,
+  workspace_id,
 }: {
   children: ReactNode;
-  params: { workspace_id: string };
+  workspace_id: string;
 }) {
   return (
     <div className="flex flex-start gap-6">
-      <Sidebar />
+      <Sidebar workspaceId={workspace_id} />
       <section className="flex-1">{children}</section>
     </div>
   );

@@ -2,6 +2,7 @@ import { getRootDocument } from "@/db/documents-actions/get-document";
 import permissionLayer from "./permission-layer";
 import Editor from "@/app/app/workspace/[workspace_id]/editor";
 import createDocument from "@/db/documents-actions/create";
+import AppLayout from "./app-layout";
 
 const Space = ({ params }: { params: { workspace_id: string } }) => {
   return permissionLayer(params.workspace_id, async (permission) => {
@@ -15,7 +16,7 @@ const Space = ({ params }: { params: { workspace_id: string } }) => {
     }
 
     return (
-      <div>
+      <AppLayout workspace_id={params.workspace_id}>
         <Editor
           isEditable={permission == "owner" || permission == "edit"}
           defaultDocumentTitle={rootDocument.title ?? ""}
@@ -23,7 +24,7 @@ const Space = ({ params }: { params: { workspace_id: string } }) => {
           workspace_id={params.workspace_id}
           document_id={rootDocument.id}
         />
-      </div>
+      </AppLayout>
     );
   });
 };
