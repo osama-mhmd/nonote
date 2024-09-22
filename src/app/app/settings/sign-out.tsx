@@ -21,7 +21,7 @@ export default function SignOut() {
       loading={isLoading}
       onClick={async () => await onclick()}
     >
-      Sign out <LogOut className="ms-2" />
+      Sign out <LogOut strokeWidth={1.5} className="ms-2" />
     </Button>
   );
 }

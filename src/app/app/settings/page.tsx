@@ -11,6 +11,16 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import DeleteAccount from "./delete-account";
+import {
+  Dialog,
+  DialogFooter,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogHeader,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Nonote | Profile",
@@ -63,11 +73,43 @@ export default async function Profile() {
           <h3>Danger Zone</h3>
           <div className="danger-zone-action-slot">
             Are you sure to sign out?
-            <SignOut />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive">Sign out</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader className="text-red-600">
+                  <DialogTitle className="mt-0">Danger Action</DialogTitle>
+                </DialogHeader>
+                <p>Are you sure to sign out?</p>
+                <DialogFooter>
+                  <DialogClose>
+                    <Button variant="outline">Close</Button>
+                  </DialogClose>
+                  <SignOut />
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="danger-zone-action-slot">
             You cannot undo deleting your account!
-            <DeleteAccount />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive">Delete Account</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader className="text-red-600">
+                  <DialogTitle className="mt-0">Danger Action</DialogTitle>
+                </DialogHeader>
+                <p>If you deleted your account, you cannot get it back!</p>
+                <DialogFooter>
+                  <DialogClose>
+                    <Button variant="outline">Close</Button>
+                  </DialogClose>
+                  <DeleteAccount />
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

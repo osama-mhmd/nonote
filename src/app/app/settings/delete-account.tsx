@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { Trash, Trash2 } from "lucide-react";
 import { deleteUser } from "@/db/actions/delete";
 import { useState } from "react";
 
@@ -16,12 +16,11 @@ export default function DeleteAccount() {
 
   return (
     <Button
-      className="w-[20ch]"
       variant="destructive"
       loading={isLoading}
       onClick={async () => await onclick()}
     >
-      Delete Account <Trash className="ms-2" />
+      Delete Account <Trash2 strokeWidth={1.5} className="ms-2" />
     </Button>
   );
 }
