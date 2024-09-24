@@ -17,7 +17,7 @@ export async function deleteUser() {
     };
   }
 
-  await lucia.invalidateSession(session.id);
+  await lucia.invalidateUserSessions(user.id);
 
   const sessionCookie = lucia.createBlankSessionCookie();
 
@@ -27,9 +27,7 @@ export async function deleteUser() {
     sessionCookie.attributes,
   );
 
-  await db
-    .delete(userTable)
-    .where(eq(userTable.userName, user.username.toLowerCase()));
+  await db.delete(userTable).where(eq(userTable.id, user.id));
 
   redirect("/auth/login");
 }
