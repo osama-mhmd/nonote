@@ -20,7 +20,12 @@ export default async function App() {
       <div className="text-center">
         <h3 className="text-2xl">No workspaces yet 😞</h3>
         <Button asChild>
-          <Link href="/app/workspace/create">Create your first one 💪</Link>
+          <Link
+            href="/app/workspace/create"
+            className="flex items-center gap-2"
+          >
+            Create your first one <PlusCircle />
+          </Link>
         </Button>
       </div>
     );
@@ -60,15 +65,8 @@ export default async function App() {
   }
 
   return (
-    <section className="mt-8">
-      <div className="container">
-        <div className="flex justify-end">
-          <Link href="/app/settings">
-            <Bolt />
-          </Link>
-        </div>
-        {Workspaces}
-      </div>
+    <section className="mt-12">
+      <div className="container">{Workspaces}</div>
     </section>
   );
 }
