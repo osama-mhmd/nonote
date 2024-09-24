@@ -43,6 +43,20 @@
       "when": 1726386383744,
       "tag": "0005_tiny_doctor_strange",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1727018609717,
+      "tag": "0006_dazzling_spencer_smythe",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1727161757539,
+      "tag": "0007_chubby_venus",
+      "breakpoints": true
     }
   ]
 }

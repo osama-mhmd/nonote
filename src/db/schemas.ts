@@ -43,3 +43,10 @@ export const workspaceDocuments = pgTable("workspace_documents", {
   content: text("content").default(""),
   parent_id: text("parent_id").notNull(),
 });
+
+export const resetPasswordTokens = pgTable("reset_password_tokens", {
+  user_id: text("user_id").notNull(),
+  token_code: text("token_code").primaryKey().notNull(),
+  token_hash: text("token_hash").notNull(),
+  expires_at: timestamp("expires_at").notNull(),
+});

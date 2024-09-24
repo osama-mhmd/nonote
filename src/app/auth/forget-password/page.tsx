@@ -1,24 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Nonote | Forget password",
-};
+import CodeForm from "./code-form";
+import UsernameForm from "./username-form";
+import { useState } from "react";
 
-export default function Login() {
+export default function ForgetPassword() {
+  const [username, setUsername] = useState("");
+
+  console.log(username);
+
   return (
-    <section className="mt-20">
-      <div className="container flex items-center justify-center">
-        <form
-          action="/auth/forget-password"
-          method="post"
-          className="flex flex-col gap-2 w-96"
-        >
-          <h2 className="text-center mb-3">Reset password</h2>
-          <Input type="text" placeholder="Email" required />
-          <Button type="submit">Reset</Button>
-        </form>
+    <section className="mt-6 sm:mt-12">
+      <div className="container flex items-center flex-col gap-6 justify-center">
+        {!username && <UsernameForm stater={setUsername} />}
+        {username && <CodeForm username={username} />}
       </div>
     </section>
   );
