@@ -3,9 +3,7 @@
 import { createTransport } from "nodemailer";
 
 const transporter = createTransport({
-  service: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  service: "Gmail",
   auth: {
     user: "nonote.app.verify@gmail.com",
     pass: process.env.MAIL_PASS,
