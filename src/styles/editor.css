@@ -49,3 +49,28 @@ ul[data-type="taskList"] > li > div {
   list-style-type: decimal;
   padding-inline-start: 1.25rem;
 }
+
+.tiptap pre {
+  background: #333;
+  border-radius: 0.5rem;
+  color: white;
+  font-family: "JetBrainsMono", monospace;
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.tiptap pre code {
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
+.tiptap blockquote {
+  @apply border-l-2 border-black pl-2 text-black;
+}
+
+span[comment_id] {
+  background-color: rgba(77, 255, 0, 0.5);
+  border-bottom: 3px solid rgba(54, 180, 0, 0.8);
+}

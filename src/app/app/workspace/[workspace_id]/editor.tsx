@@ -6,12 +6,19 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Heading from "@tiptap/extension-heading";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
+import Hightlight from "@tiptap/extension-highlight";
+import Typography from "@tiptap/extension-typography";
 import "@/styles/editor.css";
 import { saveDocument } from "@/db/documents-actions/save-document";
 import { motion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import Comments, {
+  CommentInterface,
+  CustomCommentInterface,
+} from "@/editor/extensions/comment";
+import { User } from "lucia";
 
 async function updateDocument(
   document_id: string,
@@ -34,6 +41,7 @@ interface EditorSchema {
   defaultDocumentTitle?: string;
   document_id: string;
   workspace_id: string;
+  user: User;
 }
 
 const Editor = ({
@@ -42,10 +50,12 @@ const Editor = ({
   defaultDocumentContent = "",
   document_id,
   workspace_id,
+  user,
 }: EditorSchema) => {
   const [saving, setSavingStatus] = useState(false);
   const [title, setTitle] = useState(defaultDocumentTitle);
   const [content, setContent] = useState(defaultDocumentContent);
+  const [comments, setComments] = useState<string[]>([]);
 
   function update(changeType: "title" | "content", change: string) {
     setSavingStatus(true);
@@ -80,6 +90,7 @@ const Editor = ({
       }).configure({
         levels: [1],
       }),
+      Typography,
       Placeholder.configure({
         placeholder: "Untitled Document",
       }),
@@ -104,6 +115,13 @@ const Editor = ({
       StarterKit,
       TaskList,
       TaskItem,
+      Hightlight,
+      Typography,
+      Comments.configure({
+        user: {
+          name: user.fullname,
+        },
+      }),
       Placeholder.configure({
         placeholder: "Start writing here...",
       }),
@@ -115,6 +133,27 @@ const Editor = ({
 
       setContent(editor.getHTML());
       update("content", editor.getHTML());
+    },
+    onSelectionUpdate: ({ editor }) => {
+      setComments([]);
+
+      const commentId = editor.getAttributes("comment").comment_id;
+
+      if (commentId) {
+        const threadComments = editor.storage.comment.comments.filter(
+          (thread: CustomCommentInterface) => thread.threadId === commentId,
+        )[0].comments;
+
+        console.log(threadComments);
+
+        const commentsContext = threadComments.map(
+          (comment: CommentInterface) => comment.comment,
+        );
+
+        if (commentsContext.length) {
+          setComments(commentsContext);
+        }
+      }
     },
   });
 
@@ -154,6 +193,21 @@ const Editor = ({
       </div>
       <EditorContent className="mt-16" editor={titleEditor} />
       <EditorContent editor={documentEditor} />
+      <Button
+        onClick={() => {
+          documentEditor!.commands.addComments({
+            comment: "This is a comment",
+            parent_id: null,
+          });
+        }}
+      >
+        Add Comment
+      </Button>
+      <aside>
+        {comments.map((comment, index) => (
+          <div key={index}>{comment}</div>
+        ))}
+      </aside>
     </>
   );
 };
