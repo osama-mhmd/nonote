@@ -45,12 +45,9 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
   {
     name: "comment",
     addOptions() {
-      console.log(this);
-      const user = this.parent().user;
-
       return {
         user: {
-          name: user.name,
+          name: "Anonymous",
         },
       };
     },
@@ -117,44 +114,42 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
             }
           },
         // @ts-ignore
-        removeSpecificComment:
-          (threadId: string, commentId: string) =>
-          ({ commands }) => {
-            let comments = this.storage?.comments;
-            const index = findIndex(comments, { threadId: threadId });
-            if (comments[index].comments) {
-              const commentIndex = findIndex(comments[index].comments ?? [], {
-                uuid: commentId,
-              });
-              comments[index].comments?.splice(commentIndex, 1);
+        removeSpecificComment: (threadId: string, commentId: string) => () => {
+          let comments = this.storage?.comments;
+          const index = findIndex(comments, { threadId: threadId });
+          if (comments[index].comments) {
+            const commentIndex = findIndex(comments[index].comments ?? [], {
+              uuid: commentId,
+            });
+            comments[index].comments?.splice(commentIndex, 1);
 
-              if (!comments[index].comments?.length) {
-                comments.splice(index, 1);
-              }
-
-              this.storage.comments = comments;
-              this.editor.state.doc.descendants((node: any, pos: any) => {
-                const { marks } = node;
-                marks.forEach((mark: any) => {
-                  if (mark.type.name === "comment") {
-                    const comment_id = mark.attrs.comment_id;
-                    if (
-                      !this.storage.comments.filter(
-                        (obj) => obj.threadId === comment_id,
-                      ).length
-                    ) {
-                      this.editor.commands.setTextSelection({
-                        from: pos,
-                        to: pos + (node.text?.length || 0),
-                      });
-                      this.editor.commands.unsetMark("comment");
-                    }
-                  }
-                });
-              });
+            if (!comments[index].comments?.length) {
+              comments.splice(index, 1);
             }
-            return true;
-          },
+
+            this.storage.comments = comments;
+            this.editor.state.doc.descendants((node: any, pos: any) => {
+              const { marks } = node;
+              marks.forEach((mark: any) => {
+                if (mark.type.name === "comment") {
+                  const comment_id = mark.attrs.comment_id;
+                  if (
+                    !this.storage.comments.filter(
+                      (obj) => obj.threadId === comment_id,
+                    ).length
+                  ) {
+                    this.editor.commands.setTextSelection({
+                      from: pos,
+                      to: pos + (node.text?.length || 0),
+                    });
+                    this.editor.commands.unsetMark("comment");
+                  }
+                }
+              });
+            });
+          }
+          return true;
+        },
       };
     },
     // @ts-ignore
