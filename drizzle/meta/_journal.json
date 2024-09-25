@@ -57,6 +57,13 @@
       "when": 1727161757539,
       "tag": "0007_chubby_venus",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1727265336012,
+      "tag": "0008_omniscient_brother_voodoo",
+      "breakpoints": true
     }
   ]
 }

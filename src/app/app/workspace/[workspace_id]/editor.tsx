@@ -19,6 +19,7 @@ import Comments, {
   CustomCommentInterface,
 } from "@/editor/extensions/comment";
 import { User } from "lucia";
+import { saveDocumentComments } from "@/db/documents-actions/save-comments";
 
 async function updateDocument(
   document_id: string,
@@ -42,6 +43,7 @@ interface EditorSchema {
   document_id: string;
   workspace_id: string;
   user: User;
+  comments?: string | null;
 }
 
 const Editor = ({
@@ -51,6 +53,7 @@ const Editor = ({
   document_id,
   workspace_id,
   user,
+  comments: editorComments,
 }: EditorSchema) => {
   const [saving, setSavingStatus] = useState(false);
   const [title, setTitle] = useState(defaultDocumentTitle);
@@ -155,6 +158,10 @@ const Editor = ({
         }
       }
     },
+    onCreate: ({ editor }) => {
+      if (editorComments)
+        editor.storage.comment.comments = JSON.parse(editorComments);
+    },
   });
 
   return (
@@ -194,11 +201,16 @@ const Editor = ({
       <EditorContent className="mt-16" editor={titleEditor} />
       <EditorContent editor={documentEditor} />
       <Button
-        onClick={() => {
+        onClick={async () => {
           documentEditor!.commands.addComments({
             comment: "This is a comment",
             parent_id: null,
           });
+          await saveDocumentComments(
+            JSON.stringify(documentEditor!.storage.comment.comments),
+            workspace_id,
+            document_id,
+          );
         }}
       >
         Add Comment

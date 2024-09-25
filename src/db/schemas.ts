@@ -41,7 +41,8 @@ export const workspaceDocuments = pgTable("workspace_documents", {
   id: text("id").primaryKey().notNull(),
   title: text("title").default(""),
   content: text("content").default(""),
-  parent_id: text("parent_id").notNull(),
+  comments: text("comments"),
+  parent_id: text("parent_id").notNull(), // why this is not null?
 });
 
 export const resetPasswordTokens = pgTable("reset_password_tokens", {

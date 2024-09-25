@@ -11,6 +11,7 @@ export type Document = {
   content: string | null;
   title: string | null;
   parent_id: string;
+  comments?: string | null;
 };
 
 export async function getDocument(
