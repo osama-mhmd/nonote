@@ -89,6 +89,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
               parent_title: null,
               parent_id: null,
             };
+            console.log(comment.parent_id, comment.parent_id ? "as" : "sa");
             if (comment.parent_id) {
               const index = findIndex(this.storage.comments, {
                 threadId: this.storage.comment_id,
@@ -99,16 +100,23 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
               );
               const parent = this.storage.comments[index];
               if (parent && parent.comments) {
+                const parent_content = parent.comments[commentIndex].comment;
+                const sub = parent_content.substring(0, 120);
+                const parent_title =
+                  sub == parent_content ? parent_content : sub + "...";
+
                 finalComment.parent_id = parent.comments[commentIndex].uuid;
-                finalComment.parent_title = parent.comments[
-                  commentIndex
-                ].comment.substring(0, 50);
+                finalComment.parent_title = parent_title;
               }
               this.storage.comments[index].comments?.push(finalComment);
             } else {
+              const index = findIndex(this.storage.comments, {
+                threadId: this.storage.comment_id,
+              });
+              const thread = this.storage.comments[index];
               commentsList = {
                 threadId: uuidv4(),
-                comments: [],
+                comments: thread?.comments ?? [],
               };
               commentsList.comments?.push(finalComment);
               commands.setMark("comment", {

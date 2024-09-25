@@ -11,7 +11,7 @@ import Typography from "@tiptap/extension-typography";
 import "@/styles/editor.css";
 import { saveDocument } from "@/db/documents-actions/save-document";
 import { motion } from "framer-motion";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Reply } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Comments, {
@@ -129,12 +129,7 @@ const Editor = ({
         addKeyboardShortcuts() {
           return {
             "Mod-u": () => {
-              const comment = prompt("What is your comment?") ?? "no-comment";
-
-              this.editor.commands.addComments({
-                comment,
-                parent_id: null,
-              });
+              addComment();
 
               return true;
             },
@@ -163,7 +158,7 @@ const Editor = ({
           (thread: CustomCommentInterface) => thread.threadId === commentId,
         )[0].comments;
 
-        console.log(threadComments);
+        console.log(editor.storage.comment);
 
         setComments(threadComments);
       }
@@ -173,6 +168,22 @@ const Editor = ({
         editor.storage.comment.comments = JSON.parse(editorComments);
     },
   });
+
+  async function addComment(parent_id?: string, comment?: string) {
+    const comment_content = comment
+      ? comment
+      : (prompt("What is your comment?") ?? "no-comment");
+
+    documentEditor!.commands.addComments({
+      comment: comment_content,
+      parent_id: parent_id ?? null,
+    });
+    await saveDocumentComments(
+      JSON.stringify(documentEditor!.storage.comment.comments),
+      workspace_id,
+      document_id,
+    );
+  }
 
   return (
     <div className="relative">
@@ -210,33 +221,30 @@ const Editor = ({
       </div>
       <EditorContent className="mt-16" editor={titleEditor} />
       <EditorContent editor={documentEditor} />
-      <Button
-        onClick={async () => {
-          const comment = prompt("What is your comment?") ?? "no-comment";
-
-          documentEditor!.commands.addComments({
-            comment,
-            parent_id: null,
-          });
-          await saveDocumentComments(
-            JSON.stringify(documentEditor!.storage.comment.comments),
-            workspace_id,
-            document_id,
-          );
-        }}
-      >
-        Add Comment
-      </Button>
+      <Button onClick={() => addComment()}>Add Comment</Button>
       {comments.length > 0 && (
-        <aside className="absolute bg-gray-100 rounded-md p-4 top-0 right-4 w-full max-w-sm">
+        <aside className="absolute flex flex-col gap-2 bg-white border rounded-md p-4 top-0 right-4 w-full max-w-sm">
           {comments.map((comment, index) => (
             <div key={index} className="rounded-md p-2 border-2">
-              <label>
-                {comment.user.fullname}{" "}
-                <span className="text-muted-foreground">
-                  @{comment.user.username}
-                </span>
-              </label>
+              <div className="flex justify-between">
+                <label>
+                  {comment.user.fullname}{" "}
+                  <span className="text-muted-foreground">
+                    @{comment.user.username}
+                  </span>
+                </label>
+                <Reply
+                  className="cursor-pointer"
+                  onClick={() => addComment(comment.uuid!)}
+                  width={20}
+                  height={20}
+                />
+              </div>
+              {comment.parent_id && (
+                <p className="my-2 pl-2 border-l-2 border-gray-600 text-gray-600">
+                  {comment.parent_title}
+                </p>
+              )}
               <p className="my-2">{comment.comment}</p>
               <p>
                 <DisplayDate date={comment.date} />
@@ -252,12 +260,14 @@ const Editor = ({
 const DisplayDate = ({ date: _date }: { date: number | null }) => {
   if (!_date) return null;
 
+  const $d = (d: number) => String(d).padStart(2, "0");
+
   const date: Date = new Date(_date);
 
   return (
     <div className="flex gap-2 items-center">
-      {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} -{" "}
-      {date.getHours()}:{date.getMinutes()}
+      {$d(date.getDate())}/{$d(date.getMonth() + 1)}/{date.getFullYear()} -{" "}
+      {$d(date.getHours())}:{$d(date.getMinutes())}
     </div>
   );
 };
