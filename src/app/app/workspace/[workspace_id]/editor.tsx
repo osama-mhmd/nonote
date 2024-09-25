@@ -124,6 +124,21 @@ const Editor = ({
         user: {
           name: user.fullname,
         },
+      }).extend({
+        addKeyboardShortcuts() {
+          return {
+            "Mod-u": () => {
+              const comment = prompt("What is your comment?") ?? "no-comment";
+
+              this.editor.commands.addComments({
+                comment,
+                parent_id: null,
+              });
+
+              return true;
+            },
+          };
+        },
       }),
       Placeholder.configure({
         placeholder: "Start writing here...",
@@ -202,8 +217,10 @@ const Editor = ({
       <EditorContent editor={documentEditor} />
       <Button
         onClick={async () => {
+          const comment = prompt("What is your comment?") ?? "no-comment";
+
           documentEditor!.commands.addComments({
-            comment: "This is a comment",
+            comment,
             parent_id: null,
           });
           await saveDocumentComments(
