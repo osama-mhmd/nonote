@@ -58,7 +58,7 @@ const Editor = ({
   const [saving, setSavingStatus] = useState(false);
   const [title, setTitle] = useState(defaultDocumentTitle);
   const [content, setContent] = useState(defaultDocumentContent);
-  const [comments, setComments] = useState<string[]>([]);
+  const [comments, setComments] = useState<CommentInterface[]>([]);
 
   function update(changeType: "title" | "content", change: string) {
     setSavingStatus(true);
@@ -122,7 +122,8 @@ const Editor = ({
       Typography,
       Comments.configure({
         user: {
-          name: user.fullname,
+          fullname: user.fullname,
+          username: user.username,
         },
       }).extend({
         addKeyboardShortcuts() {
@@ -164,13 +165,7 @@ const Editor = ({
 
         console.log(threadComments);
 
-        const commentsContext = threadComments.map(
-          (comment: CommentInterface) => comment.comment,
-        );
-
-        if (commentsContext.length) {
-          setComments(commentsContext);
-        }
+        setComments(threadComments);
       }
     },
     onCreate: ({ editor }) => {
@@ -180,7 +175,7 @@ const Editor = ({
   });
 
   return (
-    <>
+    <div className="relative">
       <div className="absolute top-4 right-4">
         {!saving && (
           <motion.div
@@ -232,12 +227,38 @@ const Editor = ({
       >
         Add Comment
       </Button>
-      <aside>
-        {comments.map((comment, index) => (
-          <div key={index}>{comment}</div>
-        ))}
-      </aside>
-    </>
+      {comments.length > 0 && (
+        <aside className="absolute bg-gray-100 rounded-md p-4 top-0 right-4 w-full max-w-sm">
+          {comments.map((comment, index) => (
+            <div key={index} className="rounded-md p-2 border-2">
+              <label>
+                {comment.user.fullname}{" "}
+                <span className="text-muted-foreground">
+                  @{comment.user.username}
+                </span>
+              </label>
+              <p className="my-2">{comment.comment}</p>
+              <p>
+                <DisplayDate date={comment.date} />
+              </p>
+            </div>
+          ))}
+        </aside>
+      )}
+    </div>
+  );
+};
+
+const DisplayDate = ({ date: _date }: { date: number | null }) => {
+  if (!_date) return null;
+
+  const date: Date = new Date(_date);
+
+  return (
+    <div className="flex gap-2 items-center">
+      {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} -{" "}
+      {date.getHours()}:{date.getMinutes()}
+    </div>
   );
 };
 

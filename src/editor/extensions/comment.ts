@@ -2,8 +2,14 @@ import { Mark, mergeAttributes } from "@tiptap/core";
 import { v4 as uuidv4 } from "uuid";
 import { findIndex } from "lodash";
 
+interface User {
+  fullname: string;
+  username?: string;
+  email?: string;
+}
+
 export interface CommentInterface {
-  user: any;
+  user: User;
   uuid: string | null;
   comment: string;
   date: number | null;
@@ -27,9 +33,7 @@ interface CommentsStorageInterface {
 }
 
 export interface CommentOptionsInterface {
-  user: {
-    name: string;
-  };
+  user: User;
 }
 
 declare module "@tiptap/core" {
@@ -47,7 +51,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
     addOptions() {
       return {
         user: {
-          name: "Anonymous",
+          fullname: "Anonymous",
         },
       };
     },
