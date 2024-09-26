@@ -166,7 +166,10 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
         </nav>
       </div>
       {settingsVisibility && (
-        <WorkspaceSettings stater={setSettingsVisibility} />
+        <WorkspaceSettings
+          workspaceId={workspaceId}
+          stater={setSettingsVisibility}
+        />
       )}
     </>
   );

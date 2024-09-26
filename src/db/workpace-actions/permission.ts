@@ -4,6 +4,7 @@ import db from "..";
 import { validateRequest } from "../auth";
 import { usersPermissions } from "../schemas";
 import { and, eq } from "drizzle-orm";
+import { getWorkspace } from "./get-workspaces";
 
 export type Permission = "owner" | "view" | "comment" | "edit" | "no-access";
 
@@ -14,7 +15,7 @@ export default async function permission(
 
   if (!user) return "no-access";
 
-  const workspaces = await db
+  const userPermissions = await db
     .select()
     .from(usersPermissions)
     .where(
@@ -24,17 +25,16 @@ export default async function permission(
       ),
     );
 
-  const workspace = workspaces[0];
+  const userPermission = userPermissions[0];
 
-  // if there are no workspace, so we have three options
-  // 1. no workspace with this id -> possible
-  // 2. no user with this id -> not possible
-  // 3. no relation between them -> higher percentage to happen
-  // NOTE: WE ARE USING NO-ACCESS AS AN INDICATE FOR BANNING SOMEONE
+  if (userPermission) return userPermission.permission as Permission;
+
+  const workspace = await getWorkspace(workspaceId);
+
   if (!workspace) return "not-found";
-  // and in the frontend, we are going to know if there are a workspace or not
-  // if there are no workspaces, so return "not-found"
-  // if there are a workspace, so check the visibility and then return ...
 
-  return workspace.permission as Permission;
+  const workspaceVisibility = workspace.visibility;
+
+  if (workspaceVisibility == "private") return "no-access";
+  else return workspaceVisibility.split("-")[1] as Permission;
 }

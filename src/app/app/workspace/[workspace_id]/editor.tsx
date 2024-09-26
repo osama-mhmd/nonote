@@ -167,6 +167,7 @@ const Editor = ({
       if (editorComments)
         editor.storage.comment.comments = JSON.parse(editorComments);
     },
+    editable: isEditable,
   });
 
   async function addComment(parent_id?: string, comment?: string) {

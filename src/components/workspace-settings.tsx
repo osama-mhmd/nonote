@@ -12,16 +12,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
+import { useToast } from "@/lib/use-toast";
 
 type Access = "view" | "comment" | "edit";
+export type Visibility =
+  | "private"
+  | "public-comment"
+  | "public-view"
+  | "public-edit";
 
 export default function WorkspaceSettings({
   stater,
+  workspaceId,
 }: {
   stater: (arg0: boolean) => void;
+  workspaceId: string;
 }) {
   const [visibility, setVisibility] = useState<"public" | "private">("private");
   const [access, setAccess] = useState<Access>("view");
+  const { toast } = useToast();
+
+  async function changeVisibility(visibility: Visibility) {
+    const result = await changeWorkspaceVisibility(visibility, workspaceId);
+
+    if (result)
+      toast({
+        description: "Visibility changed successfully",
+        variant: "success",
+        duration: 3000,
+      });
+
+    if (!result)
+      toast({
+        description: "You are not the owner",
+        variant: "destructive",
+        duration: 3000,
+      });
+  }
 
   return (
     <div className="absolute px-3 top-0 left-0 w-full h-full bg-black/50 z-[25] flex items-center justify-center">
@@ -41,8 +69,10 @@ export default function WorkspaceSettings({
             <RadioGroup
               defaultValue={visibility}
               className="gap-0"
-              onValueChange={(val) => {
+              onValueChange={async (val: "public" | "private") => {
                 setVisibility(val as "public" | "private");
+                if (val == "private") await changeVisibility("private");
+                else await changeVisibility(`${val}-${access}`);
               }}
             >
               <div className="flex items-center space-x-2">
@@ -50,7 +80,12 @@ export default function WorkspaceSettings({
                 <label htmlFor="public">Public</label>
                 <Select
                   defaultValue={access}
-                  onValueChange={(val) => setAccess(val as Access)}
+                  onValueChange={async (val) => {
+                    setAccess(val as Access);
+                    await changeVisibility(
+                      `${visibility}-${val}` as Visibility,
+                    );
+                  }}
                   disabled={visibility !== "public"}
                 >
                   <SelectTrigger className="w-[180px] focus:ring-0 focus:ring-transparent">

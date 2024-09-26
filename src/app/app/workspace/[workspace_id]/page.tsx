@@ -11,7 +11,7 @@ const Space = ({ params }: { params: { workspace_id: string } }) => {
 
     if (!rootDocument) {
       const process = await createDocument(params.workspace_id);
-      if (!process.ok) alert(process.message);
+      // if (!process.ok) alert(process.message);
 
       return <p>We are so sorry, please refresh the page</p>;
     }
