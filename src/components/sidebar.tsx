@@ -6,15 +6,9 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-import {
-  Bolt,
-  ChevronsLeft,
-  ChevronsRight,
-  House,
-  MenuIcon,
-  Settings,
-} from "lucide-react";
+import { ChevronsLeft, ChevronsRight, House } from "lucide-react";
 import Link from "next/link";
+import WorkspaceSettings from "./workspace-settings";
 
 const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const pathname = usePathname();
@@ -25,6 +19,7 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const [settingsVisibility, setSettingsVisibility] = useState(false);
 
   useEffect(() => {
     if (isMobile) {
@@ -102,12 +97,16 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
     }
   };
 
+  const openSettings = () => {
+    setSettingsVisibility(true);
+  };
+
   return (
     <>
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar px-3 relative z-[300] flex h-screen w-60 flex-col overflow-y-auto bg-secondary",
+          "group/sidebar px-3 relative z-[15] flex h-screen w-60 flex-col overflow-y-auto bg-secondary",
           isResetting && "transition-all duration-300 ease-in-out",
           isMobile && "w-0",
           isCollapsed && "px-0",
@@ -125,7 +124,10 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
         >
           <ChevronsLeft className="size-8 p-1" />
         </div>
-        <div className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
+        <div
+          onClick={openSettings}
+          className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2"
+        >
           L
         </div>
         <Link
@@ -163,6 +165,9 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
           )}
         </nav>
       </div>
+      {settingsVisibility && (
+        <WorkspaceSettings stater={setSettingsVisibility} />
+      )}
     </>
   );
 };
