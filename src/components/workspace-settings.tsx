@@ -14,6 +14,8 @@ import {
 } from "./ui/select";
 import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
 import { useToast } from "@/lib/use-toast";
+import BackDrop from "./backdrop";
+import { motion } from "framer-motion";
 
 type Access = "view" | "comment" | "edit";
 export type Visibility =
@@ -52,16 +54,23 @@ export default function WorkspaceSettings({
   }
 
   return (
-    <div className="absolute px-3 top-0 left-0 w-full h-full bg-black/50 z-[25] flex items-center justify-center">
-      <div className="bg-white rounded-md p-4 w-full max-w-2xl">
+    <BackDrop closePanel={() => stater(false)}>
+      <motion.div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-md p-4 w-full max-w-2xl"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 20 }}
+        transition={{ duration: 0.2 }}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex gap-2 justify-between">
             <h2 className="my-0">Settings</h2>
             <button
               onClick={() => stater(false)}
-              className="text-xl cursor-pointer"
+              className="text-xl cursor-pointer p-1 px-2 rounded-full bg-gray-100"
             >
-              <X width={20} height={20} />
+              <X size={20} />
             </button>
           </div>
           <div>
@@ -108,7 +117,7 @@ export default function WorkspaceSettings({
             </RadioGroup>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </BackDrop>
   );
 }

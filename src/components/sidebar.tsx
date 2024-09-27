@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { ChevronsLeft, ChevronsRight, House } from "lucide-react";
 import Link from "next/link";
 import WorkspaceSettings from "./workspace-settings";
+import { AnimatePresence } from "framer-motion";
 
 const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const pathname = usePathname();
@@ -165,12 +166,14 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
           )}
         </nav>
       </div>
-      {settingsVisibility && (
-        <WorkspaceSettings
-          workspaceId={workspaceId}
-          stater={setSettingsVisibility}
-        />
-      )}
+      <AnimatePresence>
+        {settingsVisibility && (
+          <WorkspaceSettings
+            workspaceId={workspaceId}
+            stater={setSettingsVisibility}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
