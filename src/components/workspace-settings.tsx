@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { X } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -14,8 +13,6 @@ import {
 } from "./ui/select";
 import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
 import { useToast } from "@/lib/use-toast";
-import BackDrop from "./backdrop";
-import { motion } from "framer-motion";
 
 type Access = "view" | "comment" | "edit";
 export type Visibility =
@@ -25,10 +22,8 @@ export type Visibility =
   | "public-edit";
 
 export default function WorkspaceSettings({
-  stater,
   workspaceId,
 }: {
-  stater: (arg0: boolean) => void;
   workspaceId: string;
 }) {
   const [visibility, setVisibility] = useState<"public" | "private">("private");
@@ -54,70 +49,46 @@ export default function WorkspaceSettings({
   }
 
   return (
-    <BackDrop closePanel={() => stater(false)}>
-      <motion.div
-        onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-md p-4 w-full max-w-2xl"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 20 }}
-        transition={{ duration: 0.2 }}
+    <div>
+      <h3 className="my-0 mb-2">Visibility</h3>
+      <RadioGroup
+        defaultValue={visibility}
+        className="gap-0"
+        onValueChange={async (val: "public" | "private") => {
+          setVisibility(val as "public" | "private");
+          if (val == "private") await changeVisibility("private");
+          else await changeVisibility(`${val}-${access}`);
+        }}
       >
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-2 justify-between">
-            <h2 className="my-0">Settings</h2>
-            <button
-              onClick={() => stater(false)}
-              className="text-xl cursor-pointer p-1 px-2 rounded-full bg-gray-100"
-            >
-              <X size={20} />
-            </button>
-          </div>
-          <div>
-            <h3 className="my-0 mb-2">Visibility</h3>
-            <RadioGroup
-              defaultValue={visibility}
-              className="gap-0"
-              onValueChange={async (val: "public" | "private") => {
-                setVisibility(val as "public" | "private");
-                if (val == "private") await changeVisibility("private");
-                else await changeVisibility(`${val}-${access}`);
-              }}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="public" id="public" />
-                <label htmlFor="public">Public</label>
-                <Select
-                  defaultValue={access}
-                  onValueChange={async (val) => {
-                    setAccess(val as Access);
-                    await changeVisibility(
-                      `${visibility}-${val}` as Visibility,
-                    );
-                  }}
-                  disabled={visibility !== "public"}
-                >
-                  <SelectTrigger className="w-[180px] focus:ring-0 focus:ring-transparent">
-                    <SelectValue placeholder="Everyone access" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Access</SelectLabel>
-                      <SelectItem value="view">View</SelectItem>
-                      <SelectItem value="comment">Comment</SelectItem>
-                      <SelectItem value="edit">Edit</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="private" id="private" />
-                <label htmlFor="private">Private</label>
-              </div>
-            </RadioGroup>
-          </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="public" id="public" />
+          <label htmlFor="public">Public</label>
+          <Select
+            defaultValue={access}
+            onValueChange={async (val) => {
+              setAccess(val as Access);
+              await changeVisibility(`${visibility}-${val}` as Visibility);
+            }}
+            disabled={visibility !== "public"}
+          >
+            <SelectTrigger className="w-[180px] focus:ring-0 focus:ring-transparent">
+              <SelectValue placeholder="Everyone access" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Access</SelectLabel>
+                <SelectItem value="view">View</SelectItem>
+                <SelectItem value="comment">Comment</SelectItem>
+                <SelectItem value="edit">Edit</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
-      </motion.div>
-    </BackDrop>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="private" id="private" />
+          <label htmlFor="private">Private</label>
+        </div>
+      </RadioGroup>
+    </div>
   );
 }

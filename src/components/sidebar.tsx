@@ -10,6 +10,7 @@ import { ChevronsLeft, ChevronsRight, House } from "lucide-react";
 import Link from "next/link";
 import WorkspaceSettings from "./workspace-settings";
 import { AnimatePresence } from "framer-motion";
+import { Panel, PanelBody, PanelHeader, PanelTrigger } from "./ui/panel";
 
 const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const pathname = usePathname();
@@ -20,7 +21,6 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const [settingsVisibility, setSettingsVisibility] = useState(false);
 
   useEffect(() => {
     if (isMobile) {
@@ -98,19 +98,16 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
     }
   };
 
-  const openSettings = () => {
-    setSettingsVisibility(true);
-  };
-
   return (
     <>
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar px-3 relative z-[15] flex h-screen w-60 flex-col overflow-y-auto bg-secondary",
-          isResetting && "transition-all duration-300 ease-in-out",
+          "group/sidebar px-3 relative z-[15] flex h-screen w-60 flex-col bg-secondary",
+          isResetting &&
+            "transition-all duration-300 ease-in-out overflow-y-auto",
           isMobile && "w-0",
-          isCollapsed && "px-0",
+          isCollapsed && "px-0 overflow-y-auto",
         )}
         suppressHydrationWarning={true}
       >
@@ -125,12 +122,19 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
         >
           <ChevronsLeft className="size-8 p-1" />
         </div>
-        <div
-          onClick={openSettings}
-          className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2"
-        >
-          L
-        </div>
+        <Panel>
+          <PanelTrigger>
+            <div className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
+              L
+            </div>
+          </PanelTrigger>
+          <PanelBody>
+            <PanelHeader>
+              <h2 className="my-0">Settings</h2>
+            </PanelHeader>
+            <WorkspaceSettings workspaceId={workspaceId} />
+          </PanelBody>
+        </Panel>
         <Link
           href={`/app/workspace/${workspaceId}`}
           className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition"
@@ -166,14 +170,6 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
           )}
         </nav>
       </div>
-      <AnimatePresence>
-        {settingsVisibility && (
-          <WorkspaceSettings
-            workspaceId={workspaceId}
-            stater={setSettingsVisibility}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 };
