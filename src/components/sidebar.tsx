@@ -9,10 +9,16 @@ import { cn } from "@/lib/utils";
 import { ChevronsLeft, ChevronsRight, House } from "lucide-react";
 import Link from "next/link";
 import WorkspaceSettings from "./workspace-settings";
-import { AnimatePresence } from "framer-motion";
 import { Panel, PanelBody, PanelHeader, PanelTrigger } from "./ui/panel";
+import { Permission } from "@/db/workpace-actions/permission";
 
-const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
+const Sidebar = ({
+  workspaceId,
+  permission,
+}: {
+  workspaceId: string;
+  permission: Permission;
+}) => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -122,19 +128,24 @@ const Sidebar = ({ workspaceId }: { workspaceId: string }) => {
         >
           <ChevronsLeft className="size-8 p-1" />
         </div>
-        <Panel>
-          <PanelTrigger>
-            <div className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
+        {permission == "owner" && (
+          <Panel>
+            <PanelTrigger className="p-4 px-6 cursor-pointer rounded-md bg-primary/20 w-fit mt-6 mb-2">
               L
-            </div>
-          </PanelTrigger>
-          <PanelBody>
-            <PanelHeader>
-              <h2 className="my-0">Settings</h2>
-            </PanelHeader>
-            <WorkspaceSettings workspaceId={workspaceId} />
-          </PanelBody>
-        </Panel>
+            </PanelTrigger>
+            <PanelBody>
+              <PanelHeader>
+                <h2 className="my-0">Settings</h2>
+              </PanelHeader>
+              <WorkspaceSettings workspaceId={workspaceId} />
+            </PanelBody>
+          </Panel>
+        )}
+        {permission !== "owner" && (
+          <div className="p-4 px-6 rounded-md bg-primary/20 w-fit mt-6 mb-2">
+            L
+          </div>
+        )}
         <Link
           href={`/app/workspace/${workspaceId}`}
           className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition"

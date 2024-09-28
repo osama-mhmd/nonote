@@ -18,11 +18,19 @@ export interface HaveChild {
   children?: ReactNode;
 }
 
-export function PanelTrigger({ children }: HaveChild) {
+export function PanelTrigger({
+  children,
+  className,
+}: HaveChild & { className?: string }) {
   const visibilityContext = useContext(VisibilityContext);
 
   return (
-    <div onClick={() => visibilityContext?.setVisibility(true)}>{children}</div>
+    <div
+      onClick={() => visibilityContext?.setVisibility(true)}
+      className={className}
+    >
+      {children}
+    </div>
   );
 }
 

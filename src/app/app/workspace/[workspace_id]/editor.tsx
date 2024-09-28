@@ -20,14 +20,21 @@ import Comments, {
 } from "@/editor/extensions/comment";
 import { User } from "lucia";
 import { saveDocumentComments } from "@/db/documents-actions/save-comments";
+import { Document } from "@/db/documents-actions/get-document";
+import { Permission } from "@/db/workpace-actions/permission";
 
 async function updateDocument(
   document_id: string,
   workspace_id: string,
-  content: string,
-  title: string,
+  content: string | null,
+  title: string | null,
 ) {
-  const status = await saveDocument(document_id, workspace_id, content, title);
+  const status = await saveDocument(
+    document_id,
+    workspace_id,
+    content ?? "",
+    title ?? "",
+  );
 
   return status;
 }
@@ -37,28 +44,32 @@ let timeout: NodeJS.Timeout | null = null;
 const debouncingDuration = 5000;
 
 interface EditorSchema {
-  isEditable?: boolean;
-  defaultDocumentContent?: string;
-  defaultDocumentTitle?: string;
-  document_id: string;
+  document: Document;
+  permission: Permission;
   workspace_id: string;
   user: User;
-  comments?: string | null;
 }
 
 const Editor = ({
-  isEditable = true,
-  defaultDocumentTitle = "",
-  defaultDocumentContent = "",
-  document_id,
+  permission,
+  document: {
+    content: defaultDocumentContent,
+    title: defaultDocumentTitle,
+    id: document_id,
+    comments: editorComments,
+  },
   workspace_id,
   user,
-  comments: editorComments,
 }: EditorSchema) => {
   const [saving, setSavingStatus] = useState(false);
   const [title, setTitle] = useState(defaultDocumentTitle);
   const [content, setContent] = useState(defaultDocumentContent);
   const [comments, setComments] = useState<CommentInterface[]>([]);
+
+  // permission checks
+  const isEditable = permission == "owner" || permission == "edit";
+  const canComment =
+    permission == "owner" || permission == "edit" || permission == "comment";
 
   function update(changeType: "title" | "content", change: string) {
     setSavingStatus(true);
@@ -210,7 +221,7 @@ const Editor = ({
           </motion.div>
         )}
       </div>
-      {documentEditor && (
+      {documentEditor && canComment && (
         <BubbleMenu editor={documentEditor}>
           <div
             className="bg-white rounded-md px-2 py-1 border cursor-pointer"

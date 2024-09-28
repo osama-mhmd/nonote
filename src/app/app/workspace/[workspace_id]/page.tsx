@@ -19,14 +19,11 @@ const Space = ({ params }: { params: { workspace_id: string } }) => {
     const { user } = await validateRequest();
 
     return (
-      <AppLayout workspace_id={params.workspace_id}>
+      <AppLayout permission={permission} workspace_id={params.workspace_id}>
         <Editor
-          isEditable={permission == "owner" || permission == "edit"}
-          defaultDocumentTitle={rootDocument.title ?? ""}
-          defaultDocumentContent={rootDocument.content ?? ""}
-          comments={rootDocument?.comments}
+          permission={permission}
+          document={rootDocument}
           workspace_id={params.workspace_id}
-          document_id={rootDocument.id}
           user={user!}
         />
       </AppLayout>
