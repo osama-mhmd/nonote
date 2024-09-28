@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Heading from "@tiptap/extension-heading";
@@ -11,7 +11,7 @@ import Typography from "@tiptap/extension-typography";
 import "@/styles/editor.css";
 import { saveDocument } from "@/db/documents-actions/save-document";
 import { motion } from "framer-motion";
-import { RefreshCw, Reply } from "lucide-react";
+import { MessageSquareMore, RefreshCw, Reply } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Comments, {
@@ -125,16 +125,6 @@ const Editor = ({
           fullname: user.fullname,
           username: user.username,
         },
-      }).extend({
-        addKeyboardShortcuts() {
-          return {
-            "Mod-u": () => {
-              addComment();
-
-              return true;
-            },
-          };
-        },
       }),
       Placeholder.configure({
         placeholder: "Start writing here...",
@@ -220,9 +210,18 @@ const Editor = ({
           </motion.div>
         )}
       </div>
+      {documentEditor && (
+        <BubbleMenu editor={documentEditor}>
+          <div
+            className="bg-white rounded-md px-2 py-1 border cursor-pointer"
+            onClick={() => addComment()}
+          >
+            <MessageSquareMore size={20} />
+          </div>
+        </BubbleMenu>
+      )}
       <EditorContent className="mt-16" editor={titleEditor} />
       <EditorContent editor={documentEditor} />
-      <Button onClick={() => addComment()}>Add Comment</Button>
       {comments.length > 0 && (
         <aside className="absolute flex flex-col gap-2 bg-white border rounded-md p-4 top-0 right-4 w-full max-w-sm">
           {comments.map((comment, index) => (
