@@ -22,6 +22,7 @@ import { User } from "lucia";
 import { saveDocumentComments } from "@/db/documents-actions/save-comments";
 import { Document } from "@/db/documents-actions/get-document";
 import { Permission } from "@/db/workpace-actions/permission";
+import Loading from "@/app/loading";
 
 async function updateDocument(
   document_id: string,
@@ -65,6 +66,7 @@ const Editor = ({
   const [title, setTitle] = useState(defaultDocumentTitle);
   const [content, setContent] = useState(defaultDocumentContent);
   const [comments, setComments] = useState<CommentInterface[]>([]);
+  const [isLoading, setLoading] = useState(true);
 
   // permission checks
   const isEditable = permission == "owner" || permission == "edit";
@@ -128,7 +130,9 @@ const Editor = ({
     extensions: [
       StarterKit,
       TaskList,
-      TaskItem,
+      TaskItem.configure({
+        nested: true,
+      }),
       Hightlight,
       Typography,
       Comments.configure({
@@ -165,6 +169,7 @@ const Editor = ({
       }
     },
     onCreate: ({ editor }) => {
+      setLoading(false);
       if (editorComments)
         editor.storage.comment.comments = JSON.parse(editorComments);
     },
@@ -186,6 +191,8 @@ const Editor = ({
       document_id,
     );
   }
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="relative">

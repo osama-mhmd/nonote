@@ -5,6 +5,8 @@ import db from "..";
 import { workspaceDocuments } from "../schemas";
 import permission from "../workpace-actions/permission";
 
+// TODO: THIS IS VERY DANGEROUS, THE USER WITH THE ACCESS
+// OF COMMENT CAN OVERWRITE THE COMMENTS OF THE DOCUMENT AND EVEN DELETE THEM
 export async function saveDocumentComments(
   comments: string,
   workspace_id: string,

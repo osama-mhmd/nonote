@@ -20,7 +20,8 @@ export async function getDocument(
 ): Promise<Document | null> {
   const userPermission = await permission(workpsace_id);
 
-  if (userPermission !== "owner") return null;
+  if (userPermission == "not-found" || userPermission == "no-access")
+    return null;
 
   const documents = await db
     .select()

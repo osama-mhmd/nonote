@@ -23,7 +23,7 @@ export default async function Verify() {
 
   if (!session || !user) redirect("/auth/login");
 
-  if (user.isVerified) redirect("/dashboard");
+  if (user.isVerified) redirect("/app");
 
   const emailSentMessage = `We have sent an email to "${user.email}". Please check out your inbox... Please note that the verification email may take a few minutes to arrive.`;
 
