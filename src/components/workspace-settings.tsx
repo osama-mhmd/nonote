@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
-import { useToast } from "@/lib/use-toast";
+import { toast } from "sonner";
 
 type Access = "view" | "comment" | "edit";
 export type Visibility =
@@ -28,24 +28,13 @@ export default function WorkspaceSettings({
 }) {
   const [visibility, setVisibility] = useState<"public" | "private">("private");
   const [access, setAccess] = useState<Access>("view");
-  const { toast } = useToast();
 
   async function changeVisibility(visibility: Visibility) {
     const result = await changeWorkspaceVisibility(visibility, workspaceId);
 
-    if (result)
-      toast({
-        description: "Visibility changed successfully",
-        variant: "success",
-        duration: 3000,
-      });
+    if (result) toast.success("Visibility changed successfully");
 
-    if (!result)
-      toast({
-        description: "You are not the owner",
-        variant: "destructive",
-        duration: 3000,
-      });
+    if (!result) toast.error("You are not the owner");
   }
 
   return (

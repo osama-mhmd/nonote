@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import * as v from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useToast } from "@/lib/use-toast";
 import { useState } from "react";
 import {
   getTokenHash,
@@ -14,6 +13,7 @@ import {
 import Result from "@/db/result";
 import { getUserByUsername } from "@/db/utils/get-user";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const forgetPasswordFields = v.object({
   code: v.pipe(
@@ -33,7 +33,6 @@ export default function CodeForm({ username }: { username: string }) {
   } = useForm<ForgetPasswordFields>({
     resolver: valibotResolver(forgetPasswordFields),
   });
-  const { toast } = useToast();
   const [isLoading, setLoadingState] = useState(false);
   const router = useRouter();
 
@@ -44,11 +43,7 @@ export default function CodeForm({ username }: { username: string }) {
 
     // this will not happen, but just in case
     if (!user) {
-      toast({
-        description: "User not found",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("User not found");
       return;
     }
 
@@ -58,11 +53,7 @@ export default function CodeForm({ username }: { username: string }) {
       const token = await getTokenHash(data.code);
 
       if (token == "invalid-code") {
-        toast({
-          description: "Invalid code",
-          variant: "destructive",
-          duration: 3000,
-        });
+        toast.error("Invalid code");
 
         return;
       }
@@ -70,18 +61,10 @@ export default function CodeForm({ username }: { username: string }) {
       router.push("/auth/forget-password/" + token);
     }
     if (result == Result.InvalidCode) {
-      toast({
-        description: "Invalid code",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("Invalid code");
     }
     if (result == Result.ExpiredCode) {
-      toast({
-        description: "Code expired",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("Expired code");
     }
 
     setLoadingState(false);

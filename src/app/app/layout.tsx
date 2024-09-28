@@ -13,8 +13,6 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   if (!session || !user) redirect("/auth/login");
 
-  if (!user.isVerified) redirect("/auth/verify");
-
   return (
     <>
       <AppNavbar />

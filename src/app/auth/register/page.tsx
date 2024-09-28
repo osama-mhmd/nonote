@@ -8,7 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { registerFields, type RegisterFields } from "./schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useState } from "react";
-import { useToast } from "@/lib/use-toast";
+import { toast } from "sonner";
 
 export default function Register() {
   const {
@@ -18,7 +18,6 @@ export default function Register() {
     handleSubmit,
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
   const [isLoading, setLoadingState] = useState(false);
-  const { toast } = useToast();
 
   const onSumbit: SubmitHandler<RegisterFields> = async (
     data: RegisterFields,
@@ -40,8 +39,7 @@ export default function Register() {
           setError("email", { message: "Email already exists" });
         if (err.message == "users_username_unique")
           setError("user_name", { message: "Username already exists" });
-        if (err.message == "timeout")
-          toast({ description: "Connection time out", variant: "destructive" });
+        if (err.message == "timeout") toast.error("Connection time out");
       }
     }
   };

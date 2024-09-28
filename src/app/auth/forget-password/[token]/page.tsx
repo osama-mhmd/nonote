@@ -5,12 +5,12 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
-import { useToast } from "@/lib/use-toast";
 import { useState } from "react";
 import { registerFields } from "../../register/schema";
 import { changePassword } from "@/db/actions/new-password";
 import { ChangePasswordResult } from "@/db/result";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const resetPasswordFields = pick(registerFields, [
   "password",
@@ -30,17 +30,12 @@ export default function ResetPassword({
   } = useForm<ResetPasswordFields>({
     resolver: valibotResolver(resetPasswordFields),
   });
-  const { toast } = useToast();
   const [isLoading, setLoadingState] = useState(false);
   const router = useRouter();
 
   async function onsubmit(data: ResetPasswordFields) {
     if (data.password !== data.password_repeat) {
-      toast({
-        description: "Passwords do not match",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("Passwords don't match");
       return;
     }
 
@@ -49,42 +44,26 @@ export default function ResetPassword({
     const result = await changePassword(token, data.password);
 
     if (result == ChangePasswordResult.InvalidPassword) {
-      toast({
-        description: "Invalid password",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("Invalid password");
 
       return;
     }
 
     if (result == ChangePasswordResult.InvalidTokenHash) {
-      toast({
-        description: "Invalid token hash",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("Invalid token hash");
 
       return;
     }
 
     // not possible, but just in case
     if (result == ChangePasswordResult.NoUser) {
-      toast({
-        description: "User not found",
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error("User not found");
 
       return;
     }
 
     if (result == ChangePasswordResult.Success) {
-      toast({
-        description: "Password changed successfully",
-        variant: "success",
-        duration: 3000,
-      });
+      toast.success("Password changed successfully");
 
       router.push("/auth/login");
     }

@@ -6,12 +6,12 @@ import GithubIcon from "@/components/icons/github";
 import Link from "next/link";
 
 import { useForm } from "react-hook-form";
-import { registerFields, RegisterFields } from "../register/schema";
+import { registerFields } from "../register/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
 import { login } from "@/db/actions/login";
 import { useState } from "react";
-import { useToast } from "@/lib/use-toast";
+import { toast } from "sonner";
 
 const loginFields = pick(registerFields, ["user_name", "password"]);
 export type LoginFields = InferInput<typeof loginFields>;
@@ -23,7 +23,6 @@ export default function Login() {
     handleSubmit,
   } = useForm<LoginFields>({ resolver: valibotResolver(loginFields) });
   const [isLoading, setLoadingState] = useState(false);
-  const { toast } = useToast();
 
   async function onsubmit(data: LoginFields) {
     setLoadingState(true);
@@ -35,12 +34,7 @@ export default function Login() {
     if (err) {
       setLoadingState(false);
 
-      toast({
-        title: "Error happened :(",
-        description: err.message,
-        variant: "destructive",
-        duration: 3000,
-      });
+      toast.error(err.message);
     }
   }
 

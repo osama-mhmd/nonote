@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { validateRequest } from "@/db/auth";
 import {
   getWorkspaces,
   getWorkspacesPerUser,
