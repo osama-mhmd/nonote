@@ -6,6 +6,12 @@
   - [Backend](#backend)
 - [Project Architecture](#project-architecture)
 
+---
+
+**Join our workspace**: https://nonote.vercel.app/app/workspace/l47qfeumtyl27fnj
+
+**Join our discord**: https://discord.com/invite/VnB4wgBNAw
+
 ## Why
 
 > Before talking about the tech stack and the project architecture, it's very important to talk about why? Why this app? Does it offer what is not found in other apps like notion, obsidian, etc...
@@ -27,7 +33,7 @@ These are the core features that seperate nonote from any note taking app
 - [Nextjs](https://nextjs.org/) - Main framework
 - [Shadcn/ui](http://ui.shadcn.com/) - Components
 - [Tailwind](https://tailwindcss.com) - CSS utilities library
-- [yoopta](https://yoopta.dev) - notion like editor `will be removed probably`
+- [Tiptap](https://tiptap.dev) - rich text editor
 - [Valibot](https://valibot.dev) - Validating schema
 - [React Hook Form](http://react-hook-form.com/) - handle forms
 
