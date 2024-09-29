@@ -13,6 +13,7 @@ import {
 } from "./ui/select";
 import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
 import { toast } from "sonner";
+import { Workspace } from "@/db/workpace-actions/get-workspaces";
 
 type Access = "view" | "comment" | "edit";
 export type Visibility =
@@ -22,15 +23,19 @@ export type Visibility =
   | "public-edit";
 
 export default function WorkspaceSettings({
-  workspaceId,
+  workspace,
 }: {
-  workspaceId: string;
+  workspace: Workspace;
 }) {
-  const [visibility, setVisibility] = useState<"public" | "private">("private");
-  const [access, setAccess] = useState<Access>("view");
+  const [visibility, setVisibility] = useState<"public" | "private">(
+    workspace.visibility.split("-")[0] as "public" | "private",
+  );
+  const [access, setAccess] = useState<Access>(
+    (workspace.visibility.split("-")[1] as Access) ?? "view",
+  );
 
   async function changeVisibility(visibility: Visibility) {
-    const result = await changeWorkspaceVisibility(visibility, workspaceId);
+    const result = await changeWorkspaceVisibility(visibility, workspace.id);
 
     if (result) toast.success("Visibility changed successfully");
 

@@ -11,12 +11,13 @@ import Link from "next/link";
 import WorkspaceSettings from "./workspace-settings";
 import { Panel, PanelBody, PanelHeader, PanelTrigger } from "./ui/panel";
 import { Permission } from "@/db/workpace-actions/permission";
+import { Workspace } from "@/db/workpace-actions/get-workspaces";
 
 const Sidebar = ({
-  workspaceId,
+  workspace,
   permission,
 }: {
-  workspaceId: string;
+  workspace: Workspace;
   permission: Permission;
 }) => {
   const pathname = usePathname();
@@ -137,7 +138,7 @@ const Sidebar = ({
               <PanelHeader>
                 <h2 className="my-0">Settings</h2>
               </PanelHeader>
-              <WorkspaceSettings workspaceId={workspaceId} />
+              <WorkspaceSettings workspace={workspace} />
             </PanelBody>
           </Panel>
         )}
@@ -147,7 +148,7 @@ const Sidebar = ({
           </div>
         )}
         <Link
-          href={`/app/workspace/${workspaceId}`}
+          href={`/app/workspace/${workspace.id}`}
           className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition"
         >
           <House width={20} /> Home
