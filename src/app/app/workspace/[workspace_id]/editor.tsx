@@ -23,6 +23,7 @@ import { saveDocumentComments } from "@/db/documents-actions/save-comments";
 import { Document } from "@/db/documents-actions/get-document";
 import { Permission } from "@/db/workpace-actions/permission";
 import Loading from "@/app/loading";
+import Image from "@tiptap/extension-image";
 
 async function updateDocument(
   document_id: string,
@@ -143,6 +144,21 @@ const Editor = ({
       }),
       Placeholder.configure({
         placeholder: "Start writing here...",
+      }),
+      Image.extend({
+        addKeyboardShortcuts() {
+          return {
+            "Mod-i": () => {
+              const url = window.prompt("URL");
+
+              if (url) {
+                this.editor.chain().focus().setImage({ src: url }).run();
+              }
+
+              return true;
+            },
+          };
+        },
       }),
     ],
     content: defaultDocumentContent,
