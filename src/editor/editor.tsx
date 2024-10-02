@@ -26,6 +26,7 @@ import Loading from "@/app/loading";
 import Image from "@tiptap/extension-image";
 import NestedDocuments from "@/editor/extensions/nested-document";
 import Link from "@tiptap/extension-link";
+import { toast } from "sonner";
 
 async function updateDocument(
   document_id: string,
@@ -89,8 +90,14 @@ const Editor = ({
 
     if (timeout) clearTimeout(timeout);
     console.log(title, content);
-    timeout = setTimeout(() => {
-      updateDocument(document_id, workspace_id, contentToBe, titleToBe);
+    timeout = setTimeout(async () => {
+      const result = await updateDocument(
+        document_id,
+        workspace_id,
+        contentToBe,
+        titleToBe,
+      );
+      if (!result) toast.error("You cannot edit 😞");
       setSavingStatus(false);
     }, debouncingDuration);
   }
@@ -207,11 +214,13 @@ const Editor = ({
       comment: comment_content,
       parent_id: parent_id ?? null,
     });
-    await saveDocumentComments(
+    const result = await saveDocumentComments(
       JSON.stringify(documentEditor!.storage.comment.comments),
       workspace_id,
       document_id,
     );
+
+    if (!result) toast.error("You cannot comment 😞");
   }
 
   if (isLoading) return <Loading />;

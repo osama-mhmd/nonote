@@ -24,7 +24,11 @@ export async function saveDocumentComments(
   await db
     .update(workspaceDocuments)
     .set({ comments })
-    .where(eq(workspaceDocuments.id, document_id));
+    .where(eq(workspaceDocuments.id, document_id))
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
 
   return true;
 }

@@ -34,7 +34,11 @@ export async function saveDocument(
     await db
       .update(workspaceDocuments)
       .set({ title })
-      .where(eq(workspaceDocuments.id, document_id));
+      .where(eq(workspaceDocuments.id, document_id))
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
 
     return true;
   }
@@ -42,7 +46,11 @@ export async function saveDocument(
   await db
     .update(workspaceDocuments)
     .set({ content, title })
-    .where(eq(workspaceDocuments.id, document_id));
+    .where(eq(workspaceDocuments.id, document_id))
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
 
   return true;
 }
