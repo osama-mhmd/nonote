@@ -9,7 +9,12 @@ import { cn } from "@/lib/utils";
 import { ChevronsLeft, ChevronsRight, House } from "lucide-react";
 import Link from "next/link";
 import WorkspaceSettings from "./workspace-settings";
-import { Panel, PanelBody, PanelHeader, PanelTrigger } from "./ui/panel";
+import {
+  Panel,
+  PanelBody,
+  PanelHeader,
+  PanelTrigger,
+} from "../../../../components/ui/panel";
 import { Permission } from "@/db/workpace-actions/permission";
 import { Workspace } from "@/db/workpace-actions/get-workspaces";
 

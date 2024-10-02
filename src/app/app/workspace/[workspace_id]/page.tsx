@@ -1,6 +1,6 @@
 import { getRootDocument } from "@/db/documents-actions/get-document";
 import permissionLayer from "./permission-layer";
-import Editor from "@/app/app/workspace/[workspace_id]/editor";
+import Editor from "@/editor/editor";
 import createDocument from "@/db/documents-actions/create";
 import AppLayout from "./app-layout";
 import { validateRequest } from "@/db/auth";
