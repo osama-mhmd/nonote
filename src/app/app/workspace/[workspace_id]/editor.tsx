@@ -250,15 +250,11 @@ const Editor = ({
           </motion.div>
         )}
       </div>
-      {documentEditor && canEdit && (
+      {documentEditor && canComment && (
         // TODO: fix, the bubble menu will not show when the selection is empty
         // if the user selects a text and then clicked on the text!!!
         <BubbleMenu
-          shouldShow={({ state }) => {
-            if (!canComment) return false;
-            if (state.selection.empty) return false;
-            return true;
-          }}
+          shouldShow={({ state }) => !state.selection.empty}
           editor={documentEditor}
         >
           <div
@@ -282,12 +278,13 @@ const Editor = ({
                     @{comment.user.username}
                   </span>
                 </label>
-                <Reply
-                  className="cursor-pointer"
-                  onClick={() => addComment(comment.uuid!)}
-                  width={20}
-                  height={20}
-                />
+                {canComment && (
+                  <Reply
+                    className="cursor-pointer"
+                    onClick={() => addComment(comment.uuid!)}
+                    size={20}
+                  />
+                )}
               </div>
               {comment.parent_id && (
                 <p className="my-2 pl-2 border-l-2 border-gray-600 text-gray-600">
