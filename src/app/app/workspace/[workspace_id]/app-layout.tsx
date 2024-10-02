@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import Sidebar from "./sidebar";
 import { getWorkspace } from "@/db/workpace-actions/get-workspaces";
 import { Permission } from "@/db/workpace-actions/permission";
 import { ReactNode } from "react";
