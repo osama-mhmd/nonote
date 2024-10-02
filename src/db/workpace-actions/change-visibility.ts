@@ -1,6 +1,6 @@
 "use server";
 
-import { Visibility } from "@/components/workspace-settings";
+import { Visibility } from "@/app/app/workspace/[workspace_id]/workspace-settings";
 import db from "..";
 import { workspaceTable } from "../schemas";
 import { eq } from "drizzle-orm";
