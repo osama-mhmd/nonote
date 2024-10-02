@@ -17,7 +17,7 @@ export default async function AppLayout({
   return (
     <div className="flex flex-start gap-6">
       <Sidebar permission={permission} workspace={workspace} />
-      <section className="flex-1">{children}</section>
+      <section className="flex-1 pe-6">{children}</section>
     </div>
   );
 }

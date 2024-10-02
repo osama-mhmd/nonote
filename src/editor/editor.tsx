@@ -27,6 +27,7 @@ import Image from "@tiptap/extension-image";
 import NestedDocuments from "@/editor/extensions/nested-document";
 import Link from "@tiptap/extension-link";
 import { toast } from "sonner";
+import Callout from "./extensions/callout";
 
 async function updateDocument(
   document_id: string,
@@ -157,7 +158,7 @@ const Editor = ({
       Image.extend({
         addKeyboardShortcuts() {
           return {
-            "Mod-i": () => {
+            "Mod-o": () => {
               const url = window.prompt("URL");
 
               if (url) {
@@ -173,6 +174,7 @@ const Editor = ({
         defaultProtocol: "https",
       }),
       NestedDocuments,
+      Callout,
     ],
     content: defaultDocumentContent,
     immediatelyRender: false,
@@ -226,7 +228,7 @@ const Editor = ({
   if (isLoading) return <Loading />;
 
   return (
-    <div className="relative">
+    <div className="relative max-w-4xl mx-auto">
       <div className="absolute top-4 right-4">
         {!saving && (
           <motion.div
@@ -301,9 +303,9 @@ const Editor = ({
                 </p>
               )}
               <p className="my-2">{comment.comment}</p>
-              <p>
+              <div>
                 <DisplayDate date={comment.date} />
-              </p>
+              </div>
             </div>
           ))}
         </aside>

@@ -10,6 +10,10 @@
   pointer-events: none;
 }
 
+.tiptap *.is-empty.callout::before {
+  @apply absolute left-10;
+}
+
 .tiptap ul[data-type="taskList"].is-empty::before {
   padding-left: 1.5rem;
 }
@@ -77,4 +81,12 @@ span[comment_id] {
 
 .tiptap a {
   @apply underline text-blue-900 cursor-pointer;
+}
+
+.tiptap .callout {
+  @apply my-2 flex gap-2 relative;
+}
+
+.tiptap .callout .content {
+  flex-grow: 1;
 }
