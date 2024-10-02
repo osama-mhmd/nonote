@@ -70,7 +70,7 @@ const Editor = ({
   const [isLoading, setLoading] = useState(true);
 
   // permission checks
-  const isEditable = permission == "owner" || permission == "edit";
+  const canEdit = permission == "owner" || permission == "edit";
   const canComment =
     permission == "owner" || permission == "edit" || permission == "comment";
 
@@ -124,7 +124,7 @@ const Editor = ({
       setTitle(editor.getHTML());
       update("title", editor.getHTML());
     },
-    editable: isEditable,
+    editable: canEdit,
   });
 
   const documentEditor = useEditor({
@@ -189,7 +189,7 @@ const Editor = ({
       if (editorComments)
         editor.storage.comment.comments = JSON.parse(editorComments);
     },
-    editable: isEditable,
+    editable: canEdit,
   });
 
   async function addComment(parent_id?: string, comment?: string) {
@@ -244,8 +244,17 @@ const Editor = ({
           </motion.div>
         )}
       </div>
-      {documentEditor && canComment && (
-        <BubbleMenu editor={documentEditor}>
+      {documentEditor && canEdit && (
+        // TODO: fix, the bubble menu will not show when the selection is empty
+        // if the user selects a text and then clicked on the text!!!
+        <BubbleMenu
+          shouldShow={({ state }) => {
+            if (!canComment) return false;
+            if (state.selection.empty) return false;
+            return true;
+          }}
+          editor={documentEditor}
+        >
           <div
             className="bg-white rounded-md px-2 py-1 border cursor-pointer"
             onClick={() => addComment()}
