@@ -24,7 +24,7 @@ import { Document } from "@/db/documents-actions/get-document";
 import { Permission } from "@/db/workpace-actions/permission";
 import Loading from "@/app/loading";
 import Image from "@tiptap/extension-image";
-import DocumentDetector from "@/editor/extensions/nested-document";
+import NestedDocuments from "@/editor/extensions/nested-document";
 import Link from "@tiptap/extension-link";
 
 async function updateDocument(
@@ -165,6 +165,7 @@ const Editor = ({
       Link.configure({
         defaultProtocol: "https",
       }),
+      NestedDocuments,
     ],
     content: defaultDocumentContent,
     immediatelyRender: false,

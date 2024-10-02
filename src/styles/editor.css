@@ -74,3 +74,7 @@ span[comment_id] {
   background-color: rgba(77, 255, 0, 0.5);
   border-bottom: 3px solid rgba(54, 180, 0, 0.8);
 }
+
+.tiptap a {
+  @apply underline text-blue-900 cursor-pointer;
+}
