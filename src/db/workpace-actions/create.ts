@@ -26,6 +26,7 @@ export default async function createWorkspace(data: any): Promise<Err | never> {
     .values({
       id: workspaceId,
       name: data.name ?? "workspace",
+      description: data.description,
       visibility: "private",
     })
     .catch((err) => {

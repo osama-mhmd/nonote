@@ -45,7 +45,7 @@ export default async function App() {
                 <div className="bg-gradient-to-r rounded-tr-md rounded-tl-md from-indigo-500 via-purple-500 to-pink-500 h-48"></div>
                 <h3 className="text-lg px-6 py-2 mb-0">{workspace.name}</h3>
                 <p className="px-6 pb-6">
-                  {workspace?.description ?? "No description"}
+                  {workspace?.description ?? <i>No description</i>}
                 </p>
               </Link>
             );

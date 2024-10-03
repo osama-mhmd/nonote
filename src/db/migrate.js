@@ -2,9 +2,9 @@
  * we will not use typescript as it still experimental in node
  */
 
-const { drizzle } = require("drizzle-orm/postgres-js");
-const postgres = require("postgres");
-const { migrate } = require("drizzle-orm/postgres-js/migrator");
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 
 const dbURI = process.env.DATABASE_URL;
 const client = postgres(dbURI);

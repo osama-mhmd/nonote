@@ -12,10 +12,10 @@ export default function Create() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<{ name: string }>();
+  } = useForm<{ name: string; description: string }>();
   const [isLoading, setLoadingState] = useState(false);
 
-  const onsubmit = async (data: { name: string }) => {
+  const onsubmit = async (data: { name: string; description: string }) => {
     setLoadingState(true);
 
     const err = await createWorkspace(data);
@@ -43,6 +43,10 @@ export default function Create() {
             {...register("name", {
               required: "Please enter the name",
             })}
+          />
+          <Input
+            placeholder="Description (optional)"
+            {...register("description")}
           />
           {errors.name && <span className="error">{errors.name.message}</span>}
           <Button loading={isLoading}>Create</Button>

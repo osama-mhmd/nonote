@@ -23,6 +23,7 @@ export const sessionTable = pgTable("session", {
 export const workspaceTable = pgTable("workspaces", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  description: text("description"),
   // "public-comment" | "public-edit" | "public-view" | "private"
   visibility: text("visibility").notNull(),
   viewed_by: text("viewed_by").array().notNull().default([]),

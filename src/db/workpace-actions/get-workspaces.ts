@@ -8,6 +8,7 @@ import { eq, inArray } from "drizzle-orm";
 export type Workspace = {
   id: string;
   name: string;
+  description: string | null;
   visibility: string;
   viewed_by: string[];
   created_at: Date;
