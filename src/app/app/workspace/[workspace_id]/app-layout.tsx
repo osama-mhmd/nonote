@@ -2,6 +2,7 @@ import Sidebar from "./sidebar";
 import { getWorkspace } from "@/db/workpace-actions/get-workspaces";
 import { Permission } from "@/db/workpace-actions/permission";
 import { ReactNode } from "react";
+import Banner from "./banner";
 
 export default async function AppLayout({
   children,
@@ -18,7 +19,7 @@ export default async function AppLayout({
     <div className="flex flex-start">
       <Sidebar permission={permission} workspace={workspace} />
       <section className="flex-1">
-        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-48"></div>
+        <Banner workspace={workspace} />
         {children}
       </section>
     </div>

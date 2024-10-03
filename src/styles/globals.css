@@ -184,3 +184,8 @@ li[data-type="error"] {
 li[data-type="success"] {
   @apply bg-green-500 border-green-500 text-white;
 }
+
+.common-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}

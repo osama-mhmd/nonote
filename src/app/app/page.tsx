@@ -42,7 +42,14 @@ export default async function App() {
                 key={index}
                 className="rounded-md border border-border"
               >
-                <div className="bg-gradient-to-r rounded-tr-md rounded-tl-md from-indigo-500 via-purple-500 to-pink-500 h-48"></div>
+                <div
+                  className="rounded-tr-md rounded-tl-md h-48"
+                  style={{
+                    backgroundImage:
+                      workspace.image ??
+                      "linear-gradient(to right, #eee, #eee)",
+                  }}
+                ></div>
                 <h3 className="text-lg px-6 py-2 mb-0">{workspace.name}</h3>
                 <p className="px-6 pb-6">
                   {workspace?.description ?? <i>No description</i>}

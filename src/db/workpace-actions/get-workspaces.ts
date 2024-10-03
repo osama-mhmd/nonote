@@ -9,6 +9,7 @@ export type Workspace = {
   id: string;
   name: string;
   description: string | null;
+  image: string | null;
   visibility: string;
   viewed_by: string[];
   created_at: Date;
