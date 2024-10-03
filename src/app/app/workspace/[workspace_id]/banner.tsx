@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/panel";
 import changeWorkspaceImage from "@/db/workpace-actions/change-image";
 import { Workspace } from "@/db/workpace-actions/get-workspaces";
+import { Permission } from "@/db/workpace-actions/permission";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -18,7 +19,13 @@ const images = [
   "linear-gradient(to right, #ec4899, #f97316)",
 ];
 
-export default function Banner({ workspace }: { workspace: Workspace }) {
+export default function Banner({
+  workspace,
+  permission,
+}: {
+  workspace: Workspace;
+  permission: Permission;
+}) {
   const [workpsaceImage, setWorkspaceImage] = useState(
     workspace.image ?? "linear-gradient(to right, #eee, #eee)",
   );
@@ -31,30 +38,32 @@ export default function Banner({ workspace }: { workspace: Workspace }) {
       }}
     >
       <div className="container relative h-full opacity-0 hover:opacity-100 transition">
-        <Panel>
-          <PanelTrigger>
-            <Button variant="secondary" className="absolute bottom-2 right-2">
-              Change Image
-            </Button>
-          </PanelTrigger>
-          <PanelBody>
-            <PanelHeader>
-              <h3 className="my-0">Change Image</h3>
-            </PanelHeader>
-            <div className="common-grid gap-2">
-              {images.map((image, index) => {
-                return (
-                  <Image
-                    image={image}
-                    workspace={workspace}
-                    setWorkspaceImage={setWorkspaceImage}
-                    key={index}
-                  />
-                );
-              })}
-            </div>
-          </PanelBody>
-        </Panel>
+        {permission == "owner" && (
+          <Panel>
+            <PanelTrigger>
+              <Button variant="secondary" className="absolute bottom-2 right-2">
+                Change Image
+              </Button>
+            </PanelTrigger>
+            <PanelBody>
+              <PanelHeader>
+                <h3 className="my-0">Change Image</h3>
+              </PanelHeader>
+              <div className="common-grid gap-2">
+                {images.map((image, index) => {
+                  return (
+                    <Image
+                      image={image}
+                      workspace={workspace}
+                      setWorkspaceImage={setWorkspaceImage}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+            </PanelBody>
+          </Panel>
+        )}
       </div>
     </div>
   );

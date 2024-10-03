@@ -19,7 +19,7 @@ export default async function AppLayout({
     <div className="flex flex-start">
       <Sidebar permission={permission} workspace={workspace} />
       <section className="flex-1">
-        <Banner workspace={workspace} />
+        <Banner workspace={workspace} permission={permission} />
         {children}
       </section>
     </div>
