@@ -182,7 +182,7 @@ const Sidebar = ({
             <ChevronsRight
               onClick={resetWidth}
               role="button"
-              className="size-8 p-1 rounded-md bg-primary/10 text-muted-foreground"
+              className="size-8 bg-white p-1 rounded-md bg-primary/10 text-muted-foreground"
             />
           )}
         </nav>

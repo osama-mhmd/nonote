@@ -15,9 +15,12 @@ export default async function AppLayout({
   const workspace = await getWorkspace(workspace_id);
 
   return (
-    <div className="flex flex-start gap-6">
+    <div className="flex flex-start">
       <Sidebar permission={permission} workspace={workspace} />
-      <section className="flex-1 pe-6">{children}</section>
+      <section className="flex-1">
+        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-48"></div>
+        {children}
+      </section>
     </div>
   );
 }

@@ -228,7 +228,7 @@ const Editor = ({
   if (isLoading) return <Loading />;
 
   return (
-    <div className="relative max-w-4xl mx-auto">
+    <div className="relative max-w-4xl mx-auto px-4 mt-8">
       <div className="absolute top-4 right-4">
         {!saving && (
           <motion.div
@@ -276,7 +276,7 @@ const Editor = ({
           </div>
         </BubbleMenu>
       )}
-      <EditorContent className="mt-16" editor={titleEditor} />
+      <EditorContent editor={titleEditor} />
       <EditorContent editor={documentEditor} />
       {comments.length > 0 && (
         <aside className="absolute flex flex-col gap-2 bg-white border rounded-md p-4 top-0 right-4 w-full max-w-sm">

@@ -34,23 +34,19 @@ export default async function App() {
     Workspaces = (
       <div>
         <h3>Workspaces</h3>
-        <div className="flex flex-col *:h-16 gap-2 mb-2">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2 mb-2">
           {workspaces.map((workspace, index) => {
             return (
               <Link
                 href={`/app/workspace/${workspace.id}`}
                 key={index}
-                className="px-4 rounded-md bg-muted border border-border"
+                className="rounded-md border border-border"
               >
-                <h3 className="text-lg">{workspace.name}</h3>
-                {/* <p>
-                  Permission:{" "}
-                  {
-                    workpsacesIds.filter(
-                      (item) => item.workspace_id == workspace.id
-                    )[0].permission
-                  }
-                </p> */}
+                <div className="bg-gradient-to-r rounded-tr-md rounded-tl-md from-indigo-500 via-purple-500 to-pink-500 h-48"></div>
+                <h3 className="text-lg px-6 py-2 mb-0">{workspace.name}</h3>
+                <p className="px-6 pb-6">
+                  {workspace?.description ?? "No description"}
+                </p>
               </Link>
             );
           })}
