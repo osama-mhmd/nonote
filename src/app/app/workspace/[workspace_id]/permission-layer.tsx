@@ -18,8 +18,8 @@ function NoAccess() {
 
 export default async function permissionLayer(
   workspace_id: string,
-  callback: (permission: Permission) => Promise<JSX.Element>,
-): Promise<JSX.Element> {
+  callback: (permission: Permission) => Promise<JSX.Element | string>,
+): Promise<JSX.Element | string> {
   let userPermission = await permission(workspace_id);
 
   if (userPermission == "no-access") {

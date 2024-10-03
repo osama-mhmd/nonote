@@ -5,13 +5,21 @@ import db from "..";
 import { workspaceDocuments } from "../schemas";
 import permission from "../workpace-actions/permission";
 
-interface Process {
-  ok: boolean;
-  message: string;
-}
+type Process =
+  | {
+      ok: false;
+      message: string;
+    }
+  | {
+      ok: true;
+      message: string;
+      id: string;
+    };
 
 export default async function createDocument(
   workspace_id: string,
+  parent_id = "",
+  title: string | null = null,
 ): Promise<Process> {
   const userPermission = await permission(workspace_id);
 
@@ -27,8 +35,9 @@ export default async function createDocument(
     .insert(workspaceDocuments)
     .values({
       id: documentId,
+      title,
       workspace_id,
-      parent_id: "",
+      parent_id,
     })
     .catch((err) => {
       return {
@@ -45,5 +54,6 @@ export default async function createDocument(
   return {
     ok: true,
     message: "done",
+    id: documentId,
   };
 }

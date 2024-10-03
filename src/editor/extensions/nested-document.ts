@@ -1,7 +1,7 @@
 import { Node } from "@tiptap/pm/model";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
-function findDocuments(doc: Node): DecorationSet {
+function findDocuments(doc: Node, workspaceId: string): DecorationSet {
   const decorations: Decoration[] = [];
 
   doc.descendants((node, position) => {
@@ -16,35 +16,52 @@ function findDocuments(doc: Node): DecorationSet {
       const to = from + match[0].length;
 
       // TODO: delete the brackets from the title
-      const link = Decoration.inline(from, to, {
+      const link = Decoration.inline(from + 2, to - 2, {
         nodeName: "a",
         rel: "noopener noreferrer nofollow",
         target: "_blank",
-        href: "/api/documents/" + match[1],
+        href: `/app/workspace/${workspaceId}/${match[1]}`,
       });
       decorations.push(link);
+
+      decorations.push(
+        Decoration.inline(from, from + 2, { class: "text-blue-200" }),
+        Decoration.inline(to - 2, to, { class: "text-blue-200" }),
+      );
     });
   });
 
   return DecorationSet.create(doc, decorations);
 }
 
+interface NestedDocumentOptions {
+  workspaceId: string;
+}
+
 import { Extension } from "@tiptap/core";
 import { Plugin } from "@tiptap/pm/state";
 
-const NestedDocuments = Extension.create({
+const NestedDocuments = Extension.create<NestedDocumentOptions>({
   name: "nestedDocuments",
 
+  addOptions() {
+    return {
+      workspaceId: "",
+    };
+  },
+
   addProseMirrorPlugins() {
+    const { workspaceId } = this.options;
+
     return [
       new Plugin({
         state: {
           init(_, { doc }) {
-            return findDocuments(doc);
+            return findDocuments(doc, workspaceId);
           },
           apply(transaction, oldState) {
             return transaction.docChanged
-              ? findDocuments(transaction.doc)
+              ? findDocuments(transaction.doc, workspaceId)
               : oldState;
           },
         },

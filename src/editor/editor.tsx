@@ -173,7 +173,9 @@ const Editor = ({
       Link.configure({
         defaultProtocol: "https",
       }),
-      NestedDocuments,
+      NestedDocuments.configure({
+        workspaceId: workspace_id,
+      }),
       Callout,
     ],
     content: defaultDocumentContent,
