@@ -1,6 +1,6 @@
 "use client";
 
-import { merienda } from "../families";
+import { merienda } from "@/lib/fonts";
 import { ChartPie, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

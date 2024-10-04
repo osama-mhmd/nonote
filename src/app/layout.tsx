@@ -1,5 +1,5 @@
-import { inter } from "./families";
-import Nav from "@/components/nav";
+import { inter } from "@/lib/fonts";
+import Nav from "@/app/nav";
 import { validateRequest } from "@/db/auth";
 import { Metadata } from "next";
 import { Toaster } from "sonner";

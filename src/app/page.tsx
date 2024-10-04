@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { merienda } from "./families";
+import { merienda } from "@/lib/fonts";
 import { validateRequest } from "@/db/auth";
-import GithubIcon from "@/components/icons/github";
 import { Circle, Star } from "lucide-react";
 
 export default async function Home() {

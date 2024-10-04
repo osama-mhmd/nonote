@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import GithubIcon from "./icons/github";
+import GithubIcon from "../components/icons/github";
 import { ArrowRight, List } from "lucide-react";
-import { merienda } from "@/app/families";
+import { merienda } from "@/lib/fonts";
 import { Session } from "lucia";
 
 export default function Nav({ session }: { session: Session | null }) {
