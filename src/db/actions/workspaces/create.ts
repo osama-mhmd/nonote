@@ -1,11 +1,11 @@
 "use server";
 
 import { generateIdFromEntropySize } from "lucia";
-import db from "..";
-import { validateRequest } from "../auth";
-import { usersPermissions, workspaceTable } from "../schemas";
+import db from "../..";
+import { validateRequest } from "../../auth";
+import { usersPermissions, workspaceTable } from "../../schemas";
 import { redirect } from "next/navigation";
-import createDocument from "../documents-actions/create";
+import createDocument from "../documents/create";
 
 export type Err = {
   message: string;

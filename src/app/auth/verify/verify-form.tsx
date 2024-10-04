@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { verify } from "@/db/actions/verify-email";
+import { verify } from "@/db/actions/users/verify-email";
 import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 

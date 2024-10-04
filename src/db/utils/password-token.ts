@@ -30,7 +30,7 @@ export async function createResetPasswordToken(
   return code;
 }
 
-import Result from "../result";
+import Result from "../../types/result";
 
 export async function verifyResetPasswordTokenCode(
   inputCode: string,

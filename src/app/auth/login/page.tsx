@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { registerFields } from "../register/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
-import { login } from "@/db/actions/login";
+import { login } from "@/db/actions/users/login";
 import { useState } from "react";
 import { toast } from "sonner";
 

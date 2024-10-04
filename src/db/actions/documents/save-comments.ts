@@ -1,9 +1,9 @@
 "use server";
 
 import { eq } from "drizzle-orm";
-import db from "..";
-import { workspaceDocuments } from "../schemas";
-import permission from "../workpace-actions/permission";
+import db from "../..";
+import { workspaceDocuments } from "../../schemas";
+import permission from "../workspaces/permission";
 
 // TODO: THIS IS VERY DANGEROUS, THE USER WITH THE ACCESS
 // OF COMMENT CAN OVERWRITE THE COMMENTS OF THE DOCUMENT AND EVEN DELETE THEM

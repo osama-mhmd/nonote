@@ -2,13 +2,13 @@
 
 import { verify } from "@node-rs/argon2";
 import { cookies } from "next/headers";
-import { lucia } from "../lucia";
+import { lucia } from "../../lucia";
 import { redirect } from "next/navigation";
-import db from "..";
-import { userTable } from "../schemas";
+import db from "../..";
+import { userTable } from "../../schemas";
 import { eq } from "drizzle-orm";
 import { LoginFields } from "@/app/auth/login/page";
-import Err from "../err";
+import Err from "../../../types/err";
 
 // TODO: rename things correctly or in the same way for all
 export async function login(data: LoginFields): Promise<Err | never> {

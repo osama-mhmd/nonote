@@ -1,14 +1,14 @@
 "use server";
 
-import db from "../.";
+import db from "../..";
 import { hash } from "@node-rs/argon2";
 import { cookies } from "next/headers";
-import { lucia } from "../lucia";
+import { lucia } from "../../lucia";
 import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
-import { userTable } from "../schemas";
+import { userTable } from "../../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
-import Err from "../err";
+import Err from "../../../types/err";
 
 export default async function signup(
   data: RegisterFields,

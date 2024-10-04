@@ -1,9 +1,9 @@
 "use server";
 
-import db from "..";
-import { workspaceDocuments } from "../schemas";
+import db from "../..";
+import { workspaceDocuments } from "../../schemas";
 import { eq } from "drizzle-orm";
-import permission from "../workpace-actions/permission";
+import permission from "../workspaces/permission";
 
 /**
  * @returns status as a boolean

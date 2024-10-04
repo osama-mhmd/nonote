@@ -9,7 +9,7 @@ import TaskList from "@tiptap/extension-task-list";
 import Hightlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import "@/styles/editor.css";
-import { saveDocument } from "@/db/documents-actions/save-document";
+import { saveDocument } from "@/db/actions/documents/save-document";
 import { motion } from "framer-motion";
 import { MessageSquareMore, RefreshCw, Reply } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,9 @@ import Comments, {
   CustomCommentInterface,
 } from "@/editor/extensions/comment";
 import { User } from "lucia";
-import { saveDocumentComments } from "@/db/documents-actions/save-comments";
-import { Document } from "@/db/documents-actions/get-document";
-import { Permission } from "@/db/workpace-actions/permission";
+import { saveDocumentComments } from "@/db/actions/documents/save-comments";
+import { Document } from "@/db/actions/documents/get-document";
+import { Permission } from "@/db/actions/workspaces/permission";
 import Loading from "@/app/loading";
 import Image from "@tiptap/extension-image";
 import NestedDocuments from "@/editor/extensions/nested-document";

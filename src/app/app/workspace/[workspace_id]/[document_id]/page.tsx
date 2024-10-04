@@ -1,7 +1,7 @@
-import { getDocument } from "@/db/documents-actions/get-document";
+import { getDocument } from "@/db/actions/documents/get-document";
 import permissionLayer from "../permission-layer";
 import Editor from "@/editor/editor";
-import createDocument from "@/db/documents-actions/create";
+import createDocument from "@/db/actions/documents/create";
 import AppLayout from "../app-layout";
 import { validateRequest } from "@/db/auth";
 import { headers } from "next/headers";

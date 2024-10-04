@@ -11,7 +11,7 @@
     "prettier:write": "pnpm exec prettier . --write",
     "prettier:check": "npx prettier . --check",
     "db:migrate": "drizzle-kit generate",
-    "db:run:migration": "node --env-file=.env ./src/db/migrate.js",
+    "db:run:migration": "node --env-file=.env ./src/db/migrations/migrate.js",
     "prepare": "husky install",
     "test": "vitest"
   },

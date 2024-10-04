@@ -1,8 +1,8 @@
 "use server";
 
-import db from "..";
-import { validateRequest } from "../auth";
-import { usersPermissions } from "../schemas";
+import db from "../..";
+import { validateRequest } from "../../auth";
+import { usersPermissions } from "../../schemas";
 import { and, eq } from "drizzle-orm";
 import { getWorkspace } from "./get-workspaces";
 

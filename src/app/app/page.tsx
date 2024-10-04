@@ -3,7 +3,7 @@ import { validateRequest } from "@/db/auth";
 import {
   getWorkspaces,
   getWorkspacesPerUser,
-} from "@/db/workpace-actions/get-workspaces";
+} from "@/db/actions/workspaces/get-workspaces";
 import { Bolt, PlusCircle } from "lucide-react";
 import Link from "next/link";
 

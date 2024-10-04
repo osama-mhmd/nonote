@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import signup from "@/db/actions/create-user";
+import signup from "@/db/actions/users/create";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { registerFields, type RegisterFields } from "./schema";

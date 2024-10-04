@@ -1,7 +1,7 @@
 "use server";
 
-import db from "..";
-import { workspaceTable } from "../schemas";
+import db from "../..";
+import { workspaceTable } from "../../schemas";
 import { eq } from "drizzle-orm";
 import permission from "./permission";
 

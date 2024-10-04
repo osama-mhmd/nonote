@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import createWorkspace from "@/db/workpace-actions/create";
+import createWorkspace from "@/db/actions/workspaces/create";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 

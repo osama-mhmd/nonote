@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import permission, { Permission } from "@/db/workpace-actions/permission";
+import permission, { Permission } from "@/db/actions/workspaces/permission";
 import Link from "next/link";
 
 function NoAccess() {

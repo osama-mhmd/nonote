@@ -11,9 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import changeWorkspaceVisibility from "@/db/workpace-actions/change-visibility";
+import changeWorkspaceVisibility from "@/db/actions/workspaces/change-visibility";
 import { toast } from "sonner";
-import { Workspace } from "@/db/workpace-actions/get-workspaces";
+import { Workspace } from "@/db/actions/workspaces/get-workspaces";
 
 type Access = "view" | "comment" | "edit";
 export type Visibility =

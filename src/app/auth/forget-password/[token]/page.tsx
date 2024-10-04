@@ -7,8 +7,8 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
 import { useState } from "react";
 import { registerFields } from "../../register/schema";
-import { changePassword } from "@/db/actions/new-password";
-import { ChangePasswordResult } from "@/db/result";
+import { changePassword } from "@/db/actions/users/new-password";
+import { ChangePasswordResult } from "@/types/result";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

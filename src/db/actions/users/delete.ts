@@ -2,11 +2,11 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { validateRequest } from "../auth";
-import { lucia } from "../lucia";
+import { validateRequest } from "../../auth";
+import { lucia } from "../../lucia";
 import { eq } from "drizzle-orm";
-import db from "..";
-import { userTable } from "../schemas";
+import db from "../..";
+import { userTable } from "../../schemas";
 
 export async function deleteUser() {
   const { user, session } = await validateRequest();

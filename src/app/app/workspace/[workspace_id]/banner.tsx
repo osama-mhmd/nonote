@@ -7,9 +7,9 @@ import {
   PanelHeader,
   PanelTrigger,
 } from "@/components/ui/panel";
-import changeWorkspaceImage from "@/db/workpace-actions/change-image";
-import { Workspace } from "@/db/workpace-actions/get-workspaces";
-import { Permission } from "@/db/workpace-actions/permission";
+import changeWorkspaceImage from "@/db/actions/workspaces/change-image";
+import { Workspace } from "@/db/actions/workspaces/get-workspaces";
+import { Permission } from "@/db/actions/workspaces/permission";
 import { useState } from "react";
 import { toast } from "sonner";
 

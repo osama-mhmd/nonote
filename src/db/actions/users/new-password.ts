@@ -1,12 +1,12 @@
 "use server";
 
-import db from "..";
-import { resetPasswordTokens, userTable } from "../schemas";
+import db from "../..";
+import { resetPasswordTokens, userTable } from "../../schemas";
 import { eq } from "drizzle-orm";
-import { createResetPasswordToken } from "../utils/password-token";
+import { createResetPasswordToken } from "../../utils/password-token";
 import { isWithinExpirationDate } from "oslo";
-import sendMail from "../utils/send-mail";
-import { NewPasswordResult as Result } from "../result";
+import sendMail from "../../utils/send-mail";
+import { NewPasswordResult as Result } from "../../../types/result";
 import { hash } from "@node-rs/argon2";
 
 export async function newPassword(username: string) {
@@ -44,8 +44,8 @@ export async function newPassword(username: string) {
   }
 }
 
-import { ChangePasswordResult } from "../result";
-import { lucia } from "../lucia";
+import { ChangePasswordResult } from "../../../types/result";
+import { lucia } from "../../lucia";
 import { cookies } from "next/headers";
 
 export async function changePassword(

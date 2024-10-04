@@ -1,9 +1,9 @@
 "use server";
 
-import db from "..";
-import { workspaceDocuments } from "../schemas";
+import db from "../..";
+import { workspaceDocuments } from "../../schemas";
 import { and, eq } from "drizzle-orm";
-import permission from "../workpace-actions/permission";
+import permission from "../workspaces/permission";
 
 export type Document = {
   id: string;

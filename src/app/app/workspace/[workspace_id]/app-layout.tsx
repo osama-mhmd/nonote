@@ -1,6 +1,6 @@
 import Sidebar from "./sidebar";
-import { getWorkspace } from "@/db/workpace-actions/get-workspaces";
-import { Permission } from "@/db/workpace-actions/permission";
+import { getWorkspace } from "@/db/actions/workspaces/get-workspaces";
+import { Permission } from "@/db/actions/workspaces/permission";
 import { ReactNode } from "react";
 import Banner from "./banner";
 

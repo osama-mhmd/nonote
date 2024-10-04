@@ -15,8 +15,8 @@ import {
   PanelHeader,
   PanelTrigger,
 } from "../../../../components/ui/panel";
-import { Permission } from "@/db/workpace-actions/permission";
-import { Workspace } from "@/db/workpace-actions/get-workspaces";
+import { Permission } from "@/db/actions/workspaces/permission";
+import { Workspace } from "@/db/actions/workspaces/get-workspaces";
 
 const Sidebar = ({
   workspace,

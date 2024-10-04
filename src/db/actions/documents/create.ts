@@ -1,9 +1,9 @@
 "use server";
 
 import { generateIdFromEntropySize } from "lucia";
-import db from "..";
-import { workspaceDocuments } from "../schemas";
-import permission from "../workpace-actions/permission";
+import db from "../..";
+import { workspaceDocuments } from "../../schemas";
+import permission from "../workspaces/permission";
 
 type Process =
   | {

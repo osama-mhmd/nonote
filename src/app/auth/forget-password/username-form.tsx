@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { registerFields } from "../register/schema";
 import { InferInput, pick } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { newPassword } from "@/db/actions/new-password";
-import { NewPasswordResult as Result } from "@/db/result";
+import { newPassword } from "@/db/actions/users/new-password";
+import { NewPasswordResult as Result } from "@/types/result";
 import { useState } from "react";
 import { toast } from "sonner";
 

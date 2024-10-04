@@ -1,8 +1,8 @@
 "use server";
 
-import db from "..";
-import { validateRequest } from "../auth";
-import { usersPermissions, workspaceTable } from "../schemas";
+import db from "../..";
+import { validateRequest } from "../../auth";
+import { usersPermissions, workspaceTable } from "../../schemas";
 import { eq, inArray } from "drizzle-orm";
 
 export type Workspace = {

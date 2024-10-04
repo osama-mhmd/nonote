@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Trash, Trash2 } from "lucide-react";
-import { deleteUser } from "@/db/actions/delete";
+import { deleteUser } from "@/db/actions/users/delete";
 import { useState } from "react";
 
 export default function DeleteAccount() {

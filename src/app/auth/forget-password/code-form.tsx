@@ -10,7 +10,7 @@ import {
   getTokenHash,
   verifyResetPasswordTokenCode,
 } from "@/db/utils/password-token";
-import Result from "@/db/result";
+import Result from "@/types/result";
 import { getUserByUsername } from "@/db/utils/get-user";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

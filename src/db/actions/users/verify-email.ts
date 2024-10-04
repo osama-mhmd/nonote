@@ -1,12 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { lucia } from "../lucia";
-import db from "..";
-import { userTable } from "../schemas";
+import { lucia } from "../../lucia";
+import db from "../..";
+import { userTable } from "../../schemas";
 import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
-import { validateRequest } from "../auth";
+import { validateRequest } from "../../auth";
 import { verifyVerificationCode } from "@/db/utils/verification-code";
 
 export async function verify(code: string) {
