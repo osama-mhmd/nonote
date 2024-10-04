@@ -7,26 +7,20 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { registerFields, type RegisterFields } from "./schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Register() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
     handleSubmit,
   } = useForm<RegisterFields>({ resolver: valibotResolver(registerFields) });
-  const [isLoading, setLoadingState] = useState(false);
 
   const onSumbit: SubmitHandler<RegisterFields> = async (
     data: RegisterFields,
   ) => {
-    setLoadingState(true);
-
     if (data.password != data.password_repeat) {
-      setLoadingState(false);
-
       setError("password_repeat", {
         message: "Passwords must match!",
       });
@@ -34,7 +28,6 @@ export default function Register() {
       const err = await signup(data);
 
       if (err) {
-        setLoadingState(false);
         if (err.message == "users_email_unique")
           setError("email", { message: "Email already exists" });
         if (err.message == "users_username_unique")
@@ -94,7 +87,7 @@ export default function Register() {
           {errors.password_repeat && (
             <p className="error">{errors.password_repeat.message}</p>
           )}
-          <Button type="submit" loading={isLoading}>
+          <Button type="submit" loading={isSubmitting}>
             Register
           </Button>
           <Link href="/auth/login" className="link">

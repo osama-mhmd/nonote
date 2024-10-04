@@ -3,21 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { verify } from "@/db/actions/users/verify-email";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
 export default function VerifyForm({ text }: { text: string | ReactNode }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<{ code: string }>();
-  const [isLoading, setLoadingState] = useState(false);
 
   const onsubmit = async (data: { code: string }) => {
-    setLoadingState(true);
-
     const err = await verify(data.code);
 
     if (err) {
@@ -26,8 +23,6 @@ export default function VerifyForm({ text }: { text: string | ReactNode }) {
           message: "Invalid code",
         });
     }
-
-    setLoadingState(false);
   };
 
   return (
@@ -51,7 +46,7 @@ export default function VerifyForm({ text }: { text: string | ReactNode }) {
         })}
       />
       {errors.code && <span className="error">{errors.code.message}</span>}
-      <Button loading={isLoading}>Verify</Button>
+      <Button loading={isSubmitting}>Verify</Button>
     </form>
   );
 }

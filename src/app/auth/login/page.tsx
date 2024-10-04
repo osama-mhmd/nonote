@@ -10,7 +10,6 @@ import { registerFields } from "../register/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
 import { login } from "@/db/actions/users/login";
-import { useState } from "react";
 import { toast } from "sonner";
 
 const loginFields = pick(registerFields, ["user_name", "password"]);
@@ -19,21 +18,14 @@ export type LoginFields = InferInput<typeof loginFields>;
 export default function Login() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<LoginFields>({ resolver: valibotResolver(loginFields) });
-  const [isLoading, setLoadingState] = useState(false);
 
   async function onsubmit(data: LoginFields) {
-    setLoadingState(true);
-
     const err = await login(data);
 
-    console.log(err);
-
     if (err) {
-      setLoadingState(false);
-
       toast.error(err.message);
     }
   }
@@ -65,7 +57,7 @@ export default function Login() {
           <Link href="/auth/forget-password" className="mb-2 link">
             Forget password?
           </Link>
-          <Button type="submit" loading={isLoading}>
+          <Button type="submit" loading={isSubmitting}>
             Login
           </Button>
           <Link href="/auth/register" className="link">

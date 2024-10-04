@@ -21,40 +21,29 @@ export default function UsernameForm({
 }) {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<ForgetPasswordFields>({
     resolver: valibotResolver(forgetPasswordFields),
   });
-  const [isLoading, setLoadingState] = useState(false);
 
   async function onsubmit(data: ForgetPasswordFields) {
-    setLoadingState(true);
-
     const result = await newPassword(data.user_name);
 
     console.log(result);
 
     if (result == Result.UserNotFound) {
-      setLoadingState(false);
-
       toast.error("User not found");
 
       return;
     }
     if (result == Result.Success) {
-      setLoadingState(false);
-
       toast.success("Email sent, please check out your inbox");
     }
     if (result == Result.SentAnotherOne) {
-      setLoadingState(false);
-
       toast.success("We have sent another email, please check out your inbox");
     }
     if (result == Result.AlreadySent) {
-      setLoadingState(false);
-
       toast.success(
         "We have already sent an email, please check out your inbox",
       );
@@ -71,7 +60,7 @@ export default function UsernameForm({
       <h2 className="text-center mb-3">Reset Password</h2>
       <Input type="text" placeholder="Username" {...register("user_name")} />
       {errors.user_name && <p className="error">{errors.user_name.message}</p>}
-      <Button type="submit" loading={isLoading}>
+      <Button type="submit" loading={isSubmitting}>
         Reset
       </Button>
     </form>

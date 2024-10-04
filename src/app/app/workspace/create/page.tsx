@@ -3,21 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import createWorkspace from "@/db/actions/workspaces/create";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Create() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<{ name: string; description: string }>();
-  const [isLoading, setLoadingState] = useState(false);
 
   const onsubmit = async (data: { name: string; description: string }) => {
-    setLoadingState(true);
-
     const err = await createWorkspace(data);
 
     if (err) {
@@ -26,8 +22,6 @@ export default function Create() {
           message: err.message,
         });
     }
-
-    setLoadingState(false);
   };
 
   return (
@@ -49,7 +43,7 @@ export default function Create() {
             {...register("description")}
           />
           {errors.name && <span className="error">{errors.name.message}</span>}
-          <Button loading={isLoading}>Create</Button>
+          <Button loading={isSubmitting}>Create</Button>
         </form>
       </div>
     </section>
