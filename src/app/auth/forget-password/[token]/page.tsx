@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
-import { useState } from "react";
 import { registerFields } from "../../register/schema";
 import { changePassword } from "@/db/actions/users/new-password";
 import { ChangePasswordResult } from "@/types/result";
@@ -25,12 +24,11 @@ export default function ResetPassword({
 }) {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<ResetPasswordFields>({
     resolver: valibotResolver(resetPasswordFields),
   });
-  const [isLoading, setLoadingState] = useState(false);
   const router = useRouter();
 
   async function onsubmit(data: ResetPasswordFields) {
@@ -38,8 +36,6 @@ export default function ResetPassword({
       toast.error("Passwords don't match");
       return;
     }
-
-    setLoadingState(true);
 
     const result = await changePassword(token, data.password);
 
@@ -67,8 +63,6 @@ export default function ResetPassword({
 
       router.push("/auth/login");
     }
-
-    setLoadingState(false);
   }
 
   return (
@@ -95,7 +89,7 @@ export default function ResetPassword({
           {errors.password_repeat && (
             <p className="error">{errors.password_repeat.message}</p>
           )}
-          <Button type="submit" loading={isLoading}>
+          <Button type="submit" loading={isSubmitting}>
             Reset
           </Button>
         </form>

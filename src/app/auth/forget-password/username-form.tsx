@@ -8,7 +8,6 @@ import { InferInput, pick } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { newPassword } from "@/db/actions/users/new-password";
 import { NewPasswordResult as Result } from "@/types/result";
-import { useState } from "react";
 import { toast } from "sonner";
 
 const forgetPasswordFields = pick(registerFields, ["user_name"]);
@@ -29,8 +28,6 @@ export default function UsernameForm({
 
   async function onsubmit(data: ForgetPasswordFields) {
     const result = await newPassword(data.user_name);
-
-    console.log(result);
 
     if (result == Result.UserNotFound) {
       toast.error("User not found");

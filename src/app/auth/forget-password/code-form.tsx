@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import * as v from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useState } from "react";
 import {
   getTokenHash,
   verifyResetPasswordTokenCode,
@@ -27,17 +26,14 @@ export type ForgetPasswordFields = v.InferInput<typeof forgetPasswordFields>;
 export default function CodeForm({ username }: { username: string }) {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<ForgetPasswordFields>({
     resolver: valibotResolver(forgetPasswordFields),
   });
-  const [isLoading, setLoadingState] = useState(false);
   const router = useRouter();
 
   async function onsubmit(data: ForgetPasswordFields) {
-    setLoadingState(true);
-
     const result = await verifyResetPasswordTokenCode(data.code, username);
 
     if (result == Result.Success) {
@@ -61,8 +57,6 @@ export default function CodeForm({ username }: { username: string }) {
       // this will not happen, but just in case
       toast.error("User not found");
     }
-
-    setLoadingState(false);
   }
 
   return (
@@ -74,7 +68,7 @@ export default function CodeForm({ username }: { username: string }) {
       <Input type="text" placeholder="Username" disabled value={username} />
       <Input type="text" placeholder="Code" {...register("code")} />
       {errors.code && <p className="error">{errors.code.message}</p>}
-      <Button type="submit" loading={isLoading}>
+      <Button type="submit" loading={isSubmitting}>
         Reset
       </Button>
     </form>
