@@ -3,7 +3,7 @@
 import { TimeSpan, createDate, isWithinExpirationDate } from "oslo";
 import { alphabet, generateRandomString } from "oslo/crypto";
 import db from "..";
-import { resetPasswordTokens } from "../schemas";
+import { resetPasswordTokens, userTable } from "../schemas";
 import { eq } from "drizzle-orm";
 import { sha256 } from "oslo/crypto";
 import { encodeHex } from "oslo/encoding";
@@ -34,12 +34,21 @@ import Result from "../../types/result";
 
 export async function verifyResetPasswordTokenCode(
   inputCode: string,
-  userId: string,
+  username: string,
 ): Promise<Result> {
+  // selecting user
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.userName, username));
+
+  if (!user) return Result.UserNotFound;
+
+  // selecting password token
   const resetPasswordToken = await db
     .select()
     .from(resetPasswordTokens)
-    .where(eq(resetPasswordTokens.user_id, userId));
+    .where(eq(resetPasswordTokens.user_id, user[0].id));
 
   if (!resetPasswordToken) return Result.InvalidCode;
 

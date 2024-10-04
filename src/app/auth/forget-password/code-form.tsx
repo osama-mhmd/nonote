@@ -11,7 +11,6 @@ import {
   verifyResetPasswordTokenCode,
 } from "@/db/utils/password-token";
 import Result from "@/types/result";
-import { getUserByUsername } from "@/db/utils/get-user";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -39,15 +38,7 @@ export default function CodeForm({ username }: { username: string }) {
   async function onsubmit(data: ForgetPasswordFields) {
     setLoadingState(true);
 
-    const user = await getUserByUsername(username);
-
-    // this will not happen, but just in case
-    if (!user) {
-      toast.error("User not found");
-      return;
-    }
-
-    const result = await verifyResetPasswordTokenCode(data.code, user.id);
+    const result = await verifyResetPasswordTokenCode(data.code, username);
 
     if (result == Result.Success) {
       const token = await getTokenHash(data.code);
@@ -65,6 +56,10 @@ export default function CodeForm({ username }: { username: string }) {
     }
     if (result == Result.ExpiredCode) {
       toast.error("Expired code");
+    }
+    if (result == Result.UserNotFound) {
+      // this will not happen, but just in case
+      toast.error("User not found");
     }
 
     setLoadingState(false);
