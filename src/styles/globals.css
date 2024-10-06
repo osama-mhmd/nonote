@@ -189,3 +189,18 @@ li[data-type="success"] {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
+.main-nav {
+  position: sticky;
+  width: 100%;
+  padding: 15px 30px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 20;
+  top: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.app-nav {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

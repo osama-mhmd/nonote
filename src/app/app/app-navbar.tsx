@@ -10,16 +10,17 @@ export default function AppNavbar() {
 
   let shouldNotRender = /^\/app\/workspace\/?(.*)$/.test(pathname);
   if (pathname == "/app/workspace/create") shouldNotRender = false;
+  if (pathname == "/app/dashboard") shouldNotRender = true;
 
   return shouldNotRender ? null : (
-    <nav className="py-4 bg-muted">
+    <nav className="py-4 bg-muted app-nav">
       <div className="container py-2 px-6 flex items-center justify-between">
         <Link href="/app" className={"font-bold " + merienda}>
           Nonote App
         </Link>
         <ul className="flex gap-3 py-2 sm:py-0 items-center px-0 list-none">
           <li>
-            <Link href="/app/settings">
+            <Link href="/app/profile">
               <UserCircle />
             </Link>
           </li>

@@ -14,8 +14,8 @@ export default function Nav({ session }: { session: Session | null }) {
   const shouldNotRender = /^\/app\/?(.*)$/.test(pathname);
 
   return shouldNotRender ? null : (
-    <nav className="py-4 my-2 mx-4">
-      <div className="container border bg-primary/5 rounded-full py-2 px-6 flex items-center justify-between">
+    <nav className="main-nav">
+      <div className="container py-2 px-6 flex items-center justify-between">
         <Link href="/" className={"font-bold " + merienda}>
           Nonote
         </Link>
