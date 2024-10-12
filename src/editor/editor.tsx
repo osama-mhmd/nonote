@@ -13,7 +13,7 @@ import { saveDocument } from "@/db/actions/documents/save-document";
 import { motion } from "framer-motion";
 import { MessageSquareMore, RefreshCw, Reply } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Comments, {
   CommentInterface,
   CustomCommentInterface,
@@ -74,34 +74,38 @@ const Editor = ({
   const [isLoading, setLoading] = useState(true);
 
   // permission checks
-  const canEdit = permission == "owner" || permission == "edit";
-  const canComment =
-    permission == "owner" || permission == "edit" || permission == "comment";
+  const canEdit = useMemo(
+    () => permission == "owner" || permission == "edit",
+    [permission],
+  );
+  const canComment = useMemo(() => {
+    return (
+      permission == "owner" || permission == "edit" || permission == "comment"
+    );
+  }, [permission]);
 
-  function update(changeType: "title" | "content", change: string) {
+  useEffect(() => {
+    if (content == defaultDocumentContent && title == defaultDocumentTitle) {
+      return;
+    }
+
     setSavingStatus(true);
 
-    // the next following lines are written because when modifying title state
-    // the last change in the title is not made to update, so we should get the change
-    let contentToBe = content;
-    let titleToBe = title;
-
-    if (changeType == "title") titleToBe = change;
-    if (changeType == "content") contentToBe = change;
-
     if (timeout) clearTimeout(timeout);
+
     console.log(title, content);
+
     timeout = setTimeout(async () => {
       const result = await updateDocument(
         document_id,
         workspace_id,
-        contentToBe,
-        titleToBe,
+        content,
+        title,
       );
       if (!result) toast.error("You cannot edit 😞");
       setSavingStatus(false);
     }, debouncingDuration);
-  }
+  }, [content, title]);
 
   const titleEditor = useEditor({
     extensions: [
@@ -132,7 +136,6 @@ const Editor = ({
       }
 
       setTitle(editor.getHTML());
-      update("title", editor.getHTML());
     },
     editable: canEdit,
   });
@@ -184,7 +187,6 @@ const Editor = ({
       setSavingStatus(true);
 
       setContent(editor.getHTML());
-      update("content", editor.getHTML());
     },
     onSelectionUpdate: ({ editor }) => {
       setComments([]);
