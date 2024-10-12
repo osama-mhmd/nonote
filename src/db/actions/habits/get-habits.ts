@@ -1,0 +1,17 @@
+import db from "@/db";
+import { validateRequest } from "@/db/auth";
+import { habitsTable } from "@/db/schemas/habits";
+import { eq } from "drizzle-orm";
+
+export default async function getHabits() {
+  const { user } = await validateRequest();
+
+  if (!user) return false;
+
+  const habits = await db
+    .select()
+    .from(habitsTable)
+    .where(eq(habitsTable.user_id, user.id));
+
+  return habits;
+}
