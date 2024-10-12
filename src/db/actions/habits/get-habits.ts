@@ -1,3 +1,5 @@
+"use server";
+
 import db from "@/db";
 import { validateRequest } from "@/db/auth";
 import { habitsTable } from "@/db/schemas/habits";

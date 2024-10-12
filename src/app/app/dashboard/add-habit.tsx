@@ -16,13 +16,11 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import createHabit from "@/db/actions/habits/create";
 import { toast } from "sonner";
-import Habit from "@/types/habit";
 import { PlusCircle } from "lucide-react";
 
 export default function AddHabit() {
@@ -42,6 +40,7 @@ export default function AddHabit() {
       toast.error("Something went wrong");
     } else {
       toast.success("Habit created successfully");
+      window.location.reload(); // TODO: delete this and make it instead a live preview
     }
   }
 
