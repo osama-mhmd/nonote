@@ -88,6 +88,14 @@ h1 {
   margin-right: 0;
 }
 
+h2.contain-icons {
+  @apply flex items-center gap-1;
+}
+
+h2.contain-icons > svg {
+  @apply size-7;
+}
+
 h2 {
   font-size: 1.5em;
   margin-top: 0.83em;
