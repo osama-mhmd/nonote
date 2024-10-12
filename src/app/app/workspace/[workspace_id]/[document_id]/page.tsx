@@ -1,6 +1,6 @@
 import { getDocument } from "@/db/actions/documents/get-document";
 import permissionLayer from "../permission-layer";
-import Editor from "@/editor/editor";
+import Editor from "@/editor";
 import createDocument from "@/db/actions/documents/create";
 import AppLayout from "../app-layout";
 import { validateRequest } from "@/db/auth";
