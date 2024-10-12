@@ -86,6 +86,14 @@ const Editor = ({
   }, [permission]);
 
   useEffect(() => {
+    window.onbeforeunload = (e) => {
+      if (saving) {
+        return "You have unsaved changes";
+      }
+    };
+  });
+
+  useEffect(() => {
     if (content == defaultDocumentContent && title == defaultDocumentTitle) {
       return;
     }
