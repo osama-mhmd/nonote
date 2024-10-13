@@ -90,3 +90,7 @@ span[comment_id] {
 .tiptap .callout .content {
   flex-grow: 1;
 }
+
+ul[data-type="taskList"] li[data-checked="true"] {
+  @apply line-through text-gray-600;
+}

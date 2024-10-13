@@ -8,8 +8,6 @@ import Habit from "@/types/habit";
 export default async function Dashboard() {
   const { user } = await validateRequest();
 
-  console.log("re");
-
   // just in case
   if (!user) redirect("/auth/login");
 
@@ -19,8 +17,8 @@ export default async function Dashboard() {
 
   return (
     <section>
-      <div className="container mt-12">
-        <h1>
+      <div className="container my-12">
+        <h1 className="mb-4">
           Hello, <span className="text-blue-500">{user.fullname}</span>
         </h1>
         <div className="flex flex-col gap-1 *:rounded-md *:p-4 *:px-6 *:flex *:pb-6 *:flex-col *:gap-4">

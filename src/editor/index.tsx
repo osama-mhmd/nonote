@@ -91,6 +91,14 @@ const Editor = ({
         return "You have unsaved changes";
       }
     };
+    window.onkeydown = (e) => {
+      if (e.key.toLowerCase() == "s" && e.ctrlKey == true) {
+        e.preventDefault();
+
+        if (saving) toast("Saving");
+        else toast.success("Saved");
+      }
+    };
   });
 
   useEffect(() => {
@@ -241,7 +249,7 @@ const Editor = ({
   if (isLoading) return <Loading />;
 
   return (
-    <div className="relative max-w-4xl mx-auto px-4 mt-8">
+    <div className="relative max-w-4xl mx-auto px-4 mt-8 pb-14">
       <div className="absolute top-4 right-4">
         {!saving && (
           <motion.div
@@ -289,7 +297,7 @@ const Editor = ({
           </div>
         </BubbleMenu>
       )}
-      <EditorContent editor={titleEditor} />
+      <EditorContent editor={titleEditor} className="mb-6" />
       <EditorContent editor={documentEditor} />
       <CommentList
         comments={comments}

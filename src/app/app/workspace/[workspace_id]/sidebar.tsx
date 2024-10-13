@@ -115,7 +115,7 @@ const Sidebar = ({
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar px-3 relative z-[15] flex h-screen w-60 flex-col bg-secondary",
+          "group/sidebar px-3 z-[15] flex h-screen w-60 flex-col bg-secondary sticky top-0 left-0",
           isResetting &&
             "transition-all duration-300 ease-in-out overflow-y-auto",
           isMobile && "w-0",
