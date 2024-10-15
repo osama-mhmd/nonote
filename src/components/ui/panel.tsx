@@ -43,7 +43,7 @@ export function PanelBody({ children }: HaveChild) {
         <BackDrop closePanel={() => visibilityContext?.setVisibility(false)}>
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-md p-4 w-full max-w-2xl"
+            className="bg-card rounded-md p-4 w-full max-w-2xl"
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
@@ -61,14 +61,13 @@ export function PanelHeader({ children }: HaveChild) {
   const visibilityContext = useContext(VisibilityContext);
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
       {children}
-      <button
+      <X
+        size={35}
         onClick={() => visibilityContext?.setVisibility(false)}
-        className="text-xl cursor-pointer p-1 px-2 rounded-full bg-gray-100"
-      >
-        <X size={20} />
-      </button>
+        className="cursor-pointer p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition duration-100"
+      />
     </div>
   );
 }

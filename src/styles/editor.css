@@ -38,7 +38,7 @@ ul[data-type="taskList"] > li label input[type="checkbox"] {
 }
 
 ul[data-type="taskList"] > li label input[type="checkbox"]::after {
-  @apply content-[""] absolute top-0 left-0 w-full h-full border border-black rounded-sm;
+  @apply content-[""] absolute top-0 left-0 w-full h-full border border-white dark:border-border rounded-sm;
 }
 
 ul[data-type="taskList"] > li label input[type="checkbox"]:checked::after {
@@ -92,5 +92,5 @@ span[comment_id] {
 }
 
 ul[data-type="taskList"] li[data-checked="true"] {
-  @apply line-through text-gray-600;
+  @apply line-through text-gray-600 dark:text-gray-400;
 }

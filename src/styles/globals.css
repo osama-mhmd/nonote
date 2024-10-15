@@ -132,7 +132,7 @@ h6 {
 }
 
 .link {
-  @apply underline text-blue-800;
+  @apply underline text-blue-800 dark:text-blue-400;
 }
 
 ul {
@@ -166,15 +166,15 @@ code * {
 }
 
 .error {
-  @apply border-red-500 bg-red-100;
+  @apply border-red-500 bg-red-100 dark:bg-red-950;
 }
 
 .info {
-  @apply bg-green-100 border-green-500;
+  @apply bg-green-100 border-green-500 dark:bg-green-950;
 }
 
 .success {
-  @apply bg-blue-100 border-blue-500;
+  @apply bg-blue-100 border-blue-500 dark:bg-blue-950;
 }
 
 .danger-zone-action-slot {
@@ -182,11 +182,11 @@ code * {
 }
 
 li[data-type="error"] {
-  @apply bg-red-500 text-white;
+  @apply bg-red-500 text-white border-transparent;
 }
 
 li[data-type="success"] {
-  @apply bg-green-500 border-green-500 text-white;
+  @apply bg-green-500 border-green-500 text-white border-transparent;
 }
 
 .common-grid {
@@ -202,7 +202,8 @@ li[data-type="success"] {
   background-color: rgba(255, 255, 255, 0.1);
   z-index: 20;
   top: 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  @apply shadow-md;
 }
 
 .app-nav {

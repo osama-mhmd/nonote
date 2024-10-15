@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import "@/styles/globals.css";
+import { ThemeProvider } from "./theme-provider";
 
 export const metadata: Metadata = {
   title: "Nonote | Homepage",
@@ -20,11 +21,18 @@ export default async function RootLayout({
   const { session } = await validateRequest();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter}>
-        <Nav session={session} />
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          disableTransitionOnChange
+          defaultTheme="system"
+          enableSystem
+        >
+          <Nav session={session} />
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

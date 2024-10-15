@@ -14,9 +14,12 @@ export default function CommentList({
 }: Props) {
   return (
     comments.length > 0 && (
-      <aside className="absolute flex flex-col gap-2 bg-white border rounded-md p-4 top-0 right-4 w-full max-w-sm">
+      <aside className="absolute flex flex-col gap-2 bg-card border rounded-md p-4 top-0 right-4 w-full max-w-sm">
         {comments.map((comment, index) => (
-          <div key={index} className="rounded-md p-2 border-2">
+          <div
+            key={index}
+            className="rounded-md p-2 border-2 border-gray-200 dark:border-gray-900"
+          >
             <div className="flex justify-between">
               <label>
                 {comment.user.fullname}{" "}

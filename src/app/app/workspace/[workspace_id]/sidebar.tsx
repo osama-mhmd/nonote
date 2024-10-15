@@ -154,7 +154,7 @@ const Sidebar = ({
         )}
         <Link
           href={`/app/workspace/${workspace.id}`}
-          className="flex gap-2 cursor-pointer hover:bg-gray-200 items-center py-2 px-3 rounded-md transition"
+          className="flex gap-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 items-center py-2 px-3 rounded-md transition"
         >
           <House width={20} /> Home
         </Link>

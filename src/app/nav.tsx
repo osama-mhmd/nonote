@@ -7,6 +7,7 @@ import GithubIcon from "../components/icons/github";
 import { ArrowRight, List } from "lucide-react";
 import { merienda } from "@/lib/fonts";
 import { Session } from "lucia";
+import { ThemeToggle } from "@/components/change-theme";
 
 export default function Nav({ session }: { session: Session | null }) {
   const pathname = usePathname();
@@ -46,6 +47,9 @@ export default function Nav({ session }: { session: Session | null }) {
                 <GithubIcon /> View source code
               </Link>
             </Button>
+          </li>
+          <li>
+            <ThemeToggle />
           </li>
         </ul>
       </div>

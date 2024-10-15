@@ -290,7 +290,7 @@ const Editor = ({
           editor={documentEditor}
         >
           <div
-            className="bg-white rounded-md px-2 py-1 border cursor-pointer"
+            className="bg-card rounded-md px-2 py-1 border cursor-pointer"
             onClick={() => addComment()}
           >
             <MessageSquareMore size={20} />
