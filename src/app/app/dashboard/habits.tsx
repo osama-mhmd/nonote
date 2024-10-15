@@ -17,7 +17,7 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
   const today = new Date();
 
   return (
-    <div className="bg-green-200 dark:bg-green-900">
+    <div className="bg-green-200 dark:bg-green-900/30">
       <h2 className="my-0">Habits 🔥</h2>
       <div className="flex *:w-full flex-col gap-2">
         {habits.map(async (habit, index) => {
@@ -47,7 +47,7 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
               <PanelTrigger>
                 <div
                   className={cn(
-                    "rounded-md bg-green-300 flex justify-between items-center dark:bg-green-800 py-3 px-4 cursor-pointer",
+                    "rounded-md bg-green-300 flex justify-between items-center hover:ring-2 ring-black dark:ring-white dark:bg-green-800/30 py-3 px-4 cursor-pointer",
                     done && "opacity-50 hover:opacity-100 transition",
                   )}
                 >
@@ -58,12 +58,12 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
                     )}
                   >
                     {done && (
-                      <CircleCheck className="text-green-700 dark:text-green-500" />
+                      <CircleCheck className="text-green-700 dark:text-green-500/30" />
                     )}
                     <HabitLink name={habit.name} id={habit.id} />
                     <p className="text-muted-foreground">{habit.quote}</p>
                   </div>
-                  <div className="contain-icons bg-green-200 dark:bg-green-900 px-3 py-2 rounded-md">
+                  <div className="contain-icons bg-green-200 dark:bg-green-900/30 px-3 py-2 rounded-md">
                     {streak}{" "}
                     {done ? (
                       <Flame fill="#22c55e" stroke="#22c55e" />

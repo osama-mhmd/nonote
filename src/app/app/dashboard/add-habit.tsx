@@ -47,7 +47,7 @@ export default function AddHabit() {
   return (
     <Panel>
       <PanelTrigger>
-        <div className="p-4 border-2 cursor-pointer border-green-400 dark:border-green-700 dark:hover:bg-green-700/50 hover:bg-green-300/50 transition rounded-md">
+        <div className="p-4 border-2 cursor-pointer border-green-400 dark:border-green-700/30 dark:hover:bg-green-700/20 hover:bg-green-300/50 transition rounded-md">
           <PlusCircle className="mx-auto" />
         </div>
       </PanelTrigger>

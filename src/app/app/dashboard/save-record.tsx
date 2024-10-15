@@ -8,8 +8,10 @@ export default function SaveRecord({ habitId }: { habitId: string }) {
   const makeRecord = async (id: string) => {
     const result = await saveRecord(id);
 
-    if (result) toast.success("Record saved");
-    else toast.error("Something went wrong");
+    if (result) {
+      toast.success("Record saved");
+      window.location.reload();
+    } else toast.error("Something went wrong"); // TODO: implement live preview
   };
 
   return <Button onClick={() => makeRecord(habitId)}>Save Record</Button>;
