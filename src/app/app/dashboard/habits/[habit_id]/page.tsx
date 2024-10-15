@@ -2,6 +2,7 @@ import { getHabit } from "@/db/actions/habits/get-habits";
 import Calendar from "react-calendar";
 // import "react-calendar/dist/Calendar.css";
 import "@/styles/calendar.css";
+import getRecords from "@/db/actions/habits/get-records";
 
 export default async function Habit({
   params,
@@ -12,8 +13,15 @@ export default async function Habit({
 
   if (!habit) return "Something went wrong";
 
-  const dates = ["2024-10-15", "2024-10-11"];
+  const records = await getRecords(params.habit_id);
 
+  const dates = records
+    ? records.map((el) => {
+        return el.record_date;
+      })
+    : [];
+
+  console.log(dates);
   return (
     <section className="mt-12">
       <div className="container">
