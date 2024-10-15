@@ -34,7 +34,7 @@ export default async function App() {
     Workspaces = (
       <div>
         <h3>Workspaces</h3>
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2 mb-2">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2 my-2">
           {workspaces.map((workspace, index) => {
             return (
               <Link
