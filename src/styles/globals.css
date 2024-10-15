@@ -86,7 +86,7 @@ h1 {
   margin-right: 0;
 }
 
-h2.contain-icons {
+.contain-icons {
   @apply flex items-center gap-1;
 }
 
