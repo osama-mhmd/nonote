@@ -15,7 +15,7 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
   const today = new Date();
 
   return (
-    <div className="bg-green-200 dark:bg-green-950">
+    <div className="bg-green-200 dark:bg-green-900">
       <h2 className="my-0">Habits 🔥</h2>
       <div className="flex *:w-full flex-col gap-2">
         {habits.map(async (habit, index) => {
@@ -36,7 +36,7 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
           return (
             <Panel key={index}>
               <PanelTrigger>
-                <div className="rounded-md bg-green-300 dark:bg-green-900/50 p-4 cursor-pointer">
+                <div className="rounded-md bg-green-300 dark:bg-green-800 p-4 cursor-pointer">
                   <HabitLink name={habit.name} id={habit.id} />
                   {/* TODO: Add streak */}
                 </div>
@@ -46,7 +46,7 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
                   <h3 className="my-0">{habit.name}</h3>
                 </PanelHeader>
                 <p>{habit.quote}</p>
-                <div className="m-1 rounded-md bg-gray-800 p-4 text-center">
+                <div className="m-1 rounded-md bg-gray-200 dark:bg-gray-800 p-4 text-center">
                   {isToday ? (
                     <p className="text-muted-foreground font-bold">
                       Done Today 💪, Keep Going 🔥

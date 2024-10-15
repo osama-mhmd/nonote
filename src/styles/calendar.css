@@ -13,7 +13,7 @@
 
 .react-calendar__navigation__prev-button,
 .react-calendar__navigation__next-button {
-  @apply rounded-md p-1 px-4 bg-blue-900;
+  @apply rounded-md p-1 px-4 bg-blue-600 text-white dark:bg-blue-900;
 }
 
 .react-calendar__month-view__days,
@@ -26,17 +26,17 @@
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  @apply text-center rounded-md bg-blue-900 py-2;
+  @apply text-center rounded-md bg-blue-600 text-white dark:bg-blue-900 py-2;
 }
 
 button.react-calendar__tile {
-  @apply h-12 bg-gray-800 inline-block rounded-md;
+  @apply h-12 bg-gray-200 dark:bg-gray-800 inline-block rounded-md;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  @apply text-gray-600;
+  @apply text-gray-400 dark:text-gray-600;
 }
 
 .react-calendar__tile--hasActive {
-  @apply !bg-green-800;
+  @apply !bg-green-400 dark:!bg-green-800;
 }

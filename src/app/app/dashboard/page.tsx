@@ -23,14 +23,14 @@ export default async function Dashboard() {
         </h1>
         <div className="flex flex-col gap-1 *:rounded-md *:p-4 *:px-6 *:flex *:pb-6 *:flex-col *:gap-4">
           <Habits habits={habits as Habit[]} />
-          <div className="bg-blue-200">
+          <div className="bg-rose-200 dark:bg-rose-900">
             <h2 className="my-0">Notes 📝</h2>
             <p className="flex flex-col gap-2 items-center">
               <i>No Notes</i>
               <Button>Create your first note</Button>
             </p>
           </div>
-          <div className="bg-blue-200">
+          <div className="bg-blue-200 dark:bg-blue-900">
             <h2 className="my-0">Capture ✅</h2>
             <p className="flex flex-col gap-2 items-center">
               <i>No Captures</i>
