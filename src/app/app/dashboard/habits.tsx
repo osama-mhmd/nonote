@@ -1,5 +1,3 @@
-"use client";
-
 import Habit from "@/types/habit";
 import AddHabit from "./add-habit";
 import Link from "next/link";
@@ -9,33 +7,37 @@ import {
   PanelHeader,
   PanelTrigger,
 } from "@/components/ui/panel";
-import { Button } from "@/components/ui/button";
-import saveRecord from "@/db/actions/habits/save-record";
-import { toast } from "sonner";
+import SaveRecordButton from "./save-record";
+import getRecords from "@/db/actions/habits/get-records";
+import HabitLink from "./habit-link";
 
 export default async function Habits({ habits }: { habits: Habit[] }) {
-  const makeRecord = async (id: string) => {
-    const result = await saveRecord(id);
-
-    if (result) toast.success("Record saved");
-    else toast.error("Something went wrong");
-  };
+  const today = new Date();
 
   return (
-    <div className="bg-green-200">
+    <div className="bg-green-200 dark:bg-green-950">
       <h2 className="my-0">Habits 🔥</h2>
       <div className="flex *:w-full flex-col gap-2">
-        {habits.map((habit, index) => {
+        {habits.map(async (habit, index) => {
+          const records = await getRecords(habit.id);
+          let isToday = false;
+
+          const dates = records
+            ? records.map((el) => {
+                return el.record_date;
+              })
+            : [];
+
+          if (dates[dates.length - 1]) {
+            if (dates[dates.length - 1].getDate() == today.getDate())
+              isToday = true;
+          }
+
           return (
             <Panel key={index}>
               <PanelTrigger>
-                <div className="rounded-md bg-green-300 p-4 cursor-pointer">
-                  <Link
-                    className="text-xl underline text-blue-100"
-                    href={`/app/dashboard/habits/${habit.id}`}
-                  >
-                    {habit.name}
-                  </Link>
+                <div className="rounded-md bg-green-300 dark:bg-green-900/50 p-4 cursor-pointer">
+                  <HabitLink name={habit.name} id={habit.id} />
                   {/* TODO: Add streak */}
                 </div>
               </PanelTrigger>
@@ -45,9 +47,13 @@ export default async function Habits({ habits }: { habits: Habit[] }) {
                 </PanelHeader>
                 <p>{habit.quote}</p>
                 <div className="m-1 rounded-md bg-gray-800 p-4 text-center">
-                  <Button onClick={() => makeRecord(habit.id)}>
-                    Save Record
-                  </Button>
+                  {isToday ? (
+                    <p className="text-muted-foreground font-bold">
+                      Done Today 💪, Keep Going 🔥
+                    </p>
+                  ) : (
+                    <SaveRecordButton habitId={habit.id} />
+                  )}
                 </div>
               </PanelBody>
             </Panel>
