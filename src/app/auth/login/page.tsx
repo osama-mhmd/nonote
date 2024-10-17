@@ -11,22 +11,31 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { InferInput, pick } from "valibot";
 import { login } from "@/db/actions/users/login";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const loginFields = pick(registerFields, ["user_name", "password"]);
 export type LoginFields = InferInput<typeof loginFields>;
 
-export default function Login() {
+export default function Login({
+  searchParams: { redirectTo },
+}: {
+  searchParams: { redirectTo: string };
+}) {
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<LoginFields>({ resolver: valibotResolver(loginFields) });
+  const router = useRouter();
 
   async function onsubmit(data: LoginFields) {
     const err = await login(data);
 
-    if (err) {
+    // TODO: please make good API
+    if (typeof err == "object") {
       toast.error(err.message);
+    } else {
+      router.push(redirectTo ?? "/app");
     }
   }
 
@@ -60,7 +69,10 @@ export default function Login() {
           <Button type="submit" loading={isSubmitting}>
             Login
           </Button>
-          <Link href="/auth/register" className="link">
+          <Link
+            href={"/auth/register" + `?redirectTo=${redirectTo ?? ""}`}
+            className="link"
+          >
             Don{"'"}t have an account? Create Account
           </Link>
         </form>

@@ -11,7 +11,7 @@ import { LoginFields } from "@/app/auth/login/page";
 import Err from "../../../types/err";
 
 // TODO: rename things correctly or in the same way for all
-export async function login(data: LoginFields): Promise<Err | never> {
+export async function login(data: LoginFields): Promise<Err | true> {
   const username = data.user_name;
   if (
     typeof username !== "string" ||
@@ -68,5 +68,5 @@ export async function login(data: LoginFields): Promise<Err | never> {
     sessionCookie.attributes,
   );
 
-  redirect("/app");
+  return true;
 }

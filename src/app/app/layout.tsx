@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   title: "Nonote | App",
 };
 
-export default async function Layout({ children }: { children: ReactNode }) {
-  const { user, session } = await validateRequest();
+export default function Layout({ children }: { children: ReactNode }) {
+  // const { user, session } = await validateRequest();
 
-  if (!session || !user) redirect("/auth/login");
+  // if (!session || !user) redirect("/auth/login");
 
   return (
     <>
