@@ -3,15 +3,23 @@
 import { verify } from "@node-rs/argon2";
 import { cookies } from "next/headers";
 import { lucia } from "../../lucia";
-import { redirect } from "next/navigation";
 import db from "../..";
 import { userTable } from "../../schemas";
 import { eq } from "drizzle-orm";
 import { LoginFields } from "@/app/auth/login/page";
-import Err from "../../../types/err";
 
-// TODO: rename things correctly or in the same way for all
-export async function login(data: LoginFields): Promise<Err | true> {
+export interface Result {
+  ok: boolean;
+  message: string;
+  code?: string;
+}
+
+export async function login(data: LoginFields): Promise<Result> {
+  const defaultReturn = {
+    ok: false,
+    message: "Invalid username or password",
+  };
+
   const username = data.user_name;
   if (
     typeof username !== "string" ||
@@ -20,6 +28,7 @@ export async function login(data: LoginFields): Promise<Err | true> {
     !/^[a-z0-9_-]+$/.test(username)
   ) {
     return {
+      ...defaultReturn,
       message: "Invalid username",
     };
   }
@@ -30,6 +39,7 @@ export async function login(data: LoginFields): Promise<Err | true> {
     password.length > 255
   ) {
     return {
+      ...defaultReturn,
       message: "Invalid password",
     };
   }
@@ -41,11 +51,7 @@ export async function login(data: LoginFields): Promise<Err | true> {
 
   const user = existingUser[0];
 
-  if (!user) {
-    return {
-      message: "Incorrect username or password",
-    };
-  }
+  if (!user) return defaultReturn;
 
   const validPassword = await verify(user.hashedPassword, password, {
     memoryCost: 19456,
@@ -53,11 +59,8 @@ export async function login(data: LoginFields): Promise<Err | true> {
     outputLen: 32,
     parallelism: 1,
   });
-  if (!validPassword) {
-    return {
-      message: "Incorrect username or password",
-    };
-  }
+
+  if (!validPassword) return defaultReturn;
 
   const session = await lucia.createSession(user.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
@@ -68,5 +71,8 @@ export async function login(data: LoginFields): Promise<Err | true> {
     sessionCookie.attributes,
   );
 
-  return true;
+  return {
+    ok: true,
+    message: "Loged successfully",
+  };
 }

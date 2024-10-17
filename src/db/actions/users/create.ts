@@ -8,11 +8,17 @@ import { redirect } from "next/navigation";
 import { generateIdFromEntropySize } from "lucia";
 import { userTable } from "../../schemas";
 import { RegisterFields } from "@/app/auth/register/schema";
-import Err from "../../../types/err";
+import { Result } from "./login";
 
 export default async function signup(
   data: RegisterFields,
-): Promise<Err | never> {
+  autoRedirect = true,
+): Promise<Result> {
+  const defaultResponse = {
+    ok: false,
+    message: "Invalid username",
+  };
+
   const userName = data.user_name;
 
   if (
@@ -21,9 +27,7 @@ export default async function signup(
     userName.length > 31 ||
     !/^[a-z0-9_-]+$/.test(userName)
   ) {
-    return {
-      message: "Invalid username",
-    };
+    return defaultResponse;
   }
 
   const password = data.password;
@@ -33,6 +37,7 @@ export default async function signup(
     password.length > 255
   ) {
     return {
+      ...defaultResponse,
       message: "Invalid password",
     };
   }
@@ -53,9 +58,8 @@ export default async function signup(
 
   const fullName = `${first_name} ${last_name}`;
 
-  const user = await db
-    .insert(userTable)
-    .values({
+  try {
+    await db.insert(userTable).values({
       id: userId,
       fullName,
       userName,
@@ -69,16 +73,11 @@ export default async function signup(
        * "=" is used to be clear in spliting it again
        */
       emailVerified: "false",
-    })
-    .catch((err: any) => {
-      return {
-        message: err.constraint_name || "timeout",
-      };
     });
-
-  if ((user as Err).message) {
+  } catch (err: any) {
     return {
-      message: (user as Err).message,
+      ...defaultResponse,
+      message: err.constraint_name || "timeout",
     };
   }
 
@@ -91,5 +90,10 @@ export default async function signup(
     sessionCookie.attributes,
   );
 
-  redirect("/auth/verify");
+  if (autoRedirect) redirect("/auth/verify");
+
+  return {
+    ok: true,
+    message: "User created",
+  };
 }

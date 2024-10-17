@@ -29,13 +29,13 @@ export default function Login({
   const router = useRouter();
 
   async function onsubmit(data: LoginFields) {
-    const err = await login(data);
+    const result = await login(data);
 
     // TODO: please make good API
-    if (typeof err == "object") {
-      toast.error(err.message);
-    } else {
+    if (result.ok) {
       router.push(redirectTo ?? "/app");
+    } else {
+      toast.error(result.message);
     }
   }
 

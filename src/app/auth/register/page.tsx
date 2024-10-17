@@ -25,14 +25,14 @@ export default function Register() {
         message: "Passwords must match!",
       });
     } else {
-      const err = await signup(data);
+      const result = await signup(data);
 
-      if (err) {
-        if (err.message == "users_email_unique")
+      if (!result.ok) {
+        if (result.message == "users_email_unique")
           setError("email", { message: "Email already exists" });
-        if (err.message == "users_username_unique")
+        if (result.message == "users_username_unique")
           setError("user_name", { message: "Username already exists" });
-        if (err.message == "timeout") toast.error("Connection time out");
+        if (result.message == "timeout") toast.error("Connection time out");
       }
     }
   };
